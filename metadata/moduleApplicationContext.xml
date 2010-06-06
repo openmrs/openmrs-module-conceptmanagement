@@ -16,7 +16,8 @@
     <!-- Controllers -->
 	
     <bean id="BasicSearchFormController" class="@MODULE_PACKAGE@.web.controller.BasicSearchFormController">
-		<property name="commandName"><value>search</value></property>
+    	<property name="sessionForm"><value>true</value></property>
+		<property name="commandName"><value>conceptSearch2</value></property>
 		<property name="formView"><value>/module/@MODULE_ID@/basicSearchForm</value></property>
 		<property name="successView"><value>/module/@MODULE_ID@/basicSearchForm</value></property>
     </bean>

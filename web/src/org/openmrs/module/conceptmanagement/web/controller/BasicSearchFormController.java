@@ -20,11 +20,13 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.conceptmanagement.ConceptSearch;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,24 +65,42 @@ public class BasicSearchFormController extends SimpleFormController {
 	@Override
 	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object object,
 	                                BindException exceptions) throws Exception {
-		//HttpSession httpSession = request.getSession();
-		ModelAndView mav = new ModelAndView(getSuccessView());
 		
-		Collection<Concept> cs = null;
-		Collection<Concept> rslt = new Vector<Concept>();
-		
-		String word = (String) request.getParameter("search");
-		
-		if ((Context.isAuthenticated()) && (word != null)) {
-			word = word.toUpperCase();
-			cs = Context.getConceptService().getAllConcepts();
-			
-			for (Concept c : cs) {
-				if (c.getName().toString().contains(word))
-					rslt.add(c);
-			}
+		if (!Context.isAuthenticated()) {
+			return new ModelAndView(getFormView());
 		}
-		mav.addObject("search_result", rslt);
+		
+		ModelAndView mav = new ModelAndView(getSuccessView());
+		HttpSession session = request.getSession();
+		
+		Collection<Concept> rslt = new Vector<Concept>();
+		ConceptSearch cs = new ConceptSearch("");
+		
+		String searchWord = (String) request.getParameter("conceptQuery");
+		
+		if ((searchWord == null) || (searchWord.isEmpty())) {
+			return new ModelAndView(getFormView());
+		}
+		
+		//moved to formBackingObject
+		/*try {
+			cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		}
+		catch (ClassCastException ex) {
+			System.out.println("del attrib");
+			session.removeAttribute("conceptSearch");
+		}*/
+
+		if (session.getAttribute("conceptSearch") != null) {
+			cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		} else {
+			session.setAttribute("conceptSearch", cs);
+		}
+		
+		cs.setSearchQuery(searchWord);
+		rslt = Context.getConceptService().getConceptsByName(searchWord);
+		
+		mav.addObject("searchResult", rslt);
 		
 		return mav;
 	}
@@ -95,7 +115,16 @@ public class BasicSearchFormController extends SimpleFormController {
 	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		
+		HttpSession session = request.getSession();
+		
+		try {
+			ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		}
+		catch (ClassCastException ex) {
+			System.out.println("Delete attrib");
+			session.removeAttribute("conceptSearch");
+		}
+		
 		return "";
 	}
-	
 }

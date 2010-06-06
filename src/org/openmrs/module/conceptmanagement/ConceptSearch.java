@@ -14,16 +14,17 @@
 package org.openmrs.module.conceptmanagement;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 
-/**
+/** ConceptSearch
+ *  Class to keep of searches by the user
  *
  */
 public class ConceptSearch {
 	
-	//place-holders, will be implemented soon
 	private String searchQuery;
 	
 	private List<String> searchTerms;
@@ -31,5 +32,71 @@ public class ConceptSearch {
 	private List<ConceptDatatype> dataTypes;
 	
 	private List<ConceptClass> conceptClasses;
+	
+	/**
+	 * @param searchQuery
+	 */
+	public ConceptSearch(String searchQuery) {
+		this.searchQuery = searchQuery;
+		this.searchTerms = new Vector<String>();
+		this.searchTerms.add(searchQuery);
+	}
+	
+	/**
+	 * @return the searchQuery
+	 */
+	public String getSearchQuery() {
+		return searchQuery;
+	}
+	
+	/**
+	 * @param searchQuery the searchQuery to set
+	 */
+	public void setSearchQuery(String searchQuery) {
+		this.searchQuery = searchQuery;
+		this.searchTerms.add(searchQuery);
+	}
+	
+	/**
+	 * @return the searchTerms
+	 */
+	public List<String> getSearchTerms() {
+		return searchTerms;
+	}
+	
+	/**
+	 * @param searchTerms the searchTerms to set
+	 */
+	public void setSearchTerms(List<String> searchTerms) {
+		this.searchTerms = searchTerms;
+	}
+	
+	/**
+	 * @return the dataTypes
+	 */
+	public List<ConceptDatatype> getDataTypes() {
+		return dataTypes;
+	}
+	
+	/**
+	 * @param dataTypes the dataTypes to set
+	 */
+	public void setDataTypes(List<ConceptDatatype> dataTypes) {
+		this.dataTypes = dataTypes;
+	}
+	
+	/**
+	 * @return the conceptClasses
+	 */
+	public List<ConceptClass> getConceptClasses() {
+		return conceptClasses;
+	}
+	
+	/**
+	 * @param conceptClasses the conceptClasses to set
+	 */
+	public void setConceptClasses(List<ConceptClass> conceptClasses) {
+		this.conceptClasses = conceptClasses;
+	}
 	
 }
