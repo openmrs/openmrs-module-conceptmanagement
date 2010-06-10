@@ -4,7 +4,7 @@
 
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
-<h2><spring:message code="conceptmanagement.heading" /></h2>
+<h2><spring:message code="conceptmanagement.basicheading" /></h2>
 
 <br />
 <form method="post" class="box">
@@ -44,9 +44,5 @@
 	</c:forEach>
 </table>
 </div>
-<b>Previous searches:</b>
-<c:forEach var="prevSearch" items="${conceptSearch.searchTerms}">
-${prevSearch}<br />
-</c:forEach>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

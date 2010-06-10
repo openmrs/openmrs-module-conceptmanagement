@@ -19,9 +19,8 @@ import java.util.Vector;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 
-/** ConceptSearch
- *  Class to keep of searches by the user
- *
+/**
+ * ConceptSearch Class to keep of searches by the user
  */
 public class ConceptSearch {
 	
@@ -38,8 +37,8 @@ public class ConceptSearch {
 	 */
 	public ConceptSearch(String searchQuery) {
 		this.searchQuery = searchQuery;
-		this.searchTerms = new Vector<String>();
-		this.searchTerms.add(searchQuery);
+		//this.searchTerms = new Vector<String>();
+		//this.searchTerms.add(searchQuery);
 	}
 	
 	/**
@@ -54,14 +53,17 @@ public class ConceptSearch {
 	 */
 	public void setSearchQuery(String searchQuery) {
 		this.searchQuery = searchQuery;
-		this.searchTerms.add(searchQuery);
+		//this.searchTerms.add(searchQuery);
 	}
 	
 	/**
 	 * @return the searchTerms
 	 */
-	public List<String> getSearchTerms() {
-		return searchTerms;
+	public String getSearchTerms() {
+		String ret = "";
+		for (String s : searchTerms)
+			ret += s + " ";
+		return ret.trim();
 	}
 	
 	/**

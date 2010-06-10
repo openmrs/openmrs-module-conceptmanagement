@@ -48,6 +48,7 @@ public class AdminList extends AdministrationSectionExt {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		map.put("module/conceptmanagement/basicSearch.form", "Basic Concept Search");
+		map.put("module/conceptmanagement/advancedSearch.form", "Advanced Concept Search");
 		
 		return map;
 	}

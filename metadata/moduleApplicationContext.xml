@@ -9,6 +9,7 @@
     	<property name="mappings">
             <props>
 	           <prop key="module/@MODULE_ID@/basicSearch.form">BasicSearchFormController</prop>
+	           <prop key="module/@MODULE_ID@/advancedSearch.form">AdvancedSearchFormController</prop>
 	    	</props>
 		</property>
     </bean>
@@ -20,6 +21,13 @@
 		<property name="commandName"><value>conceptSearch2</value></property>
 		<property name="formView"><value>/module/@MODULE_ID@/basicSearchForm</value></property>
 		<property name="successView"><value>/module/@MODULE_ID@/basicSearchForm</value></property>
+    </bean>
+    
+    <bean id="AdvancedSearchFormController" class="@MODULE_PACKAGE@.web.controller.AdvancedSearchFormController">
+    	<property name="sessionForm"><value>true</value></property>
+		<property name="commandName"><value>dataTypes2</value></property>
+		<property name="formView"><value>/module/@MODULE_ID@/advancedSearchForm</value></property>
+		<property name="successView"><value>/module/@MODULE_ID@/advancedSearchForm</value></property>
     </bean>
 	
     <!-- /Controllers -->
