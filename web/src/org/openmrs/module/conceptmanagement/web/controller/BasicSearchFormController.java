@@ -31,9 +31,6 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.springframework.web.servlet.view.RedirectView;
-
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /**
  * This controller backs the /web/module/basicmoduleForm.jsp page. This controller is tied to that

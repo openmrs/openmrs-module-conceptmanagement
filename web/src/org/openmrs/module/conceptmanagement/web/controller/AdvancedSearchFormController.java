@@ -90,11 +90,19 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
 		
+		//exists object conceptsearch? 
+		if (session.getAttribute("conceptSearch") != null) {
+			cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		} else {
+			session.setAttribute("conceptSearch", cs);
+		}
+		
 		//get all parameters
 		String searchName = request.getParameter("conceptQuery");
 		String searchDescription = request.getParameter("conceptDescription");
 		String[] searchDatatypes = request.getParameterValues("conceptDatatype");
 		String[] searchClassesString = request.getParameterValues("conceptClasses");
+		String searchIsSet = request.getParameter("conceptIsSet");
 		
 		//check for correct selections
 		if (searchDatatypes != null && searchDatatypes[0].equals("-1")) {
@@ -107,11 +115,11 @@ public class AdvancedSearchFormController extends SimpleFormController {
 			cs.setConceptClasses(new Vector<ConceptClass>());
 		}
 		
-		//exists object conceptsearch? 
-		if (session.getAttribute("conceptSearch") != null) {
-			cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (searchIsSet != null && searchIsSet.equals("-1")) {
+			searchIsSet = null;
+			cs.setIsSet(-1);
 		} else {
-			session.setAttribute("conceptSearch", cs);
+			cs.setIsSet(Integer.parseInt(searchIsSet));
 		}
 		
 		//add elements to it, other elements are added below
@@ -130,6 +138,17 @@ public class AdvancedSearchFormController extends SimpleFormController {
 			}*/
 
 			cs.setSearchTerms(searchTermsList);
+		}
+		
+		if (searchIsSet != null) {
+			Collection<Concept> newRslt = new Vector<Concept>();
+			
+			for (Concept c : rslt) {
+				if (c.isSet() == searchIsSet.equals("1")) {
+					newRslt.add(c);
+				}
+			}
+			rslt = newRslt;
 		}
 		
 		if (searchDatatypes != null) {

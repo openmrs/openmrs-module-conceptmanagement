@@ -14,13 +14,12 @@
 package org.openmrs.module.conceptmanagement;
 
 import java.util.List;
-import java.util.Vector;
 
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 
 /**
- * ConceptSearch Class to keep of searches by the user
+ * ConceptSearch Class to keep of searches by the user isSet values: -1 Don't care 0 false 1 true
  */
 public class ConceptSearch {
 	
@@ -32,13 +31,27 @@ public class ConceptSearch {
 	
 	private List<ConceptClass> conceptClasses;
 	
+	private int isSet;
+	
+	/**
+	 * @return the isSet
+	 */
+	public int getIsSet() {
+		return isSet;
+	}
+	
+	/**
+	 * @param isSet the isSet to set
+	 */
+	public void setIsSet(int isSet) {
+		this.isSet = isSet;
+	}
+	
 	/**
 	 * @param searchQuery
 	 */
 	public ConceptSearch(String searchQuery) {
 		this.searchQuery = searchQuery;
-		//this.searchTerms = new Vector<String>();
-		//this.searchTerms.add(searchQuery);
 	}
 	
 	/**
@@ -53,7 +66,6 @@ public class ConceptSearch {
 	 */
 	public void setSearchQuery(String searchQuery) {
 		this.searchQuery = searchQuery;
-		//this.searchTerms.add(searchQuery);
 	}
 	
 	/**

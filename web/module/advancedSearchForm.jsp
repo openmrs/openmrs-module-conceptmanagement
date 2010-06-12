@@ -56,10 +56,10 @@
 			Is set?
 		</td>
 		<td>
-			<select name="isSet" size="1">
-				<option value="null"></option>
-				<option value="yes">Yes</option>
-				<option value="no">No</option>
+			<select name="conceptIsSet" size="1">
+				<option value="-1"></option>
+				<option <c:if test="${conceptSearch.isSet == 1}"> selected </c:if> value="1">Yes</option>
+				<option <c:if test="${conceptSearch.isSet == 0}"> selected </c:if> value="0">No</option>
 			</select>
 		</td>
 	</tr>
@@ -86,15 +86,17 @@
 		<th><spring:message code="conceptmanagement.concept" /></th>
 		<th><spring:message code="conceptmanagement.class" /></th>
 		<th><spring:message code="conceptmanagement.datatype" /></th>
+		<th>Other Names</th>
 	</tr>
 	<c:forEach var="concept" items="${searchResult}">
 		<tr>
 			<td><a
 				href="../../dictionary/concept.htm?conceptId=${concept.conceptId}"><spring:message
 				code="conceptmanagement.view" /></a></td>
-			<td>${concept.names}</td>
+			<td>${concept.name}</td>
 			<td>${concept.conceptClass.name}</td>
 			<td>${concept.datatype.name}</td>
+			<td>${concept.names}</td>
 		</tr>
 	</c:forEach>
 </table>
