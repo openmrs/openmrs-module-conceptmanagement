@@ -35,6 +35,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -54,12 +55,11 @@ public class AdvancedSearchFormController extends SimpleFormController {
 	protected Map<String, Object> referenceData(HttpServletRequest request, Object obj, Errors err) throws Exception {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
 		List<ConceptDatatype> dataTypes = new Vector<ConceptDatatype>();
 		List<ConceptClass> conceptClasses = new Vector<ConceptClass>();
 		
 		dataTypes = Context.getConceptService().getAllConceptDatatypes();
-		conceptClasses = Context.getConceptService().getConceptClasses();
+		conceptClasses = Context.getConceptService().getAllConceptClasses();
 		
 		map.put("dataTypes", dataTypes);
 		map.put("conceptClasses", conceptClasses);
@@ -82,10 +82,12 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		
 		HttpSession session = request.getSession();
 		
-		//get reference data for succesview
 		Map model = exceptions.getModel();
 		model.putAll(referenceData(request, object, null));
 		ModelAndView mav = new ModelAndView(getSuccessView(), model);
+
+		//redirecting
+		//ModelAndView mav = new ModelAndView(new RedirectView(getSuccessView()));
 		
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
@@ -127,6 +129,7 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		
 		//search
 		rslt = Context.getConceptService().getConceptsByName(searchName);
+		
 		
 		if (searchDescription != null) {
 			String[] searchTerms = searchDescription.split(" ");
