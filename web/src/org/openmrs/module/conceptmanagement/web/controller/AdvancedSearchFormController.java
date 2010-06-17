@@ -85,7 +85,7 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		Map model = exceptions.getModel();
 		model.putAll(referenceData(request, object, null));
 		ModelAndView mav = new ModelAndView(getSuccessView(), model);
-
+		
 		//redirecting
 		//ModelAndView mav = new ModelAndView(new RedirectView(getSuccessView()));
 		
@@ -129,7 +129,6 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		
 		//search
 		rslt = Context.getConceptService().getConceptsByName(searchName);
-		
 		
 		if (searchDescription != null) {
 			String[] searchTerms = searchDescription.split(" ");
@@ -217,6 +216,25 @@ public class AdvancedSearchFormController extends SimpleFormController {
 		}
 		
 		return "";
+	}
+	
+	/**
+	 * Checks if the incoming request should be a POST or a GET request
+	 * 
+	 * @see org.springframework.web.servlet.mvc.AbstractFormController#isFormSubmission(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	protected boolean isFormSubmission(HttpServletRequest request) {
+		boolean performPost = false;
+		if (request.getParameter("action") != null) { //&& (request.getParameter("action").equals("Search"))) {
+			performPost = true;
+		}
+		
+		if (request.getParameter("sort") != null) {
+			performPost = true;
+		}
+		
+		return performPost;
 	}
 	
 }

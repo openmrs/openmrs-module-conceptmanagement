@@ -91,7 +91,7 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" value="<spring:message code="conceptmanagement.go" />"></td>
+		<td><input type="submit" name="action" value="Search"></td>
 	</tr>
 </table>
 </form>
@@ -106,7 +106,7 @@
 <table>
 	<tr>
 		<th><spring:message code="conceptmanagement.actions" /></th>
-		<th><spring:message code="conceptmanagement.concept" /></th>
+		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=asc">#</a></th>
 		<th><spring:message code="conceptmanagement.class" /></th>
 		<th><spring:message code="conceptmanagement.datatype" /></th>
 		<th>Other Names</th>
