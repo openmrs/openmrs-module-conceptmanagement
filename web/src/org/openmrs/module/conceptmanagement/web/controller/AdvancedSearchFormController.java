@@ -15,13 +15,12 @@ package org.openmrs.module.conceptmanagement.web.controller;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -30,74 +29,65 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.conceptmanagement.ConceptComparator;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 
-/**
- *
- */
-public class AdvancedSearchFormController extends SimpleFormController {
+@Controller
+public class AdvancedSearchFormController {
 	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
 	
-	/**
-	 * Returns any extra data in a key-->value pair kind of way
-	 * 
-	 * @see org.springframework.web.servlet.mvc.SimpleFormController#referenceData(javax.servlet.http.HttpServletRequest,
-	 *      java.lang.Object, org.springframework.validation.Errors)
-	 */
-	@Override
-	protected Map<String, Object> referenceData(HttpServletRequest request, Object obj, Errors err) throws Exception {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<ConceptDatatype> dataTypes = new Vector<ConceptDatatype>();
-		List<ConceptClass> conceptClasses = new Vector<ConceptClass>();
-		
-		dataTypes = Context.getConceptService().getAllConceptDatatypes();
-		conceptClasses = Context.getConceptService().getAllConceptClasses();
-		
-		map.put("dataTypes", dataTypes);
-		map.put("conceptClasses", conceptClasses);
-		
-		return map;
+	@ModelAttribute("dataTypes")
+	public List<ConceptDatatype> populateDataTypes() {
+		return Context.getConceptService().getAllConceptDatatypes();
 	}
 	
-	/**
-	 * @see org.springframework.web.servlet.mvc.SimpleFormController#onSubmit(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse, java.lang.Object,
-	 *      org.springframework.validation.BindException)
-	 */
-	@Override
-	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object object,
-	                                BindException exceptions) throws Exception {
+	@ModelAttribute("conceptClasses")
+	public List<ConceptClass> populateConceptClasses() {
+		return Context.getConceptService().getAllConceptClasses();
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET)
+	public void showAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
+		//display advancedSearch.jsp	
+		session.removeAttribute("sortResults");
+		session.removeAttribute("conceptSearch");
+		System.out.println("show page");
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
+	public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
+		//display advancedSearch.jsp	
+		System.out.println("sort");
+		String sortFor = request.getParameter("sort");
+		boolean asc = true;
 		
-		if (!Context.isAuthenticated()) {
-			return new ModelAndView(getFormView());
+		if (request.getParameter("order") != null && request.getParameter("order").equals("desc"))
+			asc = false;
+		
+		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (cs != null)
+			model.addAttribute("conceptSearch", cs);
+		
+		if (conList != null) {
+			Collections.sort((List<Concept>) conList, new ConceptComparator(sortFor, asc));
+			model.addAttribute("searchResult", conList);
 		}
-		
-		HttpSession session = request.getSession();
-		
-		Map model = exceptions.getModel();
-		model.putAll(referenceData(request, object, null));
-		ModelAndView mav = new ModelAndView(getSuccessView(), model);
-		
-		//redirecting
-		//ModelAndView mav = new ModelAndView(new RedirectView(getSuccessView()));
-		
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.POST)
+	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
-		
-		//exists object conceptsearch? 
-		if (session.getAttribute("conceptSearch") != null) {
-			cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		} else {
-			session.setAttribute("conceptSearch", cs);
-		}
 		
 		//get all parameters
 		String searchName = request.getParameter("conceptQuery");
@@ -190,51 +180,11 @@ public class AdvancedSearchFormController extends SimpleFormController {
 			cs.setConceptClasses(classesList);
 		}
 		
-		mav.addObject("searchResult", rslt);
-		
-		return mav;
-	}
-	
-	/**
-	 * This class returns the form backing object. This can be a string, a boolean, or a normal java
-	 * pojo. The type can be set in the /config/moduleApplicationContext.xml file or it can be just
-	 * defined by the return type of this method
-	 * 
-	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		
-		HttpSession session = request.getSession();
-		
-		//Maintain the conceptSearch object
-		try {
-			ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		}
-		catch (ClassCastException ex) {
-			session.removeAttribute("conceptSearch");
-		}
-		
-		return "";
-	}
-	
-	/**
-	 * Checks if the incoming request should be a POST or a GET request
-	 * 
-	 * @see org.springframework.web.servlet.mvc.AbstractFormController#isFormSubmission(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	protected boolean isFormSubmission(HttpServletRequest request) {
-		boolean performPost = false;
-		if (request.getParameter("action") != null) { //&& (request.getParameter("action").equals("Search"))) {
-			performPost = true;
-		}
-		
-		if (request.getParameter("sort") != null) {
-			performPost = true;
-		}
-		
-		return performPost;
+		model.addAttribute("searchResult", rslt);
+		model.addAttribute("conceptSearch", cs);
+		//add search results to session to make them sortable
+		session.setAttribute("sortResults", rslt);
+		session.setAttribute("conceptSearch", cs);
 	}
 	
 }

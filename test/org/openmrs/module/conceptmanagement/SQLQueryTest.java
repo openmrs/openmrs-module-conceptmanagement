@@ -19,13 +19,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
 /**
  * TestCase to test the SQL-query command
  */
-public class SQLQueryTest extends BaseContextSensitiveTest {
+public class SQLQueryTest extends BaseModuleContextSensitiveTest {
 	
 	@Test
 	@Verifies(value = "should find a concept in the db", method = "executeSQL(sql, false)")
@@ -34,7 +34,7 @@ public class SQLQueryTest extends BaseContextSensitiveTest {
 		
 		Assert.assertNotNull(adminService);
 		
-		List<List<Object>> conc = adminService.executeSQL("SELECT count(*) FROM obs", false);
+		Object conc = adminService.executeSQL("SELECT count(*) FROM obs", false);
 		
 		Assert.assertNotNull(conc);
 		

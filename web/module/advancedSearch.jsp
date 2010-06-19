@@ -106,9 +106,9 @@
 <table>
 	<tr>
 		<th><spring:message code="conceptmanagement.actions" /></th>
-		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=asc">#</a></th>
-		<th><spring:message code="conceptmanagement.class" /></th>
-		<th><spring:message code="conceptmanagement.datatype" /></th>
+		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptmanagement.class" /><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptmanagement.datatype" /><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
 		<th>Other Names</th>
 	</tr>
 	<c:forEach var="concept" items="${searchResult}">
