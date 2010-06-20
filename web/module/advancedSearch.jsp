@@ -95,13 +95,13 @@
 	</tr>
 </table>
 </form>
-<c:if test="${!(searchResult == null)}">
-	<dir>
-		returned ${fn:length(searchResult)} results
-	</dir>
-</c:if>
-<div class="boxHeader"><b><spring:message
-	code="conceptmanagement.concepts" /></b></div>
+<div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1">
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="-1">All</option>
+						</select>concepts per page</div>
+<div class="boxHeader"><b>Search Results</b>&nbsp;<c:if test="${!(searchResult == null)}">(${fn:length(searchResult)} results returned)</c:if></div>
 <div class="box">
 <table>
 	<tr>
@@ -123,6 +123,14 @@
 		</tr>
 	</c:forEach>
 </table>
+</div>
+<c:if test="${!(searchResult == null)}">
+<div style="position:relative; left:30px; font-size11px;">
+Page:
+<c:forEach var="i" begin="1" end="${(fn:length(searchResult) div 25)+1}" step="1">
+	<c:out value="${i}" />&nbsp;
+</c:forEach>
+</c:if>
 </div>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
