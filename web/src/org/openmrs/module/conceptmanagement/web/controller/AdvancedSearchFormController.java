@@ -17,8 +17,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +28,7 @@ import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.conceptmanagement.ConceptComparator;
+import org.openmrs.module.conceptmanagement.ConceptPageCount;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -57,10 +56,69 @@ public class AdvancedSearchFormController {
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET)
 	public void showAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
-		//display advancedSearch.jsp	
+		//display advancedSearch.jsp
+		
+		//reset all session objects used by this controller
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
+		session.removeAttribute("countConcept");
+		
+		ConceptPageCount conCount = new ConceptPageCount();
+		session.setAttribute("countConcept", conCount);
 		System.out.println("show page");
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "count")
+	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
+		ConceptPageCount conCount = new ConceptPageCount();
+		
+		//set count
+		String count = request.getParameter("count");
+		
+		if (session.getAttribute("countConcept") == null) {
+			session.setAttribute("countConcept", conCount);
+			conCount.setConceptsPerPage(Integer.parseInt(count));
+		} else {
+			conCount = (ConceptPageCount) session.getAttribute("countConcept");
+			int cCount = Integer.parseInt(count);
+			if (cCount == -1)
+				cCount = 10000;
+			conCount.setConceptsPerPage(cCount);
+			conCount.setCurrentPage(1);
+		}
+		model.addAttribute("countConcept", conCount);
+		
+		//add other elements (search words and results) to the view, so they are displayed
+		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (cs != null) {
+			model.addAttribute("conceptSearch", cs);
+		}
+		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		if (conList != null) {
+			model.addAttribute("searchResult", conList);
+		}
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
+	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
+		//set page
+		String page = request.getParameter("page");
+		
+		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
+		if (conCount != null) {
+			conCount.setCurrentPage(Integer.parseInt(page));
+			model.addAttribute("countConcept", conCount);
+		}
+		
+		//add other elements (search words and results) to the view, so they are displayed
+		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (cs != null) {
+			model.addAttribute("conceptSearch", cs);
+		}
+		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		if (conList != null) {
+			model.addAttribute("searchResult", conList);
+		}
 	}
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
@@ -89,7 +147,7 @@ public class AdvancedSearchFormController {
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
 		
-		//get all parameters
+		//get all search parameters
 		String searchName = request.getParameter("conceptQuery");
 		String searchDescription = request.getParameter("conceptDescription");
 		String[] searchDatatypes = request.getParameterValues("conceptDatatype");
@@ -185,6 +243,11 @@ public class AdvancedSearchFormController {
 		//add search results to session to make them sortable
 		session.setAttribute("sortResults", rslt);
 		session.setAttribute("conceptSearch", cs);
+		
+		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
+		if (conCount != null) {
+			conCount.setCurrentPage(1);
+		}
 	}
 	
 }

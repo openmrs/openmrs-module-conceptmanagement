@@ -95,12 +95,12 @@
 	</tr>
 </table>
 </form>
-<div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1">
-							<option value="25">25</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-							<option value="-1">All</option>
-						</select>concepts per page</div>
+<form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='advancedSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
+							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
+							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
+							<option <c:if test="${countConcept.conceptsPerPage==100}"> selected </c:if> value="100">100</option>
+							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1">All</option>
+						</select>concepts per page</div></form>
 <div class="boxHeader"><b>Search Results</b>&nbsp;<c:if test="${!(searchResult == null)}">(${fn:length(searchResult)} results returned)</c:if></div>
 <div class="box">
 <table>
@@ -111,7 +111,17 @@
 		<th><spring:message code="conceptmanagement.datatype" /><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
 		<th>Other Names</th>
 	</tr>
-	<c:forEach var="concept" items="${searchResult}">
+	<c:choose>
+	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
+		<c:set var="lastConcept" value="${fn:length(searchResult)}"></c:set>
+		${(countConcept.currentPage-1)*countConcept.conceptsPerPage} to ${lastConcept}
+	</c:when>
+	<c:otherwise>
+		<c:set var="lastConcept" value="${countConcept.currentPage*countConcept.conceptsPerPage}"></c:set>
+		${(countConcept.currentPage-1)*countConcept.conceptsPerPage} to ${lastConcept}
+	</c:otherwise>
+	</c:choose>
+	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">
 		<tr>
 			<td><a
 				href="../../dictionary/concept.htm?conceptId=${concept.conceptId}"><spring:message
@@ -124,11 +134,11 @@
 	</c:forEach>
 </table>
 </div>
-<c:if test="${!(searchResult == null)}">
+<c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
 <div style="position:relative; left:30px; font-size11px;">
 Page:
-<c:forEach var="i" begin="1" end="${(fn:length(searchResult) div 25)+1}" step="1">
-	<c:out value="${i}" />&nbsp;
+<c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
+	<a href="?page=${i}">${i}</a>&nbsp;
 </c:forEach>
 </c:if>
 </div>
