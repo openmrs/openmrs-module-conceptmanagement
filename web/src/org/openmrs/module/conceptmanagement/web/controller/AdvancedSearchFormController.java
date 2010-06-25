@@ -165,7 +165,7 @@ public class AdvancedSearchFormController {
 			cs.setConceptClasses(new Vector<ConceptClass>());
 		}
 		
-		if (searchIsSet != null && searchIsSet.equals("-1")) {
+		if ((searchIsSet == null) || (searchIsSet.equals("-1"))) {
 			searchIsSet = null;
 			cs.setIsSet(-1);
 		} else {

@@ -2,49 +2,11 @@
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
+<script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript" ></script>
+
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
 <h2><spring:message code="conceptmanagement.advancedheading" /></h2>
-
-<script type="text/javascript">
-<!--
-	var lstSelected = new Array();
-	
-	function contains(a, obj) {
-		var i = a.length;
-		while (i--) {
-			if (a[i] === obj) {
-		    	return true;
-		    }
-		}
-		return false;
-	}
-
-	function removeByElement(arrayName,arrayElement)
-	 {
-	    for(var i=0; i<arrayName.length;i++ )
-	     { 
-	        if(arrayName[i]==arrayElement)
-	            arrayName.splice(i,1); 
-	      } 
-	  }
-	
-	function doSelect(ob) {
-		if (ob.selectedIndex != -1) {
-			if (contains(lstSelected, ob.selectedIndex))
-					removeByElement(lstSelected, ob.selectedIndex);
-			else
-				lstSelected.push(ob.selectedIndex);
-
-			for (var i=0; lstSelected.length; i++) {
-				ob.options[lstSelected[i]].selected=true;
-			}
-				
-		}
-	}
-
-	//-->
-</script>
 
 <br />
 <form method="post" class="box" name="frmSearch">
@@ -60,34 +22,41 @@
 			value="${conceptSearch.searchTerms}"></td>
 	</tr>
 	<tr>
-		<td>Datatype:</td>
-		<td><select multiple="multiple" name="conceptDatatype" size="5">
-			<option value="-1"></option>
+		<td valign="top">Datatype:</td>
+		<td>
 			<c:forEach var="dataType" items="${dataTypes}">
-				<option
-					<c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> selected </c:if> value="${dataType.name}">${dataType.name}
-				</option>
+				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.name}">${dataType.name}<br />
 			</c:forEach>
-		</select></td>
+		</td>
 	</tr>
 	<tr>
-		<td>Classes:</td>
-		<td><select multiple="multiple" name="conceptClasses" size="5">
-			<option value="-1"></option>
+		<td valign="top">Classes:</td>
+		<td>
 			<c:forEach var="class" items="${conceptClasses}">
-				<option
-					<c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> selected </c:if> value="${class.name}">${class.name}
-				</option>
+				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.name}">${class.name}<br />
 			</c:forEach>
-		</select></td>
+		</td>
 	</tr>
 	<tr>
-		<td>Is set?</td>
-		<td><select name="conceptIsSet" size="1">
-			<option value="-1"></option>
-			<option <c:if test="${conceptSearch.isSet == 1}"> selected </c:if> value="1">Yes</option>
-			<option <c:if test="${conceptSearch.isSet == 0}"> selected </c:if> value="0">No</option>
-		</select></td>
+		<td valign="top">Is set?</td>
+		<td>
+			<input type="radio" name="conceptIsSet" value="-1">Deselect<br />
+			<input type="radio" <c:if test="${conceptSearch.isSet == 1}"> checked </c:if> name="conceptIsSet" value="1">Yes<br />
+			<input type="radio" <c:if test="${conceptSearch.isSet == 0}"> checked </c:if> name="conceptIsSet" value="0">No
+		</td>
+	</tr>
+	<tr>
+		<td>Created between:</td>
+		<td><input type="text" name="dateFrom" size="8" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="8" onClick="showCalendar(this)"></td>
+	</tr>
+	<tr>
+	<td valign="top">Concepts used as:</td>
+	<td>
+		<input type="checkbox" name="conceptUsedAs" value="formQuestion">as a question in forms<br />
+		<input type="checkbox" name="conceptUsedAs" value="formAnswer">as an answer to questions<br />
+		<input type="checkbox" name="conceptUsedAs" value="ObsQuestion">as an observation question<br />
+		<input type="checkbox" name="conceptUsedAs" value="ObsValue">as an observation value<br />
+	</td>
 	</tr>
 	<tr>
 		<td></td>
