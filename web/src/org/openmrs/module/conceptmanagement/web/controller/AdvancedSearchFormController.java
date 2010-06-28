@@ -154,22 +154,45 @@ public class AdvancedSearchFormController {
 		String[] searchClassesString = request.getParameterValues("conceptClasses");
 		String searchIsSet = request.getParameter("conceptIsSet");
 		
+		String searchDateFrom = request.getParameter("dateFrom");
+		String searchDateTo = request.getParameter("dateTo");
+		String[] searchUsedAs = request.getParameterValues("conceptUsedAs");
+		
 		//check for correct selections
-		if (searchDatatypes != null && searchDatatypes[0].equals("-1")) {
+		if (searchDatatypes == null) {
 			searchDatatypes = null;
 			cs.setDataTypes(new Vector<ConceptDatatype>());
 		}
 		
-		if (searchClassesString != null && searchClassesString[0].equals("-1")) {
+		if (searchClassesString == null) {
 			searchClassesString = null;
 			cs.setConceptClasses(new Vector<ConceptClass>());
 		}
 		
-		if ((searchIsSet == null) || (searchIsSet.equals("-1"))) {
+		if (searchIsSet == null) {
 			searchIsSet = null;
 			cs.setIsSet(-1);
 		} else {
 			cs.setIsSet(Integer.parseInt(searchIsSet));
+		}
+		
+		if (searchDateFrom == null || searchDateFrom.isEmpty()) {
+			searchDateFrom = null;
+		} else {
+			cs.setDateFrom(searchDateFrom);
+		}
+		
+		if (searchDateTo == null || searchDateTo.isEmpty()) {
+			searchDateTo = null;
+		} else {
+			cs.setDateTo(searchDateTo);
+		}
+		
+		if (searchUsedAs == null) {
+			cs.setConceptUsedAs(null);
+		} else {
+			List<String> usedAsList = Arrays.asList(searchUsedAs);
+			cs.setConceptUsedAs(usedAsList);
 		}
 		
 		//add elements to it, other elements are added below

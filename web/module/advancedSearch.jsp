@@ -47,15 +47,15 @@
 	</tr>
 	<tr>
 		<td>Created between:</td>
-		<td><input type="text" name="dateFrom" size="8" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="8" onClick="showCalendar(this)"></td>
+		<td><input type="text" name="dateFrom" size="10" value="${conceptSearch.dateFrom}" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="10" value="${conceptSearch.dateTo}" onClick="showCalendar(this)"></td>
 	</tr>
 	<tr>
 	<td valign="top">Concepts used as:</td>
 	<td>
-		<input type="checkbox" name="conceptUsedAs" value="formQuestion">as a question in forms<br />
-		<input type="checkbox" name="conceptUsedAs" value="formAnswer">as an answer to questions<br />
-		<input type="checkbox" name="conceptUsedAs" value="ObsQuestion">as an observation question<br />
-		<input type="checkbox" name="conceptUsedAs" value="ObsValue">as an observation value<br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formQuestion')}"> checked </c:if> value="formQuestion">as a question in forms<br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formAnswer')}"> checked </c:if> value="formAnswer">as an answer to questions<br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsQuestion')}"> checked </c:if> value="obsQuestion">as an observation question<br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsValue')}"> checked </c:if> value="obsValue">as an observation value<br />
 	</td>
 	</tr>
 	<tr>

@@ -31,7 +31,55 @@ public class ConceptSearch {
 	
 	private List<ConceptClass> conceptClasses;
 	
+	private List<String> conceptUsedAs;
+	
+	private String dateFrom;
+	
+	private String dateTo;
+	
 	private int isSet;
+	
+	/**
+	 * @return the dateFrom
+	 */
+	public String getDateFrom() {
+		return dateFrom;
+	}
+	
+	/**
+	 * @param dateFrom the dateFrom to set
+	 */
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+	
+	/**
+	 * @return the dateTo
+	 */
+	public String getDateTo() {
+		return dateTo;
+	}
+	
+	/**
+	 * @param dateTo the dateTo to set
+	 */
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
+	}
+	
+	/**
+	 * @return the conceptUsedAs
+	 */
+	public List<String> getConceptUsedAs() {
+		return conceptUsedAs;
+	}
+	
+	/**
+	 * @param conceptUsedAs the conceptUsedAs to set
+	 */
+	public void setConceptUsedAs(List<String> conceptUsedAs) {
+		this.conceptUsedAs = conceptUsedAs;
+	}
 	
 	/**
 	 * @return the isSet
