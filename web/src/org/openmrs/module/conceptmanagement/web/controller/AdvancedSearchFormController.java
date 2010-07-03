@@ -13,9 +13,13 @@
  */
 package org.openmrs.module.conceptmanagement.web.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -35,7 +39,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
@@ -146,6 +149,9 @@ public class AdvancedSearchFormController {
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateFrom = null;
+		Date dateTo = null;
 		
 		//get all search parameters
 		String searchName = request.getParameter("conceptQuery");
@@ -157,6 +163,19 @@ public class AdvancedSearchFormController {
 		String searchDateFrom = request.getParameter("dateFrom");
 		String searchDateTo = request.getParameter("dateTo");
 		String[] searchUsedAs = request.getParameterValues("conceptUsedAs");
+
+		try {
+			if (searchDateFrom != null && !searchDateFrom.isEmpty())
+				dateFrom = df.parse(searchDateFrom);
+			if (searchDateTo != null && !searchDateTo.isEmpty())
+				dateTo = df.parse(searchDateTo);
+		}
+		catch (ParseException ex) {
+			ex.printStackTrace();
+			dateFrom = null;
+			dateTo = null;
+		}
+		;
 		
 		//check for correct selections
 		if (searchDatatypes == null) {
@@ -179,13 +198,13 @@ public class AdvancedSearchFormController {
 		if (searchDateFrom == null || searchDateFrom.isEmpty()) {
 			searchDateFrom = null;
 		} else {
-			cs.setDateFrom(searchDateFrom);
+			cs.setDateFrom(dateFrom);
 		}
 		
 		if (searchDateTo == null || searchDateTo.isEmpty()) {
 			searchDateTo = null;
 		} else {
-			cs.setDateTo(searchDateTo);
+			cs.setDateTo(dateTo);
 		}
 		
 		if (searchUsedAs == null) {
@@ -198,9 +217,10 @@ public class AdvancedSearchFormController {
 		//add elements to it, other elements are added below
 		cs.setSearchQuery(searchName);
 		
-		//search
+		//search for the concept name
 		rslt = Context.getConceptService().getConceptsByName(searchName);
 		
+		//search for words from the description
 		if (searchDescription != null) {
 			String[] searchTerms = searchDescription.split(" ");
 			List<String> searchTermsList = Arrays.asList(searchTerms);
@@ -213,6 +233,31 @@ public class AdvancedSearchFormController {
 			cs.setSearchTerms(searchTermsList);
 		}
 		
+		//concept created after date
+		if (dateFrom != null) {
+			Collection<Concept> newRslt = new Vector<Concept>();
+			
+			for (Concept c : rslt) {
+				if (c.getDateCreated().compareTo(dateFrom)>=0) {
+					newRslt.add(c);
+				}
+			}
+			rslt = newRslt;
+		}
+		
+		//concept created before date
+		if (dateTo != null) {
+			Collection<Concept> newRslt = new Vector<Concept>();
+			
+			for (Concept c : rslt) {
+				if (c.getDateCreated().compareTo(dateTo)<=0) {
+					newRslt.add(c);
+				}
+			}
+			rslt = newRslt;
+		}
+		
+		//is concept set?
 		if (searchIsSet != null) {
 			Collection<Concept> newRslt = new Vector<Concept>();
 			
@@ -224,6 +269,7 @@ public class AdvancedSearchFormController {
 			rslt = newRslt;
 		}
 		
+		//concept matches datatype?
 		if (searchDatatypes != null) {
 			Collection<Concept> newRslt = new Vector<Concept>();
 			List<String> searchDatatypesList = Arrays.asList(searchDatatypes);
@@ -243,6 +289,7 @@ public class AdvancedSearchFormController {
 			cs.setDataTypes(dataTypesList);
 		}
 		
+		//concept matches class
 		if (searchClassesString != null) {
 			Collection<Concept> newRslt = new Vector<Concept>();
 			List<String> searchClassesList = Arrays.asList(searchClassesString);
@@ -263,6 +310,7 @@ public class AdvancedSearchFormController {
 		
 		model.addAttribute("searchResult", rslt);
 		model.addAttribute("conceptSearch", cs);
+		
 		//add search results to session to make them sortable
 		session.setAttribute("sortResults", rslt);
 		session.setAttribute("conceptSearch", cs);

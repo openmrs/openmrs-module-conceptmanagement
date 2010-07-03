@@ -7,7 +7,6 @@
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
 <h2><spring:message code="conceptmanagement.advancedheading" /></h2>
-
 <br />
 <form method="post" class="box" name="frmSearch">
 <table>
@@ -40,9 +39,8 @@
 	<tr>
 		<td valign="top">Is set?</td>
 		<td>
-			<input type="radio" name="conceptIsSet" value="-1">Deselect<br />
-			<input type="radio" <c:if test="${conceptSearch.isSet == 1}"> checked </c:if> name="conceptIsSet" value="1">Yes<br />
-			<input type="radio" <c:if test="${conceptSearch.isSet == 0}"> checked </c:if> name="conceptIsSet" value="0">No
+			<input type="checkbox" <c:if test="${conceptSearch.isSet == 1}"> checked </c:if> name="conceptIsSet" value="1" onClick="document.frmSearch.conceptIsSet[1].checked = false";>Yes<br />
+			<input type="checkbox" <c:if test="${conceptSearch.isSet == 0}"> checked </c:if> name="conceptIsSet" value="0" onClick="document.frmSearch.conceptIsSet[0].checked = false";>No
 		</td>
 	</tr>
 	<tr>
@@ -83,11 +81,9 @@
 	<c:choose>
 	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
 		<c:set var="lastConcept" value="${fn:length(searchResult)}"></c:set>
-		${(countConcept.currentPage-1)*countConcept.conceptsPerPage} to ${lastConcept}
 	</c:when>
 	<c:otherwise>
 		<c:set var="lastConcept" value="${countConcept.currentPage*countConcept.conceptsPerPage}"></c:set>
-		${(countConcept.currentPage-1)*countConcept.conceptsPerPage} to ${lastConcept}
 	</c:otherwise>
 	</c:choose>
 	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">

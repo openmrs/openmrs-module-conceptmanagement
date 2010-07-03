@@ -13,6 +13,8 @@
  */
 package org.openmrs.module.conceptmanagement;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openmrs.ConceptClass;
@@ -33,23 +35,32 @@ public class ConceptSearch {
 	
 	private List<String> conceptUsedAs;
 	
-	private String dateFrom;
+	private Date dateFrom;
 	
-	private String dateTo;
+	private Date dateTo;
 	
 	private int isSet;
+	
+	private SimpleDateFormat df;
 	
 	/**
 	 * @return the dateFrom
 	 */
 	public String getDateFrom() {
-		return dateFrom;
+		return df.format(this.dateFrom);
+	}
+	
+	/**
+	 * @return the dateFrom as date
+	 */
+	public Date getDateFromAsDate() {
+		return this.dateFrom;
 	}
 	
 	/**
 	 * @param dateFrom the dateFrom to set
 	 */
-	public void setDateFrom(String dateFrom) {
+	public void setDateFrom(Date dateFrom) {
 		this.dateFrom = dateFrom;
 	}
 	
@@ -57,13 +68,20 @@ public class ConceptSearch {
 	 * @return the dateTo
 	 */
 	public String getDateTo() {
-		return dateTo;
+		return df.format(this.dateTo);
+	}
+	
+	/**
+	 * @return the dateTo as date
+	 */
+	public Date getDateToAsDate() {
+		return this.dateTo;
 	}
 	
 	/**
 	 * @param dateTo the dateTo to set
 	 */
-	public void setDateTo(String dateTo) {
+	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
 	}
 	
@@ -99,6 +117,8 @@ public class ConceptSearch {
 	 * @param searchQuery
 	 */
 	public ConceptSearch(String searchQuery) {
+		df = new SimpleDateFormat();
+		df.applyPattern("dd/MM/yyyy");
 		this.searchQuery = searchQuery;
 	}
 	
@@ -114,6 +134,17 @@ public class ConceptSearch {
 	 */
 	public void setSearchQuery(String searchQuery) {
 		this.searchQuery = searchQuery;
+	}
+	
+	/**
+	 * @return the searchTerms as List
+	 */
+	public List<String> getSearchTermsList() {
+		/*String ret = "";
+		for (String s : searchTerms)
+			ret += s + " ";
+		return ret.trim();*/
+		return searchTerms;
 	}
 	
 	/**
