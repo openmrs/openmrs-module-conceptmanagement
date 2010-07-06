@@ -1,3 +1,4 @@
+package org.openmrs.module.conceptmanagement.impl;
 /**
  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
@@ -11,7 +12,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.impl;
+
+
 
 import java.util.List;
 
@@ -19,7 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
-import org.openmrs.module.conceptmanagement.db.hibernate.ConceptSearchDAO;
+import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
+import org.openmrs.module.conceptmanagement.ConceptSearchService;
 
 /**
  *

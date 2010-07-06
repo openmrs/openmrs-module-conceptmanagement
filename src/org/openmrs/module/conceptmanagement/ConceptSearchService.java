@@ -1,3 +1,4 @@
+package org.openmrs.module.conceptmanagement;
 /**
  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
@@ -11,23 +12,29 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.db.hibernate;
+
+
 
 import java.util.List;
 
 import org.openmrs.Concept;
-import org.openmrs.api.db.DAOException;
-import org.openmrs.module.conceptmanagement.ConceptSearch;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  */
-public interface ConceptSearchDAO {
+@Transactional
+public interface ConceptSearchService {
 	
-	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException;
+	public void setConceptSearchDAO(ConceptSearchDAO dao);
 	
-	public Concept getConcept(Integer conceptId) throws DAOException;
+	@Transactional(readOnly=true)
+	public List<Concept> getConcepts(ConceptSearch cs);
 	
-	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException;
+	@Transactional(readOnly=true)
+	public Concept getConcept(Integer conceptId);
+	
+	@Transactional(readOnly=true)
+	public Integer getNumberOfObsForConcept(Integer conceptId);
 	
 }

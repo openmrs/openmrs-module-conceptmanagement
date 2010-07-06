@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!-- ********************************************************* -->
-<!-- ** Basic Module                                        ** -->
+<!-- ** Enhanced Concept Management                         ** -->
 <!-- **	                                                    ** -->
-<!-- ** @author Ben Wolfe                                   ** -->
-<!-- ** @version 1.0                                        ** -->
+<!-- ** @author Malte Friese                                ** -->
+<!-- ** @version 0.1                                        ** -->
 <!-- ********************************************************* -->
-<project name="BasicModule" default="package-module">
+<project name="ConceptManagement" default="package-module">
 		
 	<!-- *********************************************************** -->
 	<!-- **                     TARGETS                           ** -->

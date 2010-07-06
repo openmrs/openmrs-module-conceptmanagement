@@ -28,6 +28,7 @@ import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
+import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
 
 /**
  *

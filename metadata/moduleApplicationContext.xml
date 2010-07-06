@@ -10,11 +10,11 @@
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-2.0.xsd">
     <context:component-scan base-package="@MODULE_PACKAGE@" />
-    
+     
 <bean parent="serviceContext">
 	<property name="moduleService">
 		<list>
-			<value>org.openmrs.module.formentry.FormEntryService</value> 
+			<value>org.openmrs.module.conceptmanagement.ConceptSearchService</value> 
 			<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 				<property name="transactionManager"><ref bean="transactionManager"/></property>
 				<property name="target">
@@ -27,7 +27,7 @@
 					</bean>
 				</property>
 				<property name="preInterceptors">
-					<ref bean="serviceInterceptors" />
+					<ref bean="serviceInterceptors"/>
 				</property>
 				<property name="transactionAttributeSource">
 					<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
