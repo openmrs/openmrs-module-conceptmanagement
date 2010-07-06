@@ -163,7 +163,7 @@ public class AdvancedSearchFormController {
 		String searchDateFrom = request.getParameter("dateFrom");
 		String searchDateTo = request.getParameter("dateTo");
 		String[] searchUsedAs = request.getParameterValues("conceptUsedAs");
-
+		
 		try {
 			if (searchDateFrom != null && !searchDateFrom.isEmpty())
 				dateFrom = df.parse(searchDateFrom);
@@ -238,7 +238,7 @@ public class AdvancedSearchFormController {
 			Collection<Concept> newRslt = new Vector<Concept>();
 			
 			for (Concept c : rslt) {
-				if (c.getDateCreated().compareTo(dateFrom)>=0) {
+				if (c.getDateCreated().compareTo(dateFrom) >= 0) {
 					newRslt.add(c);
 				}
 			}
@@ -250,7 +250,7 @@ public class AdvancedSearchFormController {
 			Collection<Concept> newRslt = new Vector<Concept>();
 			
 			for (Concept c : rslt) {
-				if (c.getDateCreated().compareTo(dateTo)<=0) {
+				if (c.getDateCreated().compareTo(dateTo) <= 0) {
 					newRslt.add(c);
 				}
 			}

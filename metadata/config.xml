@@ -10,7 +10,7 @@
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Malte Friese</author>
 	<description>
-			Improves Concept Search, etc.
+			Better Concept Search
 	</description>
 
 	<activator>@MODULE_PACKAGE@.ConceptManagementActivator</activator>

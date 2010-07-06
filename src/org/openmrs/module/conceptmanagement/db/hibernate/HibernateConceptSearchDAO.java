@@ -26,12 +26,13 @@ import org.hibernate.criterion.Restrictions;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.api.db.DAOException;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
 
 /**
  *
  */
-public class HibernateConceptSearchDAO {
+public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 	
@@ -41,18 +42,18 @@ public class HibernateConceptSearchDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public Concept getConcept(Integer conceptId) {
+	public Concept getConcept(Integer conceptId) throws DAOException {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
 	}
 	
-	public Integer getNumberOfObsForConcept(Integer conceptId) {
+	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
 		return (Integer) sessionFactory.getCurrentSession().createQuery(
 		    "SELECT COUNT(*) FROM obs o WHERE o.concept_id = :cid").setString("cid", String.valueOf(conceptId))
 		        .uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Concept> getConcepts(ConceptSearch cs) {
+	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException {
 		Criteria crit = createGetConceptsCriteria(cs);
 		
 		return crit.list();
