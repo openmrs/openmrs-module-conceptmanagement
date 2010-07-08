@@ -2,7 +2,10 @@
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript" ></script>
+
 
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
@@ -45,7 +48,9 @@
 	</tr>
 	<tr>
 		<td>Created between:</td>
-		<td><input type="text" name="dateFrom" size="10" value="${conceptSearch.dateFrom}" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="10" value="${conceptSearch.dateTo}" onClick="showCalendar(this)"></td>
+		<fmt:formatDate var="datFrom" value="${conceptSearch.dateFrom}" pattern="dd/MM/yyyy"/>
+		<fmt:formatDate var="datTo" value="${conceptSearch.dateTo}" pattern="dd/MM/yyyy"/>
+		<td><input type="text" name="dateFrom" size="10" value="${datFrom}" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="10" value="${datTo}" onClick="showCalendar(this)"></td>
 	</tr>
 	<tr>
 	<td valign="top">Concepts used as:</td>

@@ -96,12 +96,12 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 			}
 		}
 		
-		if ((cs.getDateFromAsDate() != null) && (cs.getDateToAsDate() != null)) {
-			crit.add(Restrictions.between("date_created", cs.getDateFromAsDate(), cs.getDateToAsDate()));
-		} else if (cs.getDateFromAsDate() != null) {
-			crit.add(Restrictions.gt("date_created", cs.getDateFromAsDate()));
-		} else if (cs.getDateToAsDate() != null) {
-			crit.add(Restrictions.le("date_created", cs.getDateToAsDate()));
+		if ((cs.getDateFrom() != null) && (cs.getDateTo() != null)) {
+			crit.add(Restrictions.between("date_created", cs.getDateFrom(), cs.getDateTo()));
+		} else if (cs.getDateFrom() != null) {
+			crit.add(Restrictions.gt("date_created", cs.getDateFrom()));
+		} else if (cs.getDateTo() != null) {
+			crit.add(Restrictions.le("date_created", cs.getDateTo()));
 		}
 		
 		return crit;

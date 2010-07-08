@@ -13,7 +13,7 @@
 <bean parent="serviceContext">
 	<property name="moduleService">
 		<list>
-			<value>org.openmrs.module.conceptmanagement.impl.ConceptSearchService</value> 
+			<value>org.openmrs.module.conceptmanagement.ConceptSearchService</value> 
 			<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 				<property name="transactionManager"><ref bean="transactionManager"/></property>
 				<property name="target">

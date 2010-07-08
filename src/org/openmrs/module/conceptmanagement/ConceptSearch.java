@@ -41,19 +41,10 @@ public class ConceptSearch {
 	
 	private int isSet;
 	
-	private SimpleDateFormat df;
-	
 	/**
 	 * @return the dateFrom
 	 */
-	public String getDateFrom() {
-		return df.format(this.dateFrom);
-	}
-	
-	/**
-	 * @return the dateFrom as date
-	 */
-	public Date getDateFromAsDate() {
+	public Date getDateFrom() {
 		return this.dateFrom;
 	}
 	
@@ -67,14 +58,7 @@ public class ConceptSearch {
 	/**
 	 * @return the dateTo
 	 */
-	public String getDateTo() {
-		return df.format(this.dateTo);
-	}
-	
-	/**
-	 * @return the dateTo as date
-	 */
-	public Date getDateToAsDate() {
+	public Date getDateTo() {
 		return this.dateTo;
 	}
 	
@@ -117,8 +101,6 @@ public class ConceptSearch {
 	 * @param searchQuery
 	 */
 	public ConceptSearch(String searchQuery) {
-		df = new SimpleDateFormat();
-		df.applyPattern("dd/MM/yyyy");
 		this.searchQuery = searchQuery;
 	}
 	

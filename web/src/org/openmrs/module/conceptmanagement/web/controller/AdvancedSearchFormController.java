@@ -122,6 +122,9 @@ public class AdvancedSearchFormController {
 		if (conList != null) {
 			model.addAttribute("searchResult", conList);
 		}
+		else {
+			System.err.println("Results are gone");
+		}
 	}
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
@@ -276,7 +279,7 @@ public class AdvancedSearchFormController {
 			List<ConceptDatatype> dataTypesList = new Vector<ConceptDatatype>();
 			
 			for (Concept c : rslt) {
-				if (searchDatatypesList.contains(c.getDatatype().getName())) {
+				if ( (searchDatatypesList.contains(c.getDatatype().getName())) && (!newRslt.contains(c))) {
 					newRslt.add(c);
 				}
 			}
@@ -296,7 +299,7 @@ public class AdvancedSearchFormController {
 			List<ConceptClass> classesList = new Vector<ConceptClass>();
 			
 			for (Concept c : rslt) {
-				if (searchClassesList.contains(c.getConceptClass().getName())) {
+				if ( (searchClassesList.contains(c.getConceptClass().getName())) && (!newRslt.contains(c))) {
 					newRslt.add(c);
 				}
 			}
