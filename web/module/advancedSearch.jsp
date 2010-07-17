@@ -92,7 +92,7 @@
 	</c:otherwise>
 	</c:choose>
 	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">
-		<tr>
+		<tr bgcolor="#F5F5F5">
 			<td><a
 				href="../../dictionary/concept.htm?conceptId=${concept.conceptId}"><spring:message
 				code="conceptmanagement.view" /></a></td>
@@ -100,6 +100,10 @@
 			<td>${concept.conceptClass.name}</td>
 			<td>${concept.datatype.name}</td>
 			<td>${concept.names}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan="4"><em>${concept.description}</em></td>
 		</tr>
 	</c:forEach>
 </table>

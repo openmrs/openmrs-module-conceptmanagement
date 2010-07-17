@@ -30,10 +30,14 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptDescription;
+import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.conceptmanagement.ConceptComparator;
 import org.openmrs.module.conceptmanagement.ConceptPageCount;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
+import org.openmrs.module.conceptmanagement.ConceptSearchResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -120,6 +124,10 @@ public class AdvancedSearchFormController {
 		}
 		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
 		if (conList != null) {
+/*			for (Concept c: conList) {
+				ConceptName test = c.getName();	
+				ConceptDescription test2 = c.getDescription();
+			}*/
 			model.addAttribute("searchResult", conList);
 		}
 		else {
@@ -309,6 +317,12 @@ public class AdvancedSearchFormController {
 				classesList.add(Context.getConceptService().getConceptClassByName(s));
 			}
 			cs.setConceptClasses(classesList);
+		}
+		
+		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
+		for (Concept c: rslt) {
+			ConceptSearchResult res = new ConceptSearchResult(c);
+			resList.add(res);
 		}
 		
 		model.addAttribute("searchResult", rslt);

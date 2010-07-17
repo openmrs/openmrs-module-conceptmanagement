@@ -13,57 +13,46 @@
  */
 package org.openmrs.module.conceptmanagement;
 
-
 /**
- *
+ * Class to keep track of the number of results per page and the current page in the view.
  */
 public class ConceptPageCount {
 	
 	private int currentPage;
-	private int conceptsPerPage;
 	
+	private int conceptsPerPage;
 	
 	public ConceptPageCount() {
 		this.currentPage = 1;
 		this.conceptsPerPage = 25;
 	}
-
-
 	
-    /**
-     * @return the currentPage
-     */
-    public int getCurrentPage() {
-    	return currentPage;
-    }
-
-
+	/**
+	 * @return the currentPage
+	 */
+	public int getCurrentPage() {
+		return currentPage;
+	}
 	
-    /**
-     * @param currentPage the currentPage to set
-     */
-    public void setCurrentPage(int currentPage) {
-    	this.currentPage = currentPage;
-    }
-
-
+	/**
+	 * @param currentPage the currentPage to set
+	 */
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
 	
-    /**
-     * @return the conceptsPerPage
-     */
-    public int getConceptsPerPage() {
-    	return conceptsPerPage;
-    }
-
-
+	/**
+	 * @return the conceptsPerPage
+	 */
+	public int getConceptsPerPage() {
+		return conceptsPerPage;
+	}
 	
-    /**
-     * @param conceptsPerPage the conceptsPerPage to set
-     */
-    public void setConceptsPerPage(int conceptsPerPage) {
-    	this.conceptsPerPage = conceptsPerPage;
-    }
+	/**
+	 * @param conceptsPerPage the conceptsPerPage to set
+	 */
+	public void setConceptsPerPage(int conceptsPerPage) {
+		this.conceptsPerPage = conceptsPerPage;
+	}
 	
-	
-
 }

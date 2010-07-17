@@ -17,7 +17,8 @@ import java.util.Comparator;
 import org.openmrs.Concept;
 
 /**
- *
+ * This class is made for a sorting-routine to determine which concept has a lower alphanumeric
+ * value. Can also be used on concepts datatype and class.
  */
 public class ConceptComparator implements Comparator<Concept> {
 	

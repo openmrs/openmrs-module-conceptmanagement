@@ -26,16 +26,12 @@ import org.openmrs.test.Verifies;
 public class SQLQueryTest extends BaseModuleContextSensitiveTest {
 	
 	@Test
-	@Verifies(value = "should find a concept in the db", method = "executeSQL(sql, false)")
 	public void testConceptQuery() {
 		AdministrationService adminService = Context.getAdministrationService();
-		
 		Assert.assertNotNull(adminService);
 		
 		Object conc = adminService.executeSQL("SELECT count(*) FROM obs", false);
-		
 		Assert.assertNotNull(conc);
-		
 	}
 	
 }
