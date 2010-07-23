@@ -11,6 +11,7 @@
 
 <h2><spring:message code="conceptmanagement.advancedheading" /></h2>
 <br />
+<div style="float:left; width:20%; overflow:auto;">
 <form method="post" class="box" name="frmSearch">
 <table>
 	<tr>
@@ -67,6 +68,8 @@
 	</tr>
 </table>
 </form>
+</div>
+<div style="foat:left; width:80%; margin:0px 0px 0px 0px; overflow:auto;">
 <form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='advancedSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
 							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
 							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
@@ -107,7 +110,6 @@
 		</tr>
 	</c:forEach>
 </table>
-</div>
 <c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
 <div style="position:relative; left:30px; font-size11px;">
 Page:
@@ -115,6 +117,8 @@ Page:
 	<a href="?page=${i}">${i}</a>&nbsp;
 </c:forEach>
 </c:if>
+</div>
+</div>
 </div>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
