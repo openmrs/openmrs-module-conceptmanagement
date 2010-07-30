@@ -18,6 +18,11 @@
 				<property name="transactionManager"><ref bean="transactionManager"/></property>
 				<property name="target">
 					<bean class="org.openmrs.module.conceptmanagement.impl.ConceptSearchServiceImpl">
+					<property name="conceptSearchDAO">
+								<bean class="org.openmrs.module.conceptmanagement.db.hibernate.HibernateConceptSearchDAO">
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean>
+							</property>
 					</bean>
 				</property>
 				<property name="preInterceptors">

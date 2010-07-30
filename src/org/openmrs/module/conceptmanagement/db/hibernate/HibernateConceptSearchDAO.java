@@ -47,10 +47,14 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
 	}
 	
+	/*public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
+		return (Integer) sessionFactory.getCurrentSession().createQuery(
+		    "SELECT COUNT(*) FROM obs WHERE concept_id = :cid").setString("cid", String.valueOf(conceptId))
+		        .uniqueResult();
+	}*/
 	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
 		return (Integer) sessionFactory.getCurrentSession().createQuery(
-		    "SELECT COUNT(*) FROM obs o WHERE o.concept_id = :cid").setString("cid", String.valueOf(conceptId))
-		        .uniqueResult();
+		    "SELECT COUNT(*) FROM obs WHERE concept_id = 1").uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")

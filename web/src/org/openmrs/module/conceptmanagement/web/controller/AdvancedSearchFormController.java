@@ -38,6 +38,7 @@ import org.openmrs.module.conceptmanagement.ConceptComparator;
 import org.openmrs.module.conceptmanagement.ConceptPageCount;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
 import org.openmrs.module.conceptmanagement.ConceptSearchResult;
+import org.openmrs.module.conceptmanagement.ConceptSearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -105,7 +106,16 @@ public class AdvancedSearchFormController {
 			model.addAttribute("searchResult", conList);
 		}
 	}
-	
+	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "test")
+	public void testPage(ModelMap model, WebRequest request, HttpSession session) {
+		System.out.println("Try DAO");
+		System.out.println(Context.getAuthenticatedUser().getName());
+		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		if (service==null) {
+			System.out.println("klappt nicht");
+		}else
+			System.out.println(service.getNumberOfObsForConcept(1));
+	}
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
@@ -159,6 +169,7 @@ public class AdvancedSearchFormController {
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.POST)
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		Collection<Concept> rslt = new Vector<Concept>();
+		//Collection<ConceptSearchResult> rslt = new Vector<ConceptSearchResult>();
 		ConceptSearch cs = new ConceptSearch("");
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateFrom = null;

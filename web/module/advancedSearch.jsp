@@ -69,7 +69,7 @@
 </table>
 </form>
 </div>
-<div style="foat:left; width:80%; margin:0px 0px 0px 0px; overflow:auto;">
+<div style="width:80%; margin:0px 0px 0px 0px; overflow:auto">
 <form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='advancedSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
 							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
 							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
