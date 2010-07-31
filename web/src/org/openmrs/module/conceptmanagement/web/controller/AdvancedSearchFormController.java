@@ -106,16 +106,18 @@ public class AdvancedSearchFormController {
 			model.addAttribute("searchResult", conList);
 		}
 	}
+	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "test")
 	public void testPage(ModelMap model, WebRequest request, HttpSession session) {
 		System.out.println("Try DAO");
 		System.out.println(Context.getAuthenticatedUser().getName());
 		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-		if (service==null) {
+		if (service == null) {
 			System.out.println("klappt nicht");
-		}else
+		} else
 			System.out.println(service.getNumberOfObsForConcept(1));
 	}
+	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
@@ -134,13 +136,12 @@ public class AdvancedSearchFormController {
 		}
 		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
 		if (conList != null) {
-/*			for (Concept c: conList) {
-				ConceptName test = c.getName();	
-				ConceptDescription test2 = c.getDescription();
-			}*/
+			/*			for (Concept c: conList) {
+							ConceptName test = c.getName();	
+							ConceptDescription test2 = c.getDescription();
+						}*/
 			model.addAttribute("searchResult", conList);
-		}
-		else {
+		} else {
 			System.err.println("Results are gone");
 		}
 	}
@@ -236,11 +237,37 @@ public class AdvancedSearchFormController {
 			cs.setConceptUsedAs(usedAsList);
 		}
 		
-		//add elements to it, other elements are added below
+		//maintain cs object: keep track of all entered information
 		cs.setSearchQuery(searchName);
 		
+		if (searchDescription != null) {
+			String[] searchTerms = searchDescription.split(" ");
+			List<String> searchTermsList = Arrays.asList(searchTerms);
+			cs.setSearchTerms(searchTermsList);
+		}
+		
+		if (searchDatatypes != null) {
+			List<String> searchDatatypesList = Arrays.asList(searchDatatypes);
+			List<ConceptDatatype> dataTypesList = new Vector<ConceptDatatype>();
+			
+			for (String s : searchDatatypesList) {
+				dataTypesList.add(Context.getConceptService().getConceptDatatypeByName(s)); //TODO: write own method
+			}
+			cs.setDataTypes(dataTypesList);
+		}
+		
+		if (searchClassesString != null) {
+			List<String> searchClassesList = Arrays.asList(searchClassesString);
+			List<ConceptClass> classesList = new Vector<ConceptClass>();
+			
+			for (String s : searchClassesList) {
+				classesList.add(Context.getConceptService().getConceptClassByName(s)); //TODO: write own method
+			}
+			cs.setConceptClasses(classesList);
+		}
+		
 		//search for the concept name
-		rslt = Context.getConceptService().getConceptsByName(searchName);
+		/*rslt = Context.getConceptService().getConceptsByName(searchName);
 		
 		//search for words from the description
 		if (searchDescription != null) {
@@ -248,9 +275,9 @@ public class AdvancedSearchFormController {
 			List<String> searchTermsList = Arrays.asList(searchTerms);
 			
 			//add all concepts found by search-term (=one word of the entered description) here
-			/*for (String s: searchTermsList) {
-				rslt.addAll();
-			}*/
+			//for (String s: searchTermsList) {
+			//	rslt.addAll();
+			//}
 
 			cs.setSearchTerms(searchTermsList);
 		}
@@ -298,7 +325,7 @@ public class AdvancedSearchFormController {
 			List<ConceptDatatype> dataTypesList = new Vector<ConceptDatatype>();
 			
 			for (Concept c : rslt) {
-				if ( (searchDatatypesList.contains(c.getDatatype().getName())) && (!newRslt.contains(c))) {
+				if ((searchDatatypesList.contains(c.getDatatype().getName())) && (!newRslt.contains(c))) {
 					newRslt.add(c);
 				}
 			}
@@ -318,7 +345,7 @@ public class AdvancedSearchFormController {
 			List<ConceptClass> classesList = new Vector<ConceptClass>();
 			
 			for (Concept c : rslt) {
-				if ( (searchClassesList.contains(c.getConceptClass().getName())) && (!newRslt.contains(c))) {
+				if ((searchClassesList.contains(c.getConceptClass().getName())) && (!newRslt.contains(c))) {
 					newRslt.add(c);
 				}
 			}
@@ -328,21 +355,28 @@ public class AdvancedSearchFormController {
 				classesList.add(Context.getConceptService().getConceptClassByName(s));
 			}
 			cs.setConceptClasses(classesList);
-		}
+		}*/
+
+		//perform search using ConceptSearchService
+		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		rslt = service.getConcepts(cs);
 		
+		//add the results to a DTO to avoid hibernates lazy loading
 		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
-		for (Concept c: rslt) {
+		for (Concept c : rslt) {
 			ConceptSearchResult res = new ConceptSearchResult(c);
 			resList.add(res);
 		}
 		
+		//add results to view
 		model.addAttribute("searchResult", rslt);
 		model.addAttribute("conceptSearch", cs);
 		
-		//add search results to session to make them sortable
+		//add search results to session to make them available for other methods
 		session.setAttribute("sortResults", rslt);
 		session.setAttribute("conceptSearch", cs);
 		
+		//reset currentPage when performing a new search
 		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
 		if (conCount != null) {
 			conCount.setCurrentPage(1);

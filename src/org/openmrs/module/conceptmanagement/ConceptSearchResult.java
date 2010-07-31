@@ -52,7 +52,8 @@ public class ConceptSearchResult {
 	
 	public ConceptSearchResult(Concept con) {
 		this.conceptName = con.getName().getName();
-		this.conceptDescription = con.getDescription().getDescription();
+		if(con.getDescription()!=null)
+			this.conceptDescription = con.getDescription().getDescription();
 		this.conceptClass = con.getConceptClass().getName();
 		this.conceptDatatype = con.getDatatype().getName();
 	}

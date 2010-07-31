@@ -22,6 +22,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
@@ -53,8 +55,8 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		        .uniqueResult();
 	}*/
 	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
-		return (Integer) sessionFactory.getCurrentSession().createQuery(
-		    "SELECT COUNT(*) FROM obs WHERE concept_id = 1").uniqueResult();
+		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM obs WHERE concept_id = 1")
+		        .uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -68,8 +70,8 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
 		
 		if (!cs.getSearchQuery().isEmpty()) {
-			crit.add(Restrictions.sqlRestriction("lower({alias}.short_name) like lower(?)", "%" + cs.getSearchQuery() + "%",
-			    Hibernate.STRING));
+			crit.createAlias("names", "names");
+			crit.add(Restrictions.like("names.name", "%" + cs.getSearchQuery() + "%"));
 		}
 		
 		/*		if (CollectionUtils.isNotEmpty(cs.getSearchTermsList())) {
@@ -77,35 +79,27 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 				}*/
 
 		if (CollectionUtils.isNotEmpty(cs.getDataTypes())) {
-			List<Integer> dataList = new Vector<Integer>();
-			for (ConceptDatatype c : cs.getDataTypes()) {
-				dataList.add(c.getConceptDatatypeId());
-			}
-			crit.add(Restrictions.in("concept_datatype_id", dataList));
+			crit.add(Restrictions.in("datatype", cs.getDataTypes()));
 		}
 		
 		if (CollectionUtils.isNotEmpty(cs.getConceptClasses())) {
-			List<Integer> classList = new Vector<Integer>();
-			for (ConceptClass c : cs.getConceptClasses()) {
-				classList.add(c.getConceptClassId());
-			}
-			crit.add(Restrictions.in("concept_datatype_id", classList));
+			crit.add(Restrictions.in("conceptClass", cs.getConceptClasses()));
 		}
 		
 		if (cs.getIsSet() != -1) {
 			if (cs.getIsSet() == 0) {
-				crit.add(Restrictions.eq("is_set", Boolean.FALSE));
+				crit.add(Restrictions.eq("set", Boolean.FALSE));
 			} else {
-				crit.add(Restrictions.eq("is_set", Boolean.TRUE));
+				crit.add(Restrictions.eq("set", Boolean.TRUE));
 			}
 		}
 		
 		if ((cs.getDateFrom() != null) && (cs.getDateTo() != null)) {
-			crit.add(Restrictions.between("date_created", cs.getDateFrom(), cs.getDateTo()));
+			crit.add(Restrictions.between("dateCreated", cs.getDateFrom(), cs.getDateTo()));
 		} else if (cs.getDateFrom() != null) {
-			crit.add(Restrictions.gt("date_created", cs.getDateFrom()));
+			crit.add(Restrictions.gt("dateCreated", cs.getDateFrom()));
 		} else if (cs.getDateTo() != null) {
-			crit.add(Restrictions.le("date_created", cs.getDateTo()));
+			crit.add(Restrictions.le("dateCreated", cs.getDateTo()));
 		}
 		
 		return crit;
