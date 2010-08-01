@@ -14,6 +14,7 @@
 package org.openmrs.module.conceptmanagement;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
@@ -28,6 +29,8 @@ import org.openmrs.ConceptName;
  */
 public class ConceptSearchResult {
 	
+	private int conceptId;
+	
 	private String conceptName;
 	
 	private String conceptDescription;
@@ -38,12 +41,13 @@ public class ConceptSearchResult {
 	
 	private List<String> otherNames;
 	
-	//private String numberOfObs;
+	private Long numberOfObs;
 	
 	//private String usedInForms;
 	
-	public ConceptSearchResult(ConceptName name, ConceptDescription description, ConceptClass cclass,
+	public ConceptSearchResult(int id, ConceptName name, ConceptDescription description, ConceptClass cclass,
 	    ConceptDatatype datatype) {
+		this.conceptId = id;
 		this.conceptName = name.getName();
 		this.conceptDescription = description.getDescription();
 		this.conceptClass = cclass.getName();
@@ -51,11 +55,16 @@ public class ConceptSearchResult {
 	}
 	
 	public ConceptSearchResult(Concept con) {
+		this.conceptId = con.getConceptId();
 		this.conceptName = con.getName().getName();
-		if(con.getDescription()!=null)
+		if (con.getDescription() != null)
 			this.conceptDescription = con.getDescription().getDescription();
 		this.conceptClass = con.getConceptClass().getName();
 		this.conceptDatatype = con.getDatatype().getName();
+		this.otherNames = new Vector<String>();
+		for (ConceptName cn : con.getNames()) {
+			this.otherNames.add(cn.getName());
+		}
 	}
 	
 	/**
@@ -126,6 +135,34 @@ public class ConceptSearchResult {
 	 */
 	public void setOtherNames(List<String> otherNames) {
 		this.otherNames = otherNames;
+	}
+	
+	/**
+	 * @return the numberOfObs
+	 */
+	public Long getNumberOfObs() {
+		return numberOfObs;
+	}
+	
+	/**
+	 * @param numberOfObs the numberOfObs to set
+	 */
+	public void setNumberOfObs(Long numberOfObs) {
+		this.numberOfObs = numberOfObs;
+	}
+	
+	/**
+	 * @return the conceptId
+	 */
+	public int getConceptId() {
+		return conceptId;
+	}
+	
+	/**
+	 * @param conceptId the conceptId to set
+	 */
+	public void setConceptId(int conceptId) {
+		this.conceptId = conceptId;
 	}
 	
 }

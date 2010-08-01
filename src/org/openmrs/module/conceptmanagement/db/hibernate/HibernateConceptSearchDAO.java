@@ -49,14 +49,14 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
 	}
 	
-	/*public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
-		return (Integer) sessionFactory.getCurrentSession().createQuery(
-		    "SELECT COUNT(*) FROM obs WHERE concept_id = :cid").setString("cid", String.valueOf(conceptId))
-		        .uniqueResult();
-	}*/
-	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException {
-		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM obs WHERE concept_id = 1")
-		        .uniqueResult();
+	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException {
+		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Obs WHERE concept_id = :cid")
+		        .setString("cid", String.valueOf(conceptId)).uniqueResult();
+	}
+	
+	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException {
+		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Forms WHERE concept_id = :cid")
+		        .setString("cid", String.valueOf(conceptId)).uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")

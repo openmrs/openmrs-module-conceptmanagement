@@ -30,9 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
-import org.openmrs.ConceptDescription;
-import org.openmrs.ConceptName;
-import org.openmrs.ConceptNameTag;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.conceptmanagement.ConceptComparator;
 import org.openmrs.module.conceptmanagement.ConceptPageCount;
@@ -73,6 +70,7 @@ public class AdvancedSearchFormController {
 		
 		ConceptPageCount conCount = new ConceptPageCount();
 		session.setAttribute("countConcept", conCount);
+		
 		System.out.println("show page");
 	}
 	
@@ -107,17 +105,6 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "test")
-	public void testPage(ModelMap model, WebRequest request, HttpSession session) {
-		System.out.println("Try DAO");
-		System.out.println(Context.getAuthenticatedUser().getName());
-		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-		if (service == null) {
-			System.out.println("klappt nicht");
-		} else
-			System.out.println(service.getNumberOfObsForConcept(1));
-	}
-	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
@@ -136,10 +123,6 @@ public class AdvancedSearchFormController {
 		}
 		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
 		if (conList != null) {
-			/*			for (Concept c: conList) {
-							ConceptName test = c.getName();	
-							ConceptDescription test2 = c.getDescription();
-						}*/
 			model.addAttribute("searchResult", conList);
 		} else {
 			System.err.println("Results are gone");
@@ -156,13 +139,13 @@ public class AdvancedSearchFormController {
 		if (request.getParameter("order") != null && request.getParameter("order").equals("desc"))
 			asc = false;
 		
-		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		Collection<ConceptSearchResult> conList = (Collection<ConceptSearchResult>) session.getAttribute("sortResults");
 		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
 		if (cs != null)
 			model.addAttribute("conceptSearch", cs);
 		
 		if (conList != null) {
-			Collections.sort((List<Concept>) conList, new ConceptComparator(sortFor, asc));
+			Collections.sort((List<ConceptSearchResult>) conList, new ConceptComparator(sortFor, asc));
 			model.addAttribute("searchResult", conList);
 		}
 	}
@@ -170,7 +153,6 @@ public class AdvancedSearchFormController {
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.POST)
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		Collection<Concept> rslt = new Vector<Concept>();
-		//Collection<ConceptSearchResult> rslt = new Vector<ConceptSearchResult>();
 		ConceptSearch cs = new ConceptSearch("");
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateFrom = null;
@@ -266,97 +248,6 @@ public class AdvancedSearchFormController {
 			cs.setConceptClasses(classesList);
 		}
 		
-		//search for the concept name
-		/*rslt = Context.getConceptService().getConceptsByName(searchName);
-		
-		//search for words from the description
-		if (searchDescription != null) {
-			String[] searchTerms = searchDescription.split(" ");
-			List<String> searchTermsList = Arrays.asList(searchTerms);
-			
-			//add all concepts found by search-term (=one word of the entered description) here
-			//for (String s: searchTermsList) {
-			//	rslt.addAll();
-			//}
-
-			cs.setSearchTerms(searchTermsList);
-		}
-		
-		//concept created after date
-		if (dateFrom != null) {
-			Collection<Concept> newRslt = new Vector<Concept>();
-			
-			for (Concept c : rslt) {
-				if (c.getDateCreated().compareTo(dateFrom) >= 0) {
-					newRslt.add(c);
-				}
-			}
-			rslt = newRslt;
-		}
-		
-		//concept created before date
-		if (dateTo != null) {
-			Collection<Concept> newRslt = new Vector<Concept>();
-			
-			for (Concept c : rslt) {
-				if (c.getDateCreated().compareTo(dateTo) <= 0) {
-					newRslt.add(c);
-				}
-			}
-			rslt = newRslt;
-		}
-		
-		//is concept set?
-		if (searchIsSet != null) {
-			Collection<Concept> newRslt = new Vector<Concept>();
-			
-			for (Concept c : rslt) {
-				if (c.isSet() == searchIsSet.equals("1")) {
-					newRslt.add(c);
-				}
-			}
-			rslt = newRslt;
-		}
-		
-		//concept matches datatype?
-		if (searchDatatypes != null) {
-			Collection<Concept> newRslt = new Vector<Concept>();
-			List<String> searchDatatypesList = Arrays.asList(searchDatatypes);
-			List<ConceptDatatype> dataTypesList = new Vector<ConceptDatatype>();
-			
-			for (Concept c : rslt) {
-				if ((searchDatatypesList.contains(c.getDatatype().getName())) && (!newRslt.contains(c))) {
-					newRslt.add(c);
-				}
-			}
-			rslt = newRslt;
-			
-			for (String s : searchDatatypesList) {
-				dataTypesList.add(Context.getConceptService().getConceptDatatypeByName(s));
-			}
-			
-			cs.setDataTypes(dataTypesList);
-		}
-		
-		//concept matches class
-		if (searchClassesString != null) {
-			Collection<Concept> newRslt = new Vector<Concept>();
-			List<String> searchClassesList = Arrays.asList(searchClassesString);
-			List<ConceptClass> classesList = new Vector<ConceptClass>();
-			
-			for (Concept c : rslt) {
-				if ((searchClassesList.contains(c.getConceptClass().getName())) && (!newRslt.contains(c))) {
-					newRslt.add(c);
-				}
-			}
-			rslt = newRslt;
-			
-			for (String s : searchClassesList) {
-				classesList.add(Context.getConceptService().getConceptClassByName(s));
-			}
-			cs.setConceptClasses(classesList);
-		}*/
-
 		//perform search using ConceptSearchService
 		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		rslt = service.getConcepts(cs);
@@ -365,16 +256,18 @@ public class AdvancedSearchFormController {
 		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
 		for (Concept c : rslt) {
 			ConceptSearchResult res = new ConceptSearchResult(c);
+			res.setNumberOfObs(service.getNumberOfObsForConcept(c.getConceptId()));
 			resList.add(res);
 		}
 		
 		//add results to view
-		model.addAttribute("searchResult", rslt);
 		model.addAttribute("conceptSearch", cs);
+		model.addAttribute("searchResult", resList);
 		
 		//add search results to session to make them available for other methods
-		session.setAttribute("sortResults", rslt);
 		session.setAttribute("conceptSearch", cs);
+		session.setAttribute("searchResult", resList);
+		session.setAttribute("sortResults", resList);
 		
 		//reset currentPage when performing a new search
 		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");

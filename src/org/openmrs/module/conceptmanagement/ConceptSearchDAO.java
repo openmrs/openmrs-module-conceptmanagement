@@ -28,6 +28,8 @@ public interface ConceptSearchDAO {
 	
 	public Concept getConcept(Integer conceptId) throws DAOException;
 	
-	public Integer getNumberOfObsForConcept(Integer conceptId) throws DAOException;
+	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException;
+	
+	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException;
 	
 }

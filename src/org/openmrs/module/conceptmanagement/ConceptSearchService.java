@@ -35,6 +35,9 @@ public interface ConceptSearchService {
 	public Concept getConcept(Integer conceptId);
 	
 	@Transactional(readOnly=true)
-	public Integer getNumberOfObsForConcept(Integer conceptId);
+	public Long getNumberOfObsForConcept(Integer conceptId);
+	
+	@Transactional(readOnly=true)
+	public Long getNumberOfFormsForConcept(Integer conceptId);
 	
 }

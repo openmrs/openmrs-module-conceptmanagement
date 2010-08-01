@@ -64,8 +64,16 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	 * @see org.openmrs.module.conceptmanagement.impl.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
 	 */
 	@Override
-	public Integer getNumberOfObsForConcept(Integer conceptId) {
+	public Long getNumberOfObsForConcept(Integer conceptId) {
 		return dao.getNumberOfObsForConcept(conceptId);
 	}
+
+	/**
+     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
+     */
+    @Override
+    public Long getNumberOfFormsForConcept(Integer conceptId) {
+	    return dao.getNumberOfFormsForConcept(conceptId);
+    }
 	
 }

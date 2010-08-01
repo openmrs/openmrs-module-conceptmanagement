@@ -14,19 +14,20 @@
 package org.openmrs.module.conceptmanagement;
 
 import java.util.Comparator;
-import org.openmrs.Concept;
 
 /**
  * This class is made for a sorting-routine to determine which concept has a lower alphanumeric
  * value. Can also be used on concepts datatype and class.
  */
-public class ConceptComparator implements Comparator<Concept> {
+public class ConceptComparator implements Comparator<ConceptSearchResult> {
 	
 	private static final int SORT_FOR_NAME = 0;
 	
 	private static final int SORT_FOR_DATATYPE = 1;
 	
 	private static final int SORT_FOR_CLASS = 2;
+	
+	private static final int SORT_FOR_OBS = 3;
 	
 	private int ascSort;
 	
@@ -39,6 +40,8 @@ public class ConceptComparator implements Comparator<Concept> {
 			this.sortFor = SORT_FOR_CLASS;
 		else if (sortCrit.equals("datatype"))
 			this.sortFor = SORT_FOR_DATATYPE;
+		else if (sortCrit.equals("obs"))
+			this.sortFor = SORT_FOR_OBS;
 		else
 			this.sortFor = SORT_FOR_NAME;
 		
@@ -56,21 +59,25 @@ public class ConceptComparator implements Comparator<Concept> {
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public int compare(Concept arg0, Concept arg1) {
+	public int compare(ConceptSearchResult arg0, ConceptSearchResult arg1) {
 		switch (sortFor) {
 			case SORT_FOR_DATATYPE:
-				if ((arg0.getDatatype().getName().toString().compareToIgnoreCase(arg1.getDatatype().getName().toString())) > 0)
+				if ((arg0.getConceptDatatype().compareToIgnoreCase(arg1.getConceptDatatype())) > 0)
 					return ascSort;
 				else
 					return descSort;
 			case SORT_FOR_CLASS:
-				if ((arg0.getConceptClass().getName().toString().compareToIgnoreCase(arg1.getConceptClass().getName()
-				        .toString())) > 0)
+				if ((arg0.getConceptClass().compareToIgnoreCase(arg1.getConceptClass())) > 0)
+					return ascSort;
+				else
+					return descSort;
+			case SORT_FOR_OBS:
+				if (arg0.getNumberOfObs() > arg1.getNumberOfObs())
 					return ascSort;
 				else
 					return descSort;
 			default:
-				if ((arg0.getDisplayString().compareToIgnoreCase(arg1.getDisplayString())) > 0)
+				if ((arg0.getConceptName().compareToIgnoreCase(arg1.getConceptName())) > 0)
 					return ascSort;
 				else
 					return descSort;
