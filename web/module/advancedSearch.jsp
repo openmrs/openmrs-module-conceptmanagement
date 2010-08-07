@@ -28,7 +28,7 @@
 		<td valign="top">Datatype:</td>
 		<td>
 			<c:forEach var="dataType" items="${dataTypes}">
-				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.name}">${dataType.name}<br />
+				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.id}">${dataType.name}<br />
 			</c:forEach>
 		</td>
 	</tr>
@@ -36,7 +36,7 @@
 		<td valign="top">Classes:</td>
 		<td>
 			<c:forEach var="class" items="${conceptClasses}">
-				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.name}">${class.name}<br />
+				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.id}">${class.name}<br />
 			</c:forEach>
 		</td>
 	</tr>

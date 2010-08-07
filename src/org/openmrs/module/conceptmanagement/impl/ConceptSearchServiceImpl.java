@@ -1,4 +1,5 @@
 package org.openmrs.module.conceptmanagement.impl;
+
 /**
  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
@@ -13,13 +14,13 @@ package org.openmrs.module.conceptmanagement.impl;
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
-
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.ConceptClass;
+import org.openmrs.ConceptDatatype;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
 import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
 import org.openmrs.module.conceptmanagement.ConceptSearchService;
@@ -67,13 +68,45 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	public Long getNumberOfObsForConcept(Integer conceptId) {
 		return dao.getNumberOfObsForConcept(conceptId);
 	}
-
+	
 	/**
-     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
-     */
-    @Override
-    public Long getNumberOfFormsForConcept(Integer conceptId) {
-	    return dao.getNumberOfFormsForConcept(conceptId);
-    }
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
+	 */
+	@Override
+	public Long getNumberOfFormsForConcept(Integer conceptId) {
+		return dao.getNumberOfFormsForConcept(conceptId);
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptClasses()
+	 */
+	@Override
+	public List<ConceptClass> getAllConceptClasses() {
+		return dao.getAllConceptClasses();
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptDatatypes()
+	 */
+	@Override
+	public List<ConceptDatatype> getAllConceptDatatypes() {
+		return dao.getAllConceptDatatypes();
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptClassById(int)
+	 */
+	@Override
+	public ConceptClass getConceptClassById(int id) {
+		return dao.getConceptClassById(id);
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptDatatypeById(int)
+	 */
+	@Override
+	public ConceptDatatype getConceptDatatypeById(int id) {
+		return dao.getConceptDatatypeById(id);
+	}
 	
 }

@@ -1,4 +1,5 @@
 package org.openmrs.module.conceptmanagement;
+
 /**
  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
@@ -13,11 +14,11 @@ package org.openmrs.module.conceptmanagement;
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
-
 import java.util.List;
 
 import org.openmrs.Concept;
+import org.openmrs.ConceptClass;
+import org.openmrs.ConceptDatatype;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -28,16 +29,28 @@ public interface ConceptSearchService {
 	
 	public void setConceptSearchDAO(ConceptSearchDAO dao);
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Concept> getConcepts(ConceptSearch cs);
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Concept getConcept(Integer conceptId);
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Long getNumberOfObsForConcept(Integer conceptId);
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Long getNumberOfFormsForConcept(Integer conceptId);
+	
+	@Transactional(readOnly = true)
+	public List<ConceptClass> getAllConceptClasses();
+	
+	@Transactional(readOnly = true)
+	public List<ConceptDatatype> getAllConceptDatatypes();
+	
+	@Transactional(readOnly = true)
+	public ConceptDatatype getConceptDatatypeById(int id);
+	
+	@Transactional(readOnly = true)
+	public ConceptClass getConceptClassById(int id);
 	
 }

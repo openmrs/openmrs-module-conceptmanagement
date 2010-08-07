@@ -51,12 +51,14 @@ public class AdvancedSearchFormController {
 	
 	@ModelAttribute("dataTypes")
 	public List<ConceptDatatype> populateDataTypes() {
-		return Context.getConceptService().getAllConceptDatatypes();
+		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		return service.getAllConceptDatatypes();
 	}
 	
 	@ModelAttribute("conceptClasses")
 	public List<ConceptClass> populateConceptClasses() {
-		return Context.getConceptService().getAllConceptClasses();
+		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		return service.getAllConceptClasses();
 	}
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET)
@@ -74,6 +76,7 @@ public class AdvancedSearchFormController {
 		System.out.println("show page");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "count")
 	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptPageCount conCount = new ConceptPageCount();
@@ -105,6 +108,7 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
@@ -129,6 +133,7 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
 	public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
 		//display advancedSearch.jsp	
@@ -152,6 +157,7 @@ public class AdvancedSearchFormController {
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.POST)
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -233,7 +239,7 @@ public class AdvancedSearchFormController {
 			List<ConceptDatatype> dataTypesList = new Vector<ConceptDatatype>();
 			
 			for (String s : searchDatatypesList) {
-				dataTypesList.add(Context.getConceptService().getConceptDatatypeByName(s)); //TODO: write own method
+				dataTypesList.add(searchService.getConceptDatatypeById(Integer.parseInt(s)));
 			}
 			cs.setDataTypes(dataTypesList);
 		}
@@ -243,20 +249,19 @@ public class AdvancedSearchFormController {
 			List<ConceptClass> classesList = new Vector<ConceptClass>();
 			
 			for (String s : searchClassesList) {
-				classesList.add(Context.getConceptService().getConceptClassByName(s)); //TODO: write own method
+				classesList.add(searchService.getConceptClassById(Integer.parseInt(s)));
 			}
 			cs.setConceptClasses(classesList);
 		}
 		
 		//perform search using ConceptSearchService
-		ConceptSearchService service = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-		rslt = service.getConcepts(cs);
+		rslt = searchService.getConcepts(cs);
 		
 		//add the results to a DTO to avoid hibernates lazy loading
 		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
 		for (Concept c : rslt) {
 			ConceptSearchResult res = new ConceptSearchResult(c);
-			res.setNumberOfObs(service.getNumberOfObsForConcept(c.getConceptId()));
+			res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
 			resList.add(res);
 		}
 		

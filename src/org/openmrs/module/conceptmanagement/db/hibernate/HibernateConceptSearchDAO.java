@@ -14,16 +14,12 @@
 package org.openmrs.module.conceptmanagement.db.hibernate;
 
 import java.util.List;
-import java.util.Vector;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
@@ -47,6 +43,28 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	public Concept getConcept(Integer conceptId) throws DAOException {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ConceptClass> getAllConceptClasses() throws DAOException {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptClass.class);
+		
+		return crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
+		
+		return crit.list();
+	}
+	
+	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException {
+		return (ConceptDatatype) sessionFactory.getCurrentSession().get(ConceptDatatype.class, id);
+	}
+	
+	public ConceptClass getConceptClassById(int id) throws DAOException {
+		return (ConceptClass) sessionFactory.getCurrentSession().get(ConceptClass.class, id);
 	}
 	
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException {

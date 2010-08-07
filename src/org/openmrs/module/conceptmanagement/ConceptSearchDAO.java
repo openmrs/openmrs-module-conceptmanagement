@@ -17,6 +17,8 @@ package org.openmrs.module.conceptmanagement;
 import java.util.List;
 
 import org.openmrs.Concept;
+import org.openmrs.ConceptClass;
+import org.openmrs.ConceptDatatype;
 import org.openmrs.api.db.DAOException;
 
 /**
@@ -31,5 +33,13 @@ public interface ConceptSearchDAO {
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException;
 	
 	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException;
+	
+	public List<ConceptClass> getAllConceptClasses() throws DAOException;
+	
+	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException;
+	
+	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException;
+	
+	public ConceptClass getConceptClassById(int id) throws DAOException;
 	
 }
