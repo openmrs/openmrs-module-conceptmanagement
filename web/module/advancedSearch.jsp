@@ -81,11 +81,11 @@
 <table>
 	<tr>
 		<th><spring:message code="conceptmanagement.actions" /></th>
-		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="conceptmanagement.class" /><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="conceptmanagement.datatype" /><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th>Other Names</th>
-		<th># Obs</th>
+		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptmanagement.class" /><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptmanagement.datatype" /><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<!-- <th>Other Names</th> -->
+		<th># Obs <a href="?sort=obs&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=obs&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
 	</tr>
 	<c:choose>
 	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
@@ -98,12 +98,12 @@
 	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">
 		<tr bgcolor="#F5F5F5">
 			<td><a
-				href="../../dictionary/concept.htm?conceptId=${concept.conceptId}"><spring:message
+				href="viewConcept.form?conceptId=${concept.conceptId}"><spring:message
 				code="conceptmanagement.view" /></a></td>
 			<td>${concept.conceptName}</td>
 			<td>${concept.conceptClass}</td>
 			<td>${concept.conceptDatatype}</td>
-			<td>${concept.otherNames}</td>
+			<!--  <td>${concept.otherNames}</td> -->
 			<td>${concept.numberOfObs}</td>
 		</tr>
 		<tr>

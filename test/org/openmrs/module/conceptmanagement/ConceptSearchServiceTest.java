@@ -13,25 +13,26 @@
  */
 package org.openmrs.module.conceptmanagement;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openmrs.api.AdministrationService;
+import org.openmrs.ConceptClass;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.test.Verifies;
 
 /**
- * TestCase to test the SQL-query command
+ * TestCase to test the concept search service
  */
-public class SQLQueryTest extends BaseModuleContextSensitiveTest {
+public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 	
 	@Test
 	public void testConceptQuery() {
-		AdministrationService adminService = Context.getAdministrationService();
-		Assert.assertNotNull(adminService);
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		Assert.assertNotNull("searchService should not be null", searchService);
 		
-		Object conc = adminService.executeSQL("SELECT count(*) FROM obs", false);
-		Assert.assertNotNull(conc);
+		List<ConceptClass> classList = searchService.getAllConceptClasses();
+		Assert.assertNotNull("some concept-classes should be found", classList);
 	}
 	
 }

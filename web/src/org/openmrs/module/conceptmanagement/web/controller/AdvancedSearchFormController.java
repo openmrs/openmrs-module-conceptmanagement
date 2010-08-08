@@ -63,17 +63,15 @@ public class AdvancedSearchFormController {
 	
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET)
 	public void showAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
-		//display advancedSearch.jsp
 		
 		//reset all session objects used by this controller
+		session.removeAttribute("searchResult");
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
 		session.removeAttribute("countConcept");
 		
 		ConceptPageCount conCount = new ConceptPageCount();
 		session.setAttribute("countConcept", conCount);
-		
-		System.out.println("show page");
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -136,8 +134,6 @@ public class AdvancedSearchFormController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
 	public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
-		//display advancedSearch.jsp	
-		System.out.println("sort");
 		String sortFor = request.getParameter("sort");
 		boolean asc = true;
 		
@@ -257,12 +253,14 @@ public class AdvancedSearchFormController {
 		//perform search using ConceptSearchService
 		rslt = searchService.getConcepts(cs);
 		
-		//add the results to a DTO to avoid hibernates lazy loading
+		//add the results to a DTO to avoid Hibernate's lazy loading
 		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
 		for (Concept c : rslt) {
-			ConceptSearchResult res = new ConceptSearchResult(c);
-			res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
-			resList.add(res);
+			if (searchService.isConceptUsedAs(c, cs)) {
+				ConceptSearchResult res = new ConceptSearchResult(c);
+				res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
+				resList.add(res);
+			}
 		}
 		
 		//add results to view

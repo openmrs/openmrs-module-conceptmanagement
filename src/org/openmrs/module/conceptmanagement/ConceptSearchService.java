@@ -53,4 +53,7 @@ public interface ConceptSearchService {
 	@Transactional(readOnly = true)
 	public ConceptClass getConceptClassById(int id);
 	
+	@Transactional(readOnly = true)
+	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs);
+	
 }

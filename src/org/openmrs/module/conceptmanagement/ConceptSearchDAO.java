@@ -42,4 +42,6 @@ public interface ConceptSearchDAO {
 	
 	public ConceptClass getConceptClassById(int id) throws DAOException;
 	
+	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException;
+	
 }

@@ -108,5 +108,13 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	public ConceptDatatype getConceptDatatypeById(int id) {
 		return dao.getConceptDatatypeById(id);
 	}
+
+	/**
+     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+     */
+    @Override
+    public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
+    	return dao.isConceptUsedAs(concept, cs);
+    }
 	
 }

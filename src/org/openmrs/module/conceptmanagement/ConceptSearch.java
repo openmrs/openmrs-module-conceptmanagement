@@ -13,7 +13,6 @@
  */
 package org.openmrs.module.conceptmanagement;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -122,10 +121,6 @@ public class ConceptSearch {
 	 * @return the searchTerms as List
 	 */
 	public List<String> getSearchTermsList() {
-		/*String ret = "";
-		for (String s : searchTerms)
-			ret += s + " ";
-		return ret.trim();*/
 		return searchTerms;
 	}
 	

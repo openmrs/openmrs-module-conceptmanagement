@@ -38,6 +38,10 @@ public class BasicSearchFormController {
 	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET)
 	public void showBasicSearch(ModelMap model, WebRequest request, HttpSession session) {
 		//display advancedSearch.jsp	
+		session.removeAttribute("searchResult");
+		session.removeAttribute("sortResults");
+		session.removeAttribute("conceptSearch");
+		session.removeAttribute("countConcept");
 	}
 	
 	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.POST)
