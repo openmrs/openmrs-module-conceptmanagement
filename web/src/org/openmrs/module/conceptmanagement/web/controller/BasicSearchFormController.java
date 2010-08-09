@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.conceptmanagement.ConceptPageCount;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +43,64 @@ public class BasicSearchFormController {
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
 		session.removeAttribute("countConcept");
+		
+		ConceptPageCount conCount = new ConceptPageCount();
+		session.setAttribute("countConcept", conCount);
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET, params = "count")
+	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
+		ConceptPageCount conCount = new ConceptPageCount();
+		
+		//set count
+		String count = request.getParameter("count");
+		
+		if (session.getAttribute("countConcept") == null) {
+			session.setAttribute("countConcept", conCount);
+			conCount.setConceptsPerPage(Integer.parseInt(count));
+		} else {
+			conCount = (ConceptPageCount) session.getAttribute("countConcept");
+			int cCount = Integer.parseInt(count);
+			if (cCount == -1)
+				cCount = 10000;
+			conCount.setConceptsPerPage(cCount);
+			conCount.setCurrentPage(1);
+		}
+		model.addAttribute("countConcept", conCount);
+		
+		//add other elements (search words and results) to the view, so they are displayed
+		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (cs != null) {
+			model.addAttribute("conceptSearch", cs);
+		}
+		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		if (conList != null) {
+			model.addAttribute("searchResult", conList);
+		}
+	}
+	
+	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET, params = "page")
+	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
+		//set page
+		String page = request.getParameter("page");
+		
+		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
+		if (conCount != null) {
+			conCount.setCurrentPage(Integer.parseInt(page));
+			model.addAttribute("countConcept", conCount);
+		}
+		
+		//add other elements (search words and results) to the view, so they are displayed
+		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		if (cs != null) {
+			model.addAttribute("conceptSearch", cs);
+		}
+		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
+		if (conList != null) {
+			model.addAttribute("searchResult", conList);
+		} else {
+			System.err.println("Results are gone");
+		}
 	}
 	
 	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.POST)
@@ -56,9 +115,12 @@ public class BasicSearchFormController {
 			rslt = Context.getConceptService().getConceptsByName(searchQuery);
 			
 			model.addAttribute("searchResult", rslt);
+			model.addAttribute("sortResults", rslt);
 			model.addAttribute("conceptSearch", cs);
+			
+			session.setAttribute("sortResults", rslt);
+			session.setAttribute("conceptSearch", cs);
 		}
-		
 	}
 	
 }
