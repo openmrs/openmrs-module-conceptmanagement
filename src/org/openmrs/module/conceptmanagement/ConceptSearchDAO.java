@@ -26,22 +26,49 @@ import org.openmrs.api.db.DAOException;
  */
 public interface ConceptSearchDAO {
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 */
 	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcept(java.lang.Integer)
+	 */
 	public Concept getConcept(Integer conceptId) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
+	 */
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
+	 */
 	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptClasses()
+	 */
 	public List<ConceptClass> getAllConceptClasses() throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptDatatypes()
+	 */
 	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptDatatypeById(int)
+	 */
 	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptClassById(int)
+	 */
 	public ConceptClass getConceptClassById(int id) throws DAOException;
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException;
 	
 }

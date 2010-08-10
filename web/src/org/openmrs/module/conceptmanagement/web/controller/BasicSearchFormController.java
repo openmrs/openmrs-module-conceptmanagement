@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
+/**
+ * Controller to handle all searches performed by basicsearch.jsp.
+ */
 @Controller
 public class BasicSearchFormController {
 	

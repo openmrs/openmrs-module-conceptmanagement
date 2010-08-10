@@ -26,7 +26,9 @@ import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
 import org.openmrs.module.conceptmanagement.ConceptSearchService;
 
 /**
- *
+ * Implementation of the ConceptSearchService
+ * 
+ * @see org.openmrs.module.conceptmanagement.ConceptSearchService
  */
 public class ConceptSearchServiceImpl implements ConceptSearchService {
 	
@@ -46,7 +48,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.impl.ConceptSearchService#getConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcept(java.lang.Integer)
 	 */
 	@Override
 	public Concept getConcept(Integer conceptId) {
@@ -54,7 +56,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.impl.ConceptSearchService#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
 	 */
 	@Override
 	public List<Concept> getConcepts(ConceptSearch cs) {
@@ -62,7 +64,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.impl.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
 	 */
 	@Override
 	public Long getNumberOfObsForConcept(Integer conceptId) {

@@ -22,37 +22,84 @@ import org.openmrs.ConceptDatatype;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Service methods for the Concept Search in the Enhanced Concept Management module.
  */
 @Transactional
 public interface ConceptSearchService {
 	
 	public void setConceptSearchDAO(ConceptSearchDAO dao);
 	
+	/**
+	 * Returns all concepts that match the criteria in cs
+	 * 
+	 * @param cs Object that stores all entered search criteria
+	 * @return all concepts that match criteria in cs
+	 */
 	@Transactional(readOnly = true)
 	public List<Concept> getConcepts(ConceptSearch cs);
 	
+	/**
+	 * Returns concept with given conceptId
+	 * 
+	 * @param conceptId id of the concept
+	 * @return concept with the given conceptId
+	 */
 	@Transactional(readOnly = true)
 	public Concept getConcept(Integer conceptId);
 	
+	/**
+	 * Returns the number of observations for this concept
+	 * 
+	 * @param conceptId id of the concept
+	 * @return number of observations for the given concept
+	 */
 	@Transactional(readOnly = true)
 	public Long getNumberOfObsForConcept(Integer conceptId);
 	
+	/**
+	 * Returns the number of forms this concept is used by
+	 * @param conceptId
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Long getNumberOfFormsForConcept(Integer conceptId);
 	
+	/**
+	 * Return all Concept Classes
+	 * @return all Concept Classes in the database
+	 */
 	@Transactional(readOnly = true)
 	public List<ConceptClass> getAllConceptClasses();
 	
+	/**
+	 * Return all Concept Datatypes
+	 * @return all Concept Datatypes in the database
+	 */
 	@Transactional(readOnly = true)
 	public List<ConceptDatatype> getAllConceptDatatypes();
 	
+	/**
+	 * Return the Datatype of a given id
+	 * @param id Datatype id
+	 * @return ConceptDatatype with given id
+	 */
 	@Transactional(readOnly = true)
 	public ConceptDatatype getConceptDatatypeById(int id);
 	
+	/**
+	 * Return the ConceptClass of a given id
+	 * @param id ConceptClass id
+	 * @return ConceptClass with given id
+	 */
 	@Transactional(readOnly = true)
 	public ConceptClass getConceptClassById(int id);
 	
+	/**
+	 * Checks if the request is used as a question in forms, as an answer to questions, as an observation question, as an observation value.
+	 * @param concept Concepts to be checked if it matches the criteria
+	 * @param cs object that contains the criteria
+	 * @return boolean, true if concept matches all given criteria or no criteria is given, false if not
+	 */
 	@Transactional(readOnly = true)
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs);
 	

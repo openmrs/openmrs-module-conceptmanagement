@@ -37,16 +37,29 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 	
+	/**
+	 * Hibernate session factory
+	 */
 	protected SessionFactory sessionFactory;
 	
+	/**
+	 * Set session factory
+	 * @param sessionFactory session factory
+	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConcept(java.lang.Integer)
+	 */
 	public Concept getConcept(Integer conceptId) throws DAOException {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAllConceptClasses()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ConceptClass> getAllConceptClasses() throws DAOException {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptClass.class);
@@ -54,6 +67,9 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		return crit.list();
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAllConceptDatatypes()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
@@ -61,24 +77,39 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		return crit.list();
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConceptDatatypeById(int)
+	 */
 	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException {
 		return (ConceptDatatype) sessionFactory.getCurrentSession().get(ConceptDatatype.class, id);
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConceptClassById(int)
+	 */
 	public ConceptClass getConceptClassById(int id) throws DAOException {
 		return (ConceptClass) sessionFactory.getCurrentSession().get(ConceptClass.class, id);
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getNumberOfObsForConcept(java.lang.Integer)
+	 */
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException {
 		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Obs WHERE concept_id = :cid")
 		        .setString("cid", String.valueOf(conceptId)).uniqueResult();
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getNumberOfFormsForConcept(java.lang.Integer)
+	 */
 	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException {
 		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Forms WHERE concept_id = :cid")
 		        .setString("cid", String.valueOf(conceptId)).uniqueResult();
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException {
 		Criteria crit = createGetConceptsCriteria(cs);
@@ -86,6 +117,11 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		return crit.list();
 	}
 	
+	/**
+	 * Method to create the criteria from the ConceptSearch object
+	 * @param cs ConceptSearch object that contains all criteria
+	 * @return search criteria
+	 */
 	private Criteria createGetConceptsCriteria(ConceptSearch cs) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
 		
@@ -126,6 +162,9 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		
 	}
 	
+	/**
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException {
 		List<String> usedAs = cs.getConceptUsedAs();
 		

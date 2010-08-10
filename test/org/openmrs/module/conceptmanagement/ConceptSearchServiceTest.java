@@ -26,6 +26,9 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
  */
 public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 	
+	/**
+	 * Test if ConceptSearchService object is created and performs queries.
+	 */
 	@Test
 	public void testConceptQuery() {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
@@ -33,6 +36,18 @@ public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 		
 		List<ConceptClass> classList = searchService.getAllConceptClasses();
 		Assert.assertNotNull("some concept-classes should be found", classList);
+	}
+	
+	/**
+	 * Test if ConceptSearchService object is created and returns a value for a special query.
+	 */
+	@Test
+	public void testNumberOfObsQuery() {
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		Assert.assertNotNull("searchService should not be null", searchService);
+		
+		Long nmbr = searchService.getNumberOfObsForConcept(1);
+		Assert.assertNotNull("some number should be returned", nmbr);
 	}
 	
 }

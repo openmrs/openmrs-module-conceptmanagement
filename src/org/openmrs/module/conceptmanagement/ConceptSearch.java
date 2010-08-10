@@ -20,7 +20,8 @@ import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 
 /**
- * ConceptSearch Class to keep of searches by the user isSet values: -1 don't care, 0 no, 1 yes
+ * ConceptSearch Class to keep track of search criteria from the user. isSet values: -1 don't care,
+ * 0 no, 1 yes
  */
 public class ConceptSearch {
 	

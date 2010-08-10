@@ -43,6 +43,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
+/**
+ * Controller to handle all searches done by the advancedsearch.jsp. All search criteria will be
+ * stored in a ConceptSearch object and the results will be kept in session, because other methods
+ * will need them.
+ */
 @Controller
 public class AdvancedSearchFormController {
 	

@@ -2,8 +2,6 @@
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
 <style type="text/css">
@@ -145,7 +143,7 @@
 </div> <!-- end conceptOverview -->
 
 <div id="conceptDetails" style="display:none;">
-<div class="boxHeader">Overview</div>
+<div class="boxHeader">Details</div>
 <div class="box">
 <table>
 	<tr>
@@ -157,17 +155,9 @@
 </div> <!-- end conceptDetails -->
 
 <div id="conceptMetadata" style="display:none;">
-<div class="boxHeader">Overview</div>
+<div class="boxHeader">Metadata</div>
 <div class="box">
 <table>
-	<tr>
-		<td><b>Created</b></td>
-		<td>Created on <fmt:formatDate value="${concept.dateCreated}" pattern="dd/MM/yyyy"/>  by ${concept.creator.person.names} (id: ${concept.creator.userId})</td>
-	</tr>
-	<tr>
-		<td><b>Changed</b></td>
-		<td>Changed on <fmt:formatDate value="${concept.dateChanged}" pattern="dd/MM/yyyy"/> by ${concept.creator.person.names} (id: ${concept.creator.userId})</td>
-	</tr>
 	<tr>
 		<td><b>Version</b></td>
 		<c:choose>
@@ -178,6 +168,14 @@
 				<td>${concept.version}</td>
 			</c:otherwise>
 		</c:choose>
+	</tr>
+	<tr>
+		<td><b>Created</b></td>
+		<td>Created on <openmrs:formatDate date="${concept.dateCreated}" type="short" /> by ${concept.creator.personName} (id: ${concept.creator.userId})</td>
+	</tr>
+	<tr>
+		<td><b>Changed</b></td>
+		<td>Changed on <openmrs:formatDate date="${concept.dateChanged}" type="short" /> by ${concept.creator.personName} (id: ${concept.creator.userId})</td>
 	</tr>
 </table>
 </div>

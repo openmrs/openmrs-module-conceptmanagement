@@ -17,7 +17,7 @@ import java.util.Comparator;
 
 /**
  * This class is made for a sorting-routine to determine which concept has a lower alphanumeric
- * value. Can also be used on concepts datatype and class.
+ * value. Can also be used on concepts datatype, class and number of obs.
  */
 public class ConceptComparator implements Comparator<ConceptSearchResult> {
 	
