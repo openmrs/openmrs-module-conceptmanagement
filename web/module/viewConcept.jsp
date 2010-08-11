@@ -147,9 +147,56 @@
 <div class="box">
 <table>
 	<tr>
-		<td><b>Test</b></td>
-		<td>Test</td>
+		<td><b>ID</b></td>
+		<td>${concept.conceptId}</td>
 	</tr>
+	<tr>
+		<td><b>Name</b></td>
+		<td>${concept.name}</td>
+	</tr>
+	<tr>
+		<td><b>Description</b></td>
+		<td>${concept.description}</td>
+	</tr>
+	<tr>
+		<td><b>Class</b></td>
+		<td>${concept.conceptClass.name}</td>
+	</tr>
+	<tr>
+		<td><b>Datatype</b></td>
+		<td>${concept.datatype.name}</td>
+	</tr>
+	<tr>
+		<td><b>Retired</b></td>
+		<td>${concept.retired} <c:if test="${concept.retired==true}"> on <openmrs:formatDate date="${concept.dateRetired}" type="short" /> by ${concept.retiredBy.personName}: ${concept.retireReason}</c:if></td>
+	</tr>
+	<tr>
+		<td><b>Answers</b></td>
+	</tr>
+	<c:forEach var="answer" items="${concept.answers}">
+		<tr>
+			<td></td>
+			<td><a href="?conceptId=${answer.answerConcept.conceptId}">${answer.answerConcept.name}</a></td>
+		</tr>
+	</c:forEach>
+	<tr>
+		<td><b>Mappings</b></td>
+	</tr>
+	<c:forEach var="mapping" items="${concept.conceptMappings}">
+		<tr>
+			<td></td>
+			<td><a href="?conceptId=${mapping.concept.conceptId}">${mapping.concept.name}</a></td>
+		</tr>
+	</c:forEach>
+	<tr>
+		<td><b>Concept Set</b></td>
+	</tr>
+	<c:forEach var="set" items="${concept.conceptSets}">
+		<tr>
+			<td></td>
+			<td><a href="?conceptId=${set.conceptSet.conceptId}">${set.conceptSet.name}</a> parent of <a href="?conceptId=${set.concept.conceptId}">${set.concept.name}</a></td>
+		</tr>
+	</c:forEach>
 </table>
 </div>
 </div> <!-- end conceptDetails -->

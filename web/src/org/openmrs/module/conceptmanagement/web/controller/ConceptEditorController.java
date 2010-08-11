@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Controller to handle 
+ * Controller to handle view/edit requests for concepts
  */
 @Controller
 public class ConceptEditorController {

@@ -23,6 +23,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.Obs;
@@ -44,6 +45,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	/**
 	 * Set session factory
+	 * 
 	 * @param sessionFactory session factory
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -119,6 +121,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	/**
 	 * Method to create the criteria from the ConceptSearch object
+	 * 
 	 * @param cs ConceptSearch object that contains all criteria
 	 * @return search criteria
 	 */
@@ -163,24 +166,29 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#isConceptUsedAs(org.openmrs.Concept,
+	 *      org.openmrs.module.conceptmanagement.ConceptSearch)
 	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException {
 		List<String> usedAs = cs.getConceptUsedAs();
 		
-		if (usedAs==null)
+		if (usedAs == null)
 			return true;
 		
 		if (usedAs.contains("formQuestion")) {
-
-		}
-		if (usedAs.contains("formAnswer")) {
-			/*System.out.println("anser");
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(FieldAnswer.class);
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptAnswer.class);
 			crit.add(Restrictions.eq("concept", concept));
 			crit.setProjection(Projections.rowCount());
 			if ((Integer) crit.list().get(0) == 0)
-				return false;*/
+				return false;
+			
+		}
+		if (usedAs.contains("formAnswer")) {
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptAnswer.class);
+			crit.add(Restrictions.eq("answerConcept", concept));
+			crit.setProjection(Projections.rowCount());
+			if ((Integer) crit.list().get(0) == 0)
+				return false;
 		}
 		if (usedAs.contains("obsQuestion")) {
 			Criteria crit = sessionFactory.getCurrentSession().createCriteria(Obs.class);
