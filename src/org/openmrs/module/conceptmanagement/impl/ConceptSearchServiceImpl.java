@@ -118,5 +118,13 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
     public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
     	return dao.isConceptUsedAs(concept, cs);
     }
+
+	/**
+     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+     */
+    @Override
+    public List<String> getAutocompleteConcepts(String searchWord) {
+    	return dao.getAutocompleteConcepts(searchWord);
+    }
 	
 }

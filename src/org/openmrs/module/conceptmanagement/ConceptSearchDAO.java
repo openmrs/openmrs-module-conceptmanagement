@@ -71,4 +71,9 @@ public interface ConceptSearchDAO {
 	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException;
 	
+	/**
+     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+     */
+    public List<String> getAutocompleteConcepts(String searchWord) throws DAOException;
+	
 }

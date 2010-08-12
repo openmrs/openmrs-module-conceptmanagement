@@ -284,4 +284,17 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
+	
+	@RequestMapping(value = "/module/conceptmanagement/autocomplete", method = RequestMethod.GET)
+	public void doAutocomplete(ModelMap model, WebRequest request, HttpSession session) {
+		//ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		//String searchFor = request.getParameter("q");
+		//List<String> autoResults = searchService.getAutocompleteConcepts(searchFor);
+		//model.addAttribute("autoComplete", autoResults);
+		
+		
+		// -- Autocompletehelper is used to avoid some problems -- 
+		
+	}
+	
 }

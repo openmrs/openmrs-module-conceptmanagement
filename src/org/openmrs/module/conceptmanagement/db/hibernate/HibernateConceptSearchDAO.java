@@ -14,6 +14,7 @@
 package org.openmrs.module.conceptmanagement.db.hibernate;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -207,5 +208,25 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		
 		return true;
 	}
+
+	/**
+     * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getAutocompleteConcepts(String searchWord) throws DAOException {
+    	Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
+    	Vector<String> prev = new Vector<String>();
+    	
+    	crit.createAlias("names", "names");
+		crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
+		crit.setMaxResults(5);
+		
+    	for (Concept c: (List<Concept>) crit.list()) {
+    		prev.add(c.getDisplayString());
+    	}    
+    	
+	    return prev;
+    }
 	
 }

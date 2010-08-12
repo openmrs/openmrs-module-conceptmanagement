@@ -103,4 +103,12 @@ public interface ConceptSearchService {
 	@Transactional(readOnly = true)
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs);
 	
+	/**
+	 * Returns a List of search suggestions depending on the search word entered
+	 * @param searchWord the beginning of the concept name
+	 * @return List of concepts that match the searchWord
+	 */
+	@Transactional(readOnly = true)
+	public List<String> getAutocompleteConcepts(String searchWord);
+	
 }

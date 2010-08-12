@@ -4,7 +4,12 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript" ></script>
+<link rel="stylesheet" type="text/css" href="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.css" />
+
+<script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript"></script>
+<script src="/openmrs/scripts/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
+
 
 
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
@@ -16,8 +21,12 @@
 <table>
 	<tr>
 		<td>Name:</td>
-		<td><input type="text" name="conceptQuery" size="20"
-			value="${conceptSearch.searchQuery}"></td>
+		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
+			value="${conceptSearch.searchQuery}">
+			<script>
+				$("#conceptQuery").autocomplete("/openmrs/module/conceptmanagement/autocomplete.form");
+			</script>
+		</td>
 	</tr>
 	<tr>
 		<td>Description:</td>
