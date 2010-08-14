@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.conceptmanagement.db.hibernate;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,12 +22,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptName;
 import org.openmrs.Obs;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.conceptmanagement.ConceptSearch;
@@ -208,25 +211,52 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		
 		return true;
 	}
-
+	
 	/**
-     * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<String> getAutocompleteConcepts(String searchWord) throws DAOException {
-    	Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
-    	Vector<String> prev = new Vector<String>();
-    	
-    	crit.createAlias("names", "names");
-		crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
-		crit.setMaxResults(5);
+	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAutocompleteConcepts(String searchWord) throws DAOException {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
+		Vector<String> prev = new Vector<String>();
 		
-    	for (Concept c: (List<Concept>) crit.list()) {
-    		prev.add(c.getDisplayString());
-    	}    
-    	
-	    return prev;
-    }
+		crit.createAlias("names", "names");
+		//crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
+		
+		crit.add(Restrictions.ilike("names.name", searchWord, MatchMode.ANYWHERE));
+		crit.setMaxResults(30);
+		
+		for (Concept c : (List<Concept>) crit.list()) {
+			Collection<ConceptName> conceptNames = c.getNames();
+			for (ConceptName cn : conceptNames) {
+				if (isSearchTermBeginningOfWord(cn.getName(), searchWord) && !prev.contains(cn.getName())) {
+					prev.add(cn.getName());
+				}
+			}
+		}
+		
+		return prev;
+	}
+	
+	/**
+	 * Method to find out that searchTerm is the beginning of a new word and not in the middle of a
+	 * word
+	 * 
+	 * @param possibleWord possible match
+	 * @param searchTerm search term
+	 * @return true if possibleWord contains searchTerm and searchTerm is the beginning of a word in
+	 *         possibleWord
+	 */
+	private boolean isSearchTermBeginningOfWord(String possibleWord, String searchTerm) {
+		int pos = possibleWord.toLowerCase().indexOf(searchTerm.toLowerCase());
+		
+		if (pos == 0)
+			return true;
+		if (pos > 0)
+			return Character.isWhitespace(possibleWord.charAt(pos - 1));
+		
+		return false;
+	}
 	
 }
