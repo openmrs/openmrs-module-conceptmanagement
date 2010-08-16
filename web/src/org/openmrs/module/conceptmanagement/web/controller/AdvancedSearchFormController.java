@@ -261,7 +261,7 @@ public class AdvancedSearchFormController {
 		//add the results to a DTO to avoid Hibernate's lazy loading
 		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
 		for (Concept c : rslt) {
-			if (searchService.isConceptUsedAs(c, cs)) {
+			if (cs.getConceptUsedAs() == null || searchService.isConceptUsedAs(c, cs)) {
 				ConceptSearchResult res = new ConceptSearchResult(c);
 				res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
 				resList.add(res);
@@ -284,14 +284,12 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
-	
 	@RequestMapping(value = "/module/conceptmanagement/autocomplete", method = RequestMethod.GET)
 	public void doAutocomplete(ModelMap model, WebRequest request, HttpSession session) {
 		//ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		//String searchFor = request.getParameter("q");
 		//List<String> autoResults = searchService.getAutocompleteConcepts(searchFor);
 		//model.addAttribute("autoComplete", autoResults);
-		
 		
 		// -- Autocompletehelper is used to avoid some problems -- 
 		

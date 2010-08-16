@@ -100,9 +100,9 @@
     }
 </script>
 
-<h2>View Concept</h2>
+<h2><spring:message code="conceptmanagement.viewconcept" /></h2>
 <br />
-<h3>Viewing Concept ${concept.name} (${concept.conceptId})</h3>
+<h3><spring:message code="conceptmanagement.viewingconcept" /> ${concept.name} (${concept.conceptId})</h3>
 
 <div id="conceptTabs">
 	<ul>		
@@ -115,27 +115,27 @@
 </div>
 
 <div id="conceptOverview" style="display:none;">
-<div class="boxHeader">Overview</div>
+<div class="boxHeader"><spring:message code="conceptmanagement.overview" /></div>
 <div class="box">
 <table>
 	<tr>
-		<td><b>ID</b></td>
+		<td><b><spring:message code="general.id" /></b></td>
 		<td>${concept.conceptId}</td>
 	</tr>
 	<tr>
-		<td><b>Name</b></td>
+		<td><b><spring:message code="general.name" /></b></td>
 		<td>${concept.name}</td>
 	</tr>
 	<tr>
-		<td><b>Description</b></td>
+		<td><b><spring:message code="general.description" /></b></td>
 		<td>${concept.description}</td>
 	</tr>
 	<tr>
-		<td><b>Class</b></td>
+		<td><b><spring:message code="Concept.conceptClass" /></b></td>
 		<td>${concept.conceptClass.name}</td>
 	</tr>
 	<tr>
-		<td><b>Datatype</b></td>
+		<td><b><spring:message code="Concept.datatype" /></b></td>
 		<td>${concept.datatype.name}</td>
 	</tr>
 </table>
@@ -143,35 +143,35 @@
 </div> <!-- end conceptOverview -->
 
 <div id="conceptDetails" style="display:none;">
-<div class="boxHeader">Details</div>
+<div class="boxHeader"><spring:message code="conceptmanagement.details" /></div>
 <div class="box">
 <table>
 	<tr>
-		<td><b>ID</b></td>
+		<td><b><spring:message code="general.id" /></b></td>
 		<td>${concept.conceptId}</td>
 	</tr>
 	<tr>
-		<td><b>Name</b></td>
+		<td><b><spring:message code="general.name" /></b></td>
 		<td>${concept.name}</td>
 	</tr>
 	<tr>
-		<td><b>Description</b></td>
+		<td><b><spring:message code="general.description" /></b></td>
 		<td>${concept.description}</td>
 	</tr>
 	<tr>
-		<td><b>Class</b></td>
+		<td><b><spring:message code="Concept.conceptClass" /></b></td>
 		<td>${concept.conceptClass.name}</td>
 	</tr>
 	<tr>
-		<td><b>Datatype</b></td>
+		<td><b><spring:message code="Concept.datatype" /></b></td>
 		<td>${concept.datatype.name}</td>
 	</tr>
 	<tr>
-		<td><b>Retired</b></td>
-		<td>${concept.retired} <c:if test="${concept.retired==true}"> on <openmrs:formatDate date="${concept.dateRetired}" type="short" /> by ${concept.retiredBy.personName}: ${concept.retireReason}</c:if></td>
+		<td><b><spring:message code="general.retired" /></b></td>
+		<td>${concept.retired} <c:if test="${concept.retired==true}"> <spring:message code="conceptmanagement.on" /> <openmrs:formatDate date="${concept.dateRetired}" type="short" /> <spring:message code="conceptmanagement.by" /> ${concept.retiredBy.personName}: ${concept.retireReason}</c:if></td>
 	</tr>
 	<tr>
-		<td><b>Answers</b></td>
+		<td><b><spring:message code="Concept.answers" /></b></td>
 	</tr>
 	<c:forEach var="answer" items="${concept.answers}">
 		<tr>
@@ -180,7 +180,7 @@
 		</tr>
 	</c:forEach>
 	<tr>
-		<td><b>Mappings</b></td>
+		<td><b><spring:message code="Concept.mappings" /></b></td>
 	</tr>
 	<c:forEach var="mapping" items="${concept.conceptMappings}">
 		<tr>
@@ -189,7 +189,7 @@
 		</tr>
 	</c:forEach>
 	<tr>
-		<td><b>Concept Set</b></td>
+		<td><b><spring:message code="conceptmanagement.set" /></b></td>
 	</tr>
 	<c:forEach var="set" items="${concept.conceptSets}">
 		<tr>
@@ -202,14 +202,14 @@
 </div> <!-- end conceptDetails -->
 
 <div id="conceptMetadata" style="display:none;">
-<div class="boxHeader">Metadata</div>
+<div class="boxHeader"><spring:message code="conceptmanagement.metadata" /></div>
 <div class="box">
 <table>
 	<tr>
-		<td><b>Version</b></td>
+		<td><b><spring:message code="Concept.version" /></b></td>
 		<c:choose>
 			<c:when test='${concept.version==""}'>
-				<td>none</td>
+				<td><spring:message code="conceptmanagement.none" /></td>
 			</c:when>
 			<c:otherwise>
 				<td>${concept.version}</td>
@@ -217,12 +217,12 @@
 		</c:choose>
 	</tr>
 	<tr>
-		<td><b>Created</b></td>
-		<td>Created on <openmrs:formatDate date="${concept.dateCreated}" type="short" /> by ${concept.creator.personName} (id: ${concept.creator.userId})</td>
+		<td><b><spring:message code="conceptmanagement.created" /></b></td>
+		<td><spring:message code="conceptmanagement.createdon" /> <openmrs:formatDate date="${concept.dateCreated}" type="short" /> <spring:message code="conceptmanagement.by" /> ${concept.creator.personName} (id: ${concept.creator.userId})</td>
 	</tr>
 	<tr>
-		<td><b>Changed</b></td>
-		<td>Changed on <openmrs:formatDate date="${concept.dateChanged}" type="short" /> by ${concept.creator.personName} (id: ${concept.creator.userId})</td>
+		<td><b><spring:message code="conceptmanagement.changed" /></b></td>
+		<td><spring:message code="conceptmanagement.changedon" /> <openmrs:formatDate date="${concept.dateChanged}" type="short" /> <spring:message code="conceptmanagement.by" /> ${concept.creator.personName} (id: ${concept.creator.userId})</td>
 	</tr>
 </table>
 </div>

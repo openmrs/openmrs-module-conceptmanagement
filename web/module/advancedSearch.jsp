@@ -20,7 +20,7 @@
 <form method="post" class="box" name="frmSearch">
 <table>
 	<tr>
-		<td>Name:</td>
+		<td><spring:message code="general.name" />:</td>
 		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
 			value="${conceptSearch.searchQuery}">
 			<script>
@@ -29,12 +29,12 @@
 		</td>
 	</tr>
 	<tr>
-		<td>Description:</td>
+		<td><spring:message code="general.description" />:</td>
 		<td><input type="text" name="conceptDescription" size="20"
 			value="${conceptSearch.searchTerms}"></td>
 	</tr>
 	<tr>
-		<td valign="top">Datatype:</td>
+		<td valign="top"><spring:message code="Concept.datatype" />:</td>
 		<td>
 			<c:forEach var="dataType" items="${dataTypes}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.id}">${dataType.name}<br />
@@ -42,7 +42,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top">Classes:</td>
+		<td valign="top"><spring:message code="Concept.conceptClass" />:</td>
 		<td>
 			<c:forEach var="class" items="${conceptClasses}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.id}">${class.name}<br />
@@ -50,30 +50,30 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top">Is set?</td>
+		<td valign="top"><spring:message code="conceptmanagement.isset" /></td>
 		<td>
-			<input type="checkbox" <c:if test="${conceptSearch.isSet == 1}"> checked </c:if> name="conceptIsSet" value="1" onClick="document.frmSearch.conceptIsSet[1].checked = false";>Yes<br />
-			<input type="checkbox" <c:if test="${conceptSearch.isSet == 0}"> checked </c:if> name="conceptIsSet" value="0" onClick="document.frmSearch.conceptIsSet[0].checked = false";>No
+			<input type="checkbox" <c:if test="${conceptSearch.isSet == 1}"> checked </c:if> name="conceptIsSet" value="1" onClick="document.frmSearch.conceptIsSet[1].checked = false";><spring:message code="general.yes" /><br />
+			<input type="checkbox" <c:if test="${conceptSearch.isSet == 0}"> checked </c:if> name="conceptIsSet" value="0" onClick="document.frmSearch.conceptIsSet[0].checked = false";><spring:message code="general.no" />
 		</td>
 	</tr>
 	<tr>
-		<td>Created between:</td>
+		<td><spring:message code="conceptmanagement.createdbetween" />:</td>
 		<fmt:formatDate var="datFrom" value="${conceptSearch.dateFrom}" pattern="dd/MM/yyyy"/>
 		<fmt:formatDate var="datTo" value="${conceptSearch.dateTo}" pattern="dd/MM/yyyy"/>
-		<td><input type="text" name="dateFrom" size="10" value="${datFrom}" onClick="showCalendar(this)"> to <input type="text" name="dateTo" size="10" value="${datTo}" onClick="showCalendar(this)"></td>
+		<td><input type="text" name="dateFrom" size="10" value="${datFrom}" onClick="showCalendar(this)"> <spring:message code="conceptmanagement.todate" /> <input type="text" name="dateTo" size="10" value="${datTo}" onClick="showCalendar(this)"></td>
 	</tr>
 	<tr>
-	<td valign="top">Concepts used as:</td>
+	<td valign="top"><spring:message code="conceptmanagement.conceptsusedas" />:</td>
 	<td>
-		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formQuestion')}"> checked </c:if> value="formQuestion">as a question in forms<br />
-		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formAnswer')}"> checked </c:if> value="formAnswer">as an answer to questions<br />
-		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsQuestion')}"> checked </c:if> value="obsQuestion">as an observation question<br />
-		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsValue')}"> checked </c:if> value="obsValue">as an observation value<br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formQuestion')}"> checked </c:if> value="formQuestion"><spring:message code="conceptmanagement.asformquestion" /><br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'formAnswer')}"> checked </c:if> value="formAnswer"><spring:message code="conceptmanagement.asformanswer" /><br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsQuestion')}"> checked </c:if> value="obsQuestion"><spring:message code="conceptmanagement.asobsquestion" /><br />
+		<input type="checkbox" name="conceptUsedAs" <c:if test="${fn:contains(conceptSearch.conceptUsedAs, 'obsValue')}"> checked </c:if> value="obsValue"><spring:message code="conceptmanagement.asobsvalue" /><br />
 	</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" name="action" value="Search"></td>
+		<td><input type="submit" name="action" value="<spring:message code="general.search" />"></td>
 	</tr>
 </table>
 </form>
@@ -83,18 +83,18 @@
 							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
 							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
 							<option <c:if test="${countConcept.conceptsPerPage==100}"> selected </c:if> value="100">100</option>
-							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1">All</option>
-						</select>concepts per page</div></form>
-<div class="boxHeader"><b>Search Results</b>&nbsp;<c:if test="${!(searchResult == null)}">(${fn:length(searchResult)} results returned)</c:if></div>
+							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1"><spring:message code="conceptmanagement.all" /></option>
+						</select><spring:message code="conceptmanagement.conceptsperpage" /></div></form>
+<div class="boxHeader"><b><spring:message code="conceptmanagement.searchresults" /></b>&nbsp;<c:if test="${!(searchResult == null)}">(${fn:length(searchResult)} <spring:message code="conceptmanagement.resultsreturned" />)</c:if></div>
 <div class="box">
 <table>
 	<tr>
 		<th><spring:message code="conceptmanagement.actions" /></th>
-		<th><spring:message code="conceptmanagement.concept" /><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="conceptmanagement.class" /><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="conceptmanagement.datatype" /><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="Concept" /><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="Concept.conceptClass" /><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="Concept.datatype" /><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
 		<!-- <th>Other Names</th> -->
-		<th># Obs <a href="?sort=obs&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=obs&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptmanagement.numberofobs" /><a href="?sort=obs&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=obs&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
 	</tr>
 	<c:choose>
 	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
@@ -123,7 +123,7 @@
 </table>
 <c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
 <div style="position:relative; left:30px; font-size11px;">
-Page:
+<spring:message code="conceptmanagement.page" />:
 <c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
 	<a href="?page=${i}">${i}</a>&nbsp;
 </c:forEach>
