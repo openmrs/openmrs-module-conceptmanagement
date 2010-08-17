@@ -108,7 +108,7 @@
 		<tr bgcolor="#F5F5F5">
 			<td><a
 				href="viewConcept.form?conceptId=${concept.conceptId}"><spring:message
-				code="conceptmanagement.view" /></a></td>
+				code="general.view" /></a></td>
 			<td>${concept.conceptName}</td>
 			<td>${concept.conceptClass}</td>
 			<td>${concept.conceptDatatype}</td>
