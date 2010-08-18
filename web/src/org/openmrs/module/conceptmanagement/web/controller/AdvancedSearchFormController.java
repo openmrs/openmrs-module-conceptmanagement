@@ -292,6 +292,7 @@ public class AdvancedSearchFormController {
 		//model.addAttribute("autoComplete", autoResults);
 		
 		// -- Autocompletehelper is used to avoid some problems -- 
+		System.out.println("Accessing autocomplete");
 		
 	}
 	

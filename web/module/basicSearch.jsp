@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.css" />
 
-<script src="/openmrs/scripts/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
 
 <h2><spring:message code="conceptmanagement.basicheading" /></h2>

@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.css" />
 
 <script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript"></script>
-<script src="/openmrs/scripts/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
 
 
@@ -24,7 +24,9 @@
 		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
 			value="${conceptSearch.searchQuery}">
 			<script>
-				$("#conceptQuery").autocomplete("/openmrs/module/conceptmanagement/autocomplete.form");
+				jQuery(document).ready(function() {
+					$("#conceptQuery").autocomplete("/openmrs/module/conceptmanagement/autocomplete.form");
+				});
 			</script>
 		</td>
 	</tr>
