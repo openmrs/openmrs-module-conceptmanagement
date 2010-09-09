@@ -13,13 +13,13 @@
 <bean parent="serviceContext">
 	<property name="moduleService">
 		<list>
-			<value>org.openmrs.module.conceptmanagement.ConceptSearchService</value> 
+			<value>org.openmrs.module.conceptsearch.ConceptSearchService</value> 
 			<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 				<property name="transactionManager"><ref bean="transactionManager"/></property>
 				<property name="target">
-					<bean class="org.openmrs.module.conceptmanagement.impl.ConceptSearchServiceImpl">
+					<bean class="org.openmrs.module.conceptsearch.impl.ConceptSearchServiceImpl">
 					<property name="conceptSearchDAO">
-								<bean class="org.openmrs.module.conceptmanagement.db.hibernate.HibernateConceptSearchDAO">
+								<bean class="org.openmrs.module.conceptsearch.db.hibernate.HibernateConceptSearchDAO">
 									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
 								</bean>
 							</property>

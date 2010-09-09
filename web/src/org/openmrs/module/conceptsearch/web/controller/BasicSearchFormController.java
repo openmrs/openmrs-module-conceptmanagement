@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.web.controller;
+package org.openmrs.module.conceptsearch.web.controller;
 
 import java.util.Collection;
 import java.util.Vector;
@@ -22,8 +22,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptmanagement.ConceptPageCount;
-import org.openmrs.module.conceptmanagement.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptPageCount;
+import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +39,7 @@ public class BasicSearchFormController {
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
 	
-	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET)
 	public void showBasicSearch(ModelMap model, WebRequest request, HttpSession session) {
 		//display advancedSearch.jsp	
 		session.removeAttribute("searchResult");
@@ -51,7 +51,7 @@ public class BasicSearchFormController {
 		session.setAttribute("countConcept", conCount);
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET, params = "count")
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET, params = "count")
 	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptPageCount conCount = new ConceptPageCount();
 		
@@ -82,7 +82,7 @@ public class BasicSearchFormController {
 		}
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.GET, params = "page")
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
 		String page = request.getParameter("page");
@@ -106,7 +106,7 @@ public class BasicSearchFormController {
 		}
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/basicSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.POST)
 	public void performBasicSearch(ModelMap model, WebRequest request, HttpSession session) {
 		Collection<Concept> rslt = new Vector<Concept>();
 		ConceptSearch cs = new ConceptSearch("");

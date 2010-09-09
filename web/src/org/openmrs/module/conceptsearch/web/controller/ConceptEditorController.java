@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.web.controller;
+package org.openmrs.module.conceptsearch.web.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptmanagement.ConceptSearchService;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Controller to handle view/edit requests for concepts
+ * Controller to handle view requests for concepts
  */
 @Controller
 public class ConceptEditorController {
@@ -35,12 +35,12 @@ public class ConceptEditorController {
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
 	
-	@RequestMapping(value = "/module/conceptmanagement/viewConcept", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/conceptsearch/viewConcept", method = RequestMethod.GET)
 	public void showViewPage(ModelMap model, WebRequest request, HttpSession session) {
 		System.out.println("show page");
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/viewConcept", method = RequestMethod.GET, params = "conceptId")
+	@RequestMapping(value = "/module/conceptsearch/viewConcept", method = RequestMethod.GET, params = "conceptId")
 	public void displayConceptPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		

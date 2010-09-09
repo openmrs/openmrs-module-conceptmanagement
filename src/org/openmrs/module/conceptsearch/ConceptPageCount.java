@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 /**
  * Class to keep track of the number of results per page and the current page in the view.

@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.extension.html;
+package org.openmrs.module.conceptsearch.extension.html;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "Enhanced Concept Management";
+		return "Concept Search";
 	}
 	
 	/**
@@ -47,8 +47,8 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/conceptmanagement/basicSearch.form", "Basic Concept Search");
-		map.put("module/conceptmanagement/advancedSearch.form", "Advanced Concept Search");
+		map.put("module/conceptsearch/basicSearch.form", "Basic Concept Search");
+		map.put("module/conceptsearch/advancedSearch.form", "Advanced Concept Search");
 		
 		return map;
 	}

@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openmrs.ConceptClass;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**

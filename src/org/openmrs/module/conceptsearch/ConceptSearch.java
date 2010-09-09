@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 import java.util.Date;
 import java.util.List;

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!-- ********************************************************* -->
-<!-- ** Enhanced Concept Management                         ** -->
+<!-- **  Concept Search Module                              ** -->
 <!-- **	                                                    ** -->
 <!-- ** @author Malte Friese                                ** -->
 <!-- ** @version 0.1                                        ** -->
 <!-- ********************************************************* -->
-<project name="ConceptManagement" default="package-module">
+<project name="ConceptSearch" default="package-module">
 		
 	<!-- *********************************************************** -->
 	<!-- **                     TARGETS                           ** -->

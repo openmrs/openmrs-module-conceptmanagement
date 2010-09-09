@@ -4,21 +4,21 @@
 <module configVersion="1.2">
 	
 	<!-- Base Module Properties -->
-	<id>conceptmanagement</id>
-	<name>Enhanced Concept Management</name>
-	<version>0.1</version>
+	<id>conceptsearch</id>
+	<name>Concept Search Module</name>
+	<version>0.1.1</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Malte Friese</author>
 	<description>
-			Improved Concept Search and Concept Editing
+			Improved Concept Search with more criteria
 	</description>
 
 	<activator>@MODULE_PACKAGE@.ConceptManagementActivator</activator>
 	
-	<!-- <updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
 	<!-- /Base Module Properties -->
 	
-	<require_version>1.2.0.3400</require_version>
+	<require_version>1.6.0.0000</require_version>
 	
 	<!-- Extensions -->
 	<extension>
@@ -90,8 +90,8 @@
 		<file>messages.properties</file>
 	</messages>
 	<messages>
-		<lang>de</lang>
-		<file>messages_de.properties</file>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
 	</messages>
 	<!-- /Internationalization -->
 	

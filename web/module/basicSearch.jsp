@@ -18,7 +18,7 @@
 		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
 			value="${conceptSearch.searchQuery}">
 			<script>
-				$("#conceptQuery").autocomplete("/openmrs/module/conceptmanagement/autocomplete.form");
+				$("#conceptQuery").autocomplete("/openmrs/module/conceptsearch/autocomplete.form");
 			</script></td>
 		<td><input type="submit"
 			value="<spring:message code="general.search" />"></td>

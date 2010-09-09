@@ -1,4 +1,4 @@
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 /**
  * The contents of this file are subject to the OpenMRS Public License
@@ -27,52 +27,52 @@ import org.openmrs.api.db.DAOException;
 public interface ConceptSearchDAO {
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConcepts(org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConcept(java.lang.Integer)
 	 */
 	public Concept getConcept(Integer conceptId) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
 	 */
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
 	 */
 	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptClasses()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAllConceptClasses()
 	 */
 	public List<ConceptClass> getAllConceptClasses() throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptDatatypes()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAllConceptDatatypes()
 	 */
 	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptDatatypeById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConceptDatatypeById(int)
 	 */
 	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptClassById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConceptClassById(int)
 	 */
 	public ConceptClass getConceptClassById(int id) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException;
 	
 	/**
-     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
      */
     public List<String> getAutocompleteConcepts(String searchWord) throws DAOException;
 	

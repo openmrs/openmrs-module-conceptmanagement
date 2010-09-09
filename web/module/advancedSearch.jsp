@@ -25,7 +25,7 @@
 			value="${conceptSearch.searchQuery}">
 			<script>
 				jQuery(document).ready(function() {
-					$("#conceptQuery").autocomplete("/openmrs/module/conceptmanagement/autocomplete.form");
+					$("#conceptQuery").autocomplete("/openmrs/module/conceptsearch/autocomplete.form");
 				});
 			</script>
 		</td>

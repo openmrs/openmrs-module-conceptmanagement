@@ -1,6 +1,6 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
-<%@page import="org.openmrs.module.conceptmanagement.AutocompleteHelper"%>
+<%@page import="org.openmrs.module.conceptsearch.AutocompleteHelper"%>
 <%
 	AutocompleteHelper ah = new AutocompleteHelper();
 

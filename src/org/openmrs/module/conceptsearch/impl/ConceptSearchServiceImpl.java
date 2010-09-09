@@ -1,4 +1,4 @@
-package org.openmrs.module.conceptmanagement.impl;
+package org.openmrs.module.conceptsearch.impl;
 
 /**
  * The contents of this file are subject to the OpenMRS Public License
@@ -21,14 +21,14 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
-import org.openmrs.module.conceptmanagement.ConceptSearch;
-import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
-import org.openmrs.module.conceptmanagement.ConceptSearchService;
+import org.openmrs.module.conceptsearch.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptSearchDAO;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
 
 /**
  * Implementation of the ConceptSearchService
  * 
- * @see org.openmrs.module.conceptmanagement.ConceptSearchService
+ * @see org.openmrs.module.conceptsearch.ConceptSearchService
  */
 public class ConceptSearchServiceImpl implements ConceptSearchService {
 	
@@ -48,7 +48,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConcept(java.lang.Integer)
 	 */
 	@Override
 	public Concept getConcept(Integer conceptId) {
@@ -56,7 +56,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConcepts(org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	@Override
 	public List<Concept> getConcepts(ConceptSearch cs) {
@@ -64,7 +64,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getNumberOfObsForConcept(java.lang.Integer)
 	 */
 	@Override
 	public Long getNumberOfObsForConcept(Integer conceptId) {
@@ -72,7 +72,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getNumberOfFormsForConcept(java.lang.Integer)
 	 */
 	@Override
 	public Long getNumberOfFormsForConcept(Integer conceptId) {
@@ -80,7 +80,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptClasses()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAllConceptClasses()
 	 */
 	@Override
 	public List<ConceptClass> getAllConceptClasses() {
@@ -88,7 +88,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAllConceptDatatypes()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAllConceptDatatypes()
 	 */
 	@Override
 	public List<ConceptDatatype> getAllConceptDatatypes() {
@@ -96,7 +96,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptClassById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConceptClassById(int)
 	 */
 	@Override
 	public ConceptClass getConceptClassById(int id) {
@@ -104,7 +104,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getConceptDatatypeById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getConceptDatatypeById(int)
 	 */
 	@Override
 	public ConceptDatatype getConceptDatatypeById(int id) {
@@ -112,7 +112,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 
 	/**
-     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptmanagement.ConceptSearch)
+     * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptsearch.ConceptSearch)
      */
     @Override
     public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
@@ -120,7 +120,7 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
     }
 
 	/**
-     * @see org.openmrs.module.conceptmanagement.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
      */
     @Override
     public List<String> getAutocompleteConcepts(String searchWord) {

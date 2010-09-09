@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
  
- 	<logger name="org.openmrs.module.conceptmanagement">
+ 	<logger name="org.openmrs.module.conceptsearch">
 		<level value="DEBUG" />
  	</logger>
  

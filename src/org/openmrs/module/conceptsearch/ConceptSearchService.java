@@ -1,4 +1,4 @@
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 /**
  * The contents of this file are subject to the OpenMRS Public License

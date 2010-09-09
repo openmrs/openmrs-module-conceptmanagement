@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.web.controller;
+package org.openmrs.module.conceptsearch.web.controller;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -31,11 +31,11 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptmanagement.ConceptComparator;
-import org.openmrs.module.conceptmanagement.ConceptPageCount;
-import org.openmrs.module.conceptmanagement.ConceptSearch;
-import org.openmrs.module.conceptmanagement.ConceptSearchResult;
-import org.openmrs.module.conceptmanagement.ConceptSearchService;
+import org.openmrs.module.conceptsearch.ConceptComparator;
+import org.openmrs.module.conceptsearch.ConceptPageCount;
+import org.openmrs.module.conceptsearch.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptSearchResult;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,7 +66,7 @@ public class AdvancedSearchFormController {
 		return service.getAllConceptClasses();
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET)
 	public void showAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		
 		//reset all session objects used by this controller
@@ -80,7 +80,7 @@ public class AdvancedSearchFormController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "count")
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "count")
 	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptPageCount conCount = new ConceptPageCount();
 		
@@ -112,7 +112,7 @@ public class AdvancedSearchFormController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "page")
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "page")
 	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
 		//set page
 		String page = request.getParameter("page");
@@ -137,7 +137,7 @@ public class AdvancedSearchFormController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.GET, params = "sort")
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "sort")
 	public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
 		String sortFor = request.getParameter("sort");
 		boolean asc = true;
@@ -156,7 +156,7 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/advancedSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.POST)
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		Collection<Concept> rslt = new Vector<Concept>();
@@ -284,7 +284,7 @@ public class AdvancedSearchFormController {
 		}
 	}
 	
-	@RequestMapping(value = "/module/conceptmanagement/autocomplete", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/conceptsearch/autocomplete", method = RequestMethod.GET)
 	public void doAutocomplete(ModelMap model, WebRequest request, HttpSession session) {
 		//ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		//String searchFor = request.getParameter("q");

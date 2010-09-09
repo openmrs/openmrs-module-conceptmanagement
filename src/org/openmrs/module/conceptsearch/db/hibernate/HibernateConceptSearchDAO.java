@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement.db.hibernate;
+package org.openmrs.module.conceptsearch.db.hibernate;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,8 +32,8 @@ import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptName;
 import org.openmrs.Obs;
 import org.openmrs.api.db.DAOException;
-import org.openmrs.module.conceptmanagement.ConceptSearch;
-import org.openmrs.module.conceptmanagement.ConceptSearchDAO;
+import org.openmrs.module.conceptsearch.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptSearchDAO;
 
 /**
  *
@@ -57,14 +57,14 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getConcept(java.lang.Integer)
 	 */
 	public Concept getConcept(Integer conceptId) throws DAOException {
 		return (Concept) sessionFactory.getCurrentSession().get(Concept.class, conceptId);
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAllConceptClasses()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getAllConceptClasses()
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ConceptClass> getAllConceptClasses() throws DAOException {
@@ -74,7 +74,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAllConceptDatatypes()
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getAllConceptDatatypes()
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ConceptDatatype> getAllConceptDatatypes() throws DAOException {
@@ -84,21 +84,21 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConceptDatatypeById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getConceptDatatypeById(int)
 	 */
 	public ConceptDatatype getConceptDatatypeById(int id) throws DAOException {
 		return (ConceptDatatype) sessionFactory.getCurrentSession().get(ConceptDatatype.class, id);
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConceptClassById(int)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getConceptClassById(int)
 	 */
 	public ConceptClass getConceptClassById(int id) throws DAOException {
 		return (ConceptClass) sessionFactory.getCurrentSession().get(ConceptClass.class, id);
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getNumberOfObsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getNumberOfObsForConcept(java.lang.Integer)
 	 */
 	public Long getNumberOfObsForConcept(Integer conceptId) throws DAOException {
 		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Obs WHERE concept_id = :cid")
@@ -106,7 +106,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getNumberOfFormsForConcept(java.lang.Integer)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getNumberOfFormsForConcept(java.lang.Integer)
 	 */
 	public Long getNumberOfFormsForConcept(Integer conceptId) throws DAOException {
 		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Forms WHERE concept_id = :cid")
@@ -114,7 +114,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getConcepts(org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getConcepts(org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException {
@@ -170,8 +170,8 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#isConceptUsedAs(org.openmrs.Concept,
-	 *      org.openmrs.module.conceptmanagement.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#isConceptUsedAs(org.openmrs.Concept,
+	 *      org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException {
 		List<String> usedAs = cs.getConceptUsedAs();
@@ -213,7 +213,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-	 * @see org.openmrs.module.conceptmanagement.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

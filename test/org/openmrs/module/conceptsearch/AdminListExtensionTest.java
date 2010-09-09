@@ -11,14 +11,14 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.conceptmanagement;
+package org.openmrs.module.conceptsearch;
 
 import java.util.Map;
 
 import junit.framework.TestCase;
 
 import org.openmrs.module.Extension.MEDIA_TYPE;
-import org.openmrs.module.conceptmanagement.extension.html.AdminList;
+import org.openmrs.module.conceptsearch.extension.html.AdminList;
 
 /**
  * This test validates the AdminList extension class
