@@ -10,6 +10,37 @@
 <script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
 
+<script type="text/javascript" language="JavaScript">
+<!--
+function showDatatypes() {
+	var dTyp = document.getElementById('divData');
+	var lTyp = document.getElementById('linkData');
+
+	if (dTyp.style.display=='none') {
+		dTyp.style.display = 'block';
+		lTyp.innerHTML = 'Hide Datatypes';
+	}
+	else {
+		dTyp.style.display = 'none';
+		lTyp.innerHTML = 'Show Datatypes';
+	}	
+}
+
+function showConceptClasses() {
+	var cClass = document.getElementById('divClass');
+	var lClass = document.getElementById('linkClass');
+
+	if (cClass.style.display=='none') {
+		cClass.style.display = 'block';
+		lClass.innerHTML = 'Hide Classes';
+	}
+	else {
+		cClass.style.display = 'none';
+		lClass.innerHTML = 'Show Classes';
+	}	
+}
+//-->
+</script>
 
 
 <openmrs:require privilege="View Concepts" otherwise="/login.htm" />
@@ -20,7 +51,7 @@
 <form method="post" class="box" name="frmSearch">
 <table>
 	<tr>
-		<td><spring:message code="general.name" />:</td>
+		<td>Keyword:</td>
 		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
 			value="${conceptSearch.searchQuery}">
 			<script>
@@ -31,24 +62,23 @@
 		</td>
 	</tr>
 	<tr>
-		<td><spring:message code="general.description" />:</td>
-		<td><input type="text" name="conceptDescription" size="20"
-			value="${conceptSearch.searchTerms}"></td>
-	</tr>
-	<tr>
 		<td valign="top"><spring:message code="Concept.datatype" />:</td>
-		<td>
+		<td><a href="#" id='linkData' onclick="showDatatypes()";>Show Datatypes</a> 
+		<div id="divData" style="display:none;">
 			<c:forEach var="dataType" items="${dataTypes}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.id}">${dataType.name}<br />
 			</c:forEach>
+	    </div>
 		</td>
 	</tr>
 	<tr>
 		<td valign="top"><spring:message code="Concept.conceptClass" />:</td>
-		<td>
+		<td><a href="#" id='linkClass' onclick="showConceptClasses()";>Show Classes</a> 
+		<div id="divClass" style="display:none;">
 			<c:forEach var="class" items="${conceptClasses}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.id}">${class.name}<br />
 			</c:forEach>
+		</div>
 		</td>
 	</tr>
 	<tr>
@@ -129,8 +159,8 @@
 <c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
 	<a href="?page=${i}">${i}</a>&nbsp;
 </c:forEach>
-</c:if>
 </div>
+</c:if>
 </div>
 </div>
 

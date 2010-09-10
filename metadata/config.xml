@@ -6,7 +6,7 @@
 	<!-- Base Module Properties -->
 	<id>conceptsearch</id>
 	<name>Concept Search Module</name>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Malte Friese</author>
 	<description>
@@ -89,10 +89,10 @@
 		<lang>en</lang>
 		<file>messages.properties</file>
 	</messages>
-	<messages>
+	<!-- <messages>
 		<lang>es</lang>
 		<file>messages_es.properties</file>
-	</messages>
+	</messages> -->
 	<!-- /Internationalization -->
 	
 </module>
