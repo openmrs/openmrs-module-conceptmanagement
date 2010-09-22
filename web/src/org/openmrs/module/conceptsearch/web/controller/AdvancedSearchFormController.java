@@ -16,6 +16,7 @@ package org.openmrs.module.conceptsearch.web.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -282,6 +283,20 @@ public class AdvancedSearchFormController {
 		if (conCount != null) {
 			conCount.setCurrentPage(1);
 		}
+		
+		//remember the last ten search queries
+		List<ConceptSearch> historyQueries = (List<ConceptSearch>) session.getAttribute("historyQuery");
+		if (historyQueries != null) {
+			historyQueries.add(cs);
+			
+			if (historyQueries.size() > 10) {
+				historyQueries.remove(historyQueries.remove(0));
+			}
+		} else {
+			historyQueries = new ArrayList<ConceptSearch>();
+			historyQueries.add(cs);
+		}
+		session.setAttribute("historyQuery", historyQueries);
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/autocomplete", method = RequestMethod.GET)

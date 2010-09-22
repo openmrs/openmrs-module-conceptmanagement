@@ -39,6 +39,20 @@ function showConceptClasses() {
 		lClass.innerHTML = 'Show Classes';
 	}	
 }
+
+function showSearchHistory() {
+	var cClass = document.getElementById('rowHistory');
+	var lClass = document.getElementById('linkHistory');
+
+	if (cClass.style.display=='none') {
+		cClass.style.display = '';
+		lClass.innerHTML = 'Hide Last';
+	}
+	else {
+		cClass.style.display = 'none';
+		lClass.innerHTML = 'Last 10';
+	}	
+}
 //-->
 </script>
 
@@ -53,13 +67,23 @@ function showConceptClasses() {
 	<tr>
 		<td>Keyword:</td>
 		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
-			value="${conceptSearch.searchQuery}">
+			value="${conceptSearch.searchQuery}"> <a href="#" id='linkHistory' onclick="showSearchHistory()";>Last 10</a> 
 			<script>
 				jQuery(document).ready(function() {
 					$("#conceptQuery").autocomplete("/openmrs/module/conceptsearch/autocomplete.form");
 				});
 			</script>
 		</td>
+	</tr>
+	<tr id="rowHistory" style="display:none;">
+		<td valign="top">History:</td>
+		<td>		
+			<c:set var="histIter" value="1"></c:set>	
+			<c:forEach var="history" items="${historyQuery}">
+				<a href='advancedSearch.form?history=${histIter}'>${histIter}. ${history.searchQuery}</a><br />
+				<c:set var="histIter" value="${histIter+1}"></c:set>
+			</c:forEach>
+	    </td>
 	</tr>
 	<tr>
 		<td valign="top"><spring:message code="Concept.datatype" />:</td>
