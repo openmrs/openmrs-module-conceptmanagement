@@ -6,7 +6,7 @@
 	<!-- Base Module Properties -->
 	<id>conceptsearch</id>
 	<name>Concept Search Module</name>
-	<version>0.1.3</version>
+	<version>0.1.4</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Malte Friese</author>
 	<description>

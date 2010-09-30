@@ -75,6 +75,7 @@ public class AdvancedSearchFormController {
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
 		session.removeAttribute("countConcept");
+		session.removeAttribute("historyQuery");
 		
 		ConceptPageCount conCount = new ConceptPageCount();
 		session.setAttribute("countConcept", conCount);
@@ -308,7 +309,54 @@ public class AdvancedSearchFormController {
 		
 		// -- Autocompletehelper is used to avoid some problems -- 
 		System.out.println("Accessing autocomplete");
+	}
+	
+	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "history")
+	public void loadPastSearchResults(ModelMap model, WebRequest request, HttpSession session) {
+		String sHistory = request.getParameter("history");
+		int iHistory = Integer.parseInt(sHistory);
 		
+		//get past searches
+		List<ConceptSearch> historyQueries = (List<ConceptSearch>) session.getAttribute("historyQuery");
+		
+		//check if value is valid
+		if (historyQueries != null && iHistory > 0 && iHistory <= historyQueries.size()) {
+			
+			ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+			Collection<Concept> rslt = new Vector<Concept>();
+			
+			ConceptSearch cs = historyQueries.get(iHistory - 1);
+			
+			//perform search using ConceptSearchService
+			rslt = searchService.getConcepts(cs);
+			
+			//add the results to a DTO to avoid Hibernate's lazy loading
+			Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
+			for (Concept c : rslt) {
+				if (cs.getConceptUsedAs() == null || searchService.isConceptUsedAs(c, cs)) {
+					ConceptSearchResult res = new ConceptSearchResult(c);
+					res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
+					resList.add(res);
+				}
+			}
+			
+			//add results to view
+			model.addAttribute("conceptSearch", cs);
+			model.addAttribute("searchResult", resList);
+			
+			//add search results to session to make them available for other methods
+			session.setAttribute("conceptSearch", cs);
+			session.setAttribute("searchResult", resList);
+			session.setAttribute("sortResults", resList);
+			
+			//reset currentPage when performing a new search
+			ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
+			if (conCount != null) {
+				conCount.setCurrentPage(1);
+			}
+		} else {
+			System.err.println("ConceptSearch (cs) index is invalid!");
+		}
 	}
 	
 }
