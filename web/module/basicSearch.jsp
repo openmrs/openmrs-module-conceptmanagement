@@ -9,7 +9,7 @@
 <script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
 
-<h2><spring:message code="conceptmanagement.basicheading" /></h2>
+<h2><spring:message code="conceptsearch.basicheading" /></h2>
 
 <br />
 <form method="post" class="box">
@@ -27,21 +27,21 @@
 </form>
 <c:if test="${!(searchResult == null)}">
 	<dir>
-		${fn:length(searchResult)} <spring:message code="conceptmanagement.resultsreturned" />
+		${fn:length(searchResult)} <spring:message code="conceptsearch.resultsreturned" />
 	</dir>
 </c:if>
 <form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='basicSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
 							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
 							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
 							<option <c:if test="${countConcept.conceptsPerPage==100}"> selected </c:if> value="100">100</option>
-							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1"><spring:message code="conceptmanagement.all" /></option>
-						</select><spring:message code="conceptmanagement.conceptsperpage" /></div></form>
+							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1"><spring:message code="conceptsearch.all" /></option>
+						</select><spring:message code="conceptsearch.conceptsperpage" /></div></form>
 <div class="boxHeader"><b><spring:message
-	code="conceptmanagement.concepts" /></b></div>
+	code="conceptsearch.concepts" /></b></div>
 <div class="box">
 <table>
 	<tr>
-		<th><spring:message code="conceptmanagement.actions" /></th>
+		<th><spring:message code="conceptsearch.actions" /></th>
 		<th><spring:message code="Concept" /></th>
 		<th><spring:message code="Concept.conceptClass" /></th>
 		<th><spring:message code="Concept.datatype" /></th>
@@ -67,7 +67,7 @@
 </table>
 <c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
 <div style="position:relative; left:30px; font-size11px;">
-<spring:message code="conceptmanagement.page" />:
+<spring:message code="conceptsearch.page" />:
 <c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
 	<a href="?page=${i}">${i}</a>&nbsp;
 </c:forEach>

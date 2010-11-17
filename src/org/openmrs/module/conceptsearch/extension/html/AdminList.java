@@ -21,7 +21,7 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "basicmodule.title" heading. This extension is enabled by defining (uncommenting) it in the
+ * "conceptsearch.title" heading. This extension is enabled by defining (uncommenting) it in the
  * /metadata/config.xml file.
  */
 public class AdminList extends AdministrationSectionExt {
@@ -37,7 +37,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "Concept Search";
+		return "conceptsearch.title";
 	}
 	
 	/**
@@ -47,8 +47,8 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/conceptsearch/basicSearch.form", "Basic Concept Search");
-		map.put("module/conceptsearch/advancedSearch.form", "Advanced Concept Search");
+		map.put("module/conceptsearch/basicSearch.form", "conceptsearch.basicheading");
+		map.put("module/conceptsearch/advancedSearch.form", "conceptsearch.advancedheading");
 		
 		return map;
 	}
