@@ -20,7 +20,7 @@ import org.openmrs.module.Activator;
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
-public class ConceptManagementActivator implements Activator {
+public class ConceptSearchActivator implements Activator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -28,14 +28,14 @@ public class ConceptManagementActivator implements Activator {
 	 * @see org.openmrs.module.Activator#startup()
 	 */
 	public void startup() {
-		log.info("Starting Malte Module");
+		log.info("Starting Concept Search Module");
 	}
 	
 	/**
 	 * @see org.openmrs.module.Activator#shutdown()
 	 */
 	public void shutdown() {
-		log.info("Shutting down Malte Module");
+		log.info("Shutting down Concept Search Module");
 	}
 	
 }
