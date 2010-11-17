@@ -134,7 +134,7 @@ public class AdvancedSearchFormController {
 		if (conList != null) {
 			model.addAttribute("searchResult", conList);
 		} else {
-			System.err.println("Results are gone");
+			log.error("Results are gone");
 		}
 	}
 	
@@ -308,7 +308,7 @@ public class AdvancedSearchFormController {
 		//model.addAttribute("autoComplete", autoResults);
 		
 		// -- Autocompletehelper is used to avoid some problems -- 
-		System.out.println("Accessing autocomplete");
+		log.debug("Accessing autocomplete");
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "history")
@@ -355,7 +355,7 @@ public class AdvancedSearchFormController {
 				conCount.setCurrentPage(1);
 			}
 		} else {
-			System.err.println("ConceptSearch (cs) index is invalid!");
+			log.error("ConceptSearch (cs) index is invalid!");
 		}
 	}
 	

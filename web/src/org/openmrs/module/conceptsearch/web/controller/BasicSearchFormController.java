@@ -102,7 +102,7 @@ public class BasicSearchFormController {
 		if (conList != null) {
 			model.addAttribute("searchResult", conList);
 		} else {
-			System.err.println("Results are gone");
+			log.error("Results are gone");
 		}
 	}
 	
