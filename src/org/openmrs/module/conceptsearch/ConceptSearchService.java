@@ -19,6 +19,8 @@ import java.util.List;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.annotation.Authorized;
+import org.openmrs.util.OpenmrsConstants;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -36,6 +38,7 @@ public interface ConceptSearchService {
 	 * @return all concepts that match criteria in cs
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<Concept> getConcepts(ConceptSearch cs);
 	
 	/**
@@ -45,6 +48,7 @@ public interface ConceptSearchService {
 	 * @return concept with the given conceptId
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Concept getConcept(Integer conceptId);
 	
 	/**
@@ -54,6 +58,7 @@ public interface ConceptSearchService {
 	 * @return number of observations for the given concept
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Long getNumberOfObsForConcept(Integer conceptId);
 	
 	/**
@@ -62,6 +67,7 @@ public interface ConceptSearchService {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Long getNumberOfFormsForConcept(Integer conceptId);
 	
 	/**
@@ -69,6 +75,7 @@ public interface ConceptSearchService {
 	 * @return all Concept Classes in the database
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<ConceptClass> getAllConceptClasses();
 	
 	/**
@@ -76,6 +83,7 @@ public interface ConceptSearchService {
 	 * @return all Concept Datatypes in the database
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<ConceptDatatype> getAllConceptDatatypes();
 	
 	/**
@@ -84,6 +92,7 @@ public interface ConceptSearchService {
 	 * @return ConceptDatatype with given id
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public ConceptDatatype getConceptDatatypeById(int id);
 	
 	/**
@@ -92,6 +101,7 @@ public interface ConceptSearchService {
 	 * @return ConceptClass with given id
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public ConceptClass getConceptClassById(int id);
 	
 	/**
@@ -101,6 +111,7 @@ public interface ConceptSearchService {
 	 * @return boolean, true if concept matches all given criteria or no criteria is given, false if not
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs);
 	
 	/**
@@ -109,6 +120,7 @@ public interface ConceptSearchService {
 	 * @return List of concepts that match the searchWord
 	 */
 	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<String> getAutocompleteConcepts(String searchWord);
 	
 }
