@@ -19,41 +19,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptsearch.ConceptComparator;
-import org.openmrs.module.conceptsearch.ConceptPageCount;
 import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.openmrs.module.conceptsearch.ConceptSearchResult;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 /**
  * Controller to handle all searches done by the advancedsearch.jsp. All search criteria will be
  * stored in a ConceptSearch object and the results will be kept in session, because other methods
  * will need them.
+ * 
+ * 
  */
 @Controller
-public class AdvancedSearchFormController {
+public class AdvancedSearchFormController extends AbstractSearchFormController {
 	
-	/** Logger for this class and subclasses */
-	protected final Log log = LogFactory.getLog(getClass());
 	
 	@ModelAttribute("dataTypes")
 	public List<ConceptDatatype> populateDataTypes() {
@@ -74,90 +69,25 @@ public class AdvancedSearchFormController {
 		session.removeAttribute("searchResult");
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
-		session.removeAttribute("countConcept");
 		session.removeAttribute("historyQuery");
-		
-		ConceptPageCount conCount = new ConceptPageCount();
-		session.setAttribute("countConcept", conCount);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "count")
 	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
-		ConceptPageCount conCount = new ConceptPageCount();
-		
-		//set count
-		String count = request.getParameter("count");
-		
-		if (session.getAttribute("countConcept") == null) {
-			session.setAttribute("countConcept", conCount);
-			conCount.setConceptsPerPage(Integer.parseInt(count));
-		} else {
-			conCount = (ConceptPageCount) session.getAttribute("countConcept");
-			int cCount = Integer.parseInt(count);
-			if (cCount == -1)
-				cCount = 10000;
-			conCount.setConceptsPerPage(cCount);
-			conCount.setCurrentPage(1);
-		}
-		model.addAttribute("countConcept", conCount);
-		
-		//add other elements (search words and results) to the view, so they are displayed
-		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		if (cs != null) {
-			model.addAttribute("conceptSearch", cs);
-		}
-		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
-		if (conList != null) {
-			model.addAttribute("searchResult", conList);
-		}
+		super.setConceptsPerPage(model, request, session);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "page")
-	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
-		//set page
-		String page = request.getParameter("page");
-		
-		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
-		if (conCount != null) {
-			conCount.setCurrentPage(Integer.parseInt(page));
-			model.addAttribute("countConcept", conCount);
-		}
-		
-		//add other elements (search words and results) to the view, so they are displayed
-		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		if (cs != null) {
-			model.addAttribute("conceptSearch", cs);
-		}
-		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
-		if (conList != null) {
-			model.addAttribute("searchResult", conList);
-		} else {
-			log.error("Results are gone");
-		}
+	public void switchToPage(@RequestParam("page") String page, ModelMap model, WebRequest request, HttpSession session) {
+		super.switchToPage(page, model, request, session);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.GET, params = "sort")
-	public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
-		String sortFor = request.getParameter("sort");
-		boolean asc = true;
-		
-		if (request.getParameter("order") != null && request.getParameter("order").equals("desc"))
-			asc = false;
-		
-		Collection<ConceptSearchResult> conList = (Collection<ConceptSearchResult>) session.getAttribute("sortResults");
-		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		if (cs != null)
-			model.addAttribute("conceptSearch", cs);
-		
-		if (conList != null) {
-			Collections.sort((List<ConceptSearchResult>) conList, new ConceptComparator(sortFor, asc));
-			model.addAttribute("searchResult", conList);
-		}
+    public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
+		super.sortResultsView(model, request, session);
 	}
 	
+
 	@RequestMapping(value = "/module/conceptsearch/advancedSearch", method = RequestMethod.POST)
 	public void performAdvancedSearch(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
@@ -185,7 +115,7 @@ public class AdvancedSearchFormController {
 				dateTo = df.parse(searchDateTo);
 		}
 		catch (ParseException ex) {
-			ex.printStackTrace();
+			log.error("Error converting strings to date ", ex);
 			dateFrom = null;
 			dateTo = null;
 		}
@@ -261,7 +191,7 @@ public class AdvancedSearchFormController {
 		rslt = searchService.getConcepts(cs);
 		
 		//add the results to a DTO to avoid Hibernate's lazy loading
-		Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
+		List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();
 		for (Concept c : rslt) {
 			if (cs.getConceptUsedAs() == null || searchService.isConceptUsedAs(c, cs)) {
 				ConceptSearchResult res = new ConceptSearchResult(c);
@@ -270,20 +200,19 @@ public class AdvancedSearchFormController {
 			}
 		}
 		
+		// add results to ListHolder
+		PagedListHolder resListHolder = new PagedListHolder(resList);
+		resListHolder.setPageSize(DEFAULT_RESULT_PAGE_SIZE);
+
 		//add results to view
 		model.addAttribute("conceptSearch", cs);
-		model.addAttribute("searchResult", resList);
+		model.addAttribute("searchResult", resListHolder);
 		
 		//add search results to session to make them available for other methods
 		session.setAttribute("conceptSearch", cs);
-		session.setAttribute("searchResult", resList);
-		session.setAttribute("sortResults", resList);
+		session.setAttribute("searchResult", resListHolder);
+		session.setAttribute("sortResults", resListHolder);
 		
-		//reset currentPage when performing a new search
-		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
-		if (conCount != null) {
-			conCount.setCurrentPage(1);
-		}
 		
 		//remember the last ten search queries
 		List<ConceptSearch> historyQueries = (List<ConceptSearch>) session.getAttribute("historyQuery");
@@ -331,7 +260,7 @@ public class AdvancedSearchFormController {
 			rslt = searchService.getConcepts(cs);
 			
 			//add the results to a DTO to avoid Hibernate's lazy loading
-			Collection<ConceptSearchResult> resList = new Vector<ConceptSearchResult>();
+			List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();
 			for (Concept c : rslt) {
 				if (cs.getConceptUsedAs() == null || searchService.isConceptUsedAs(c, cs)) {
 					ConceptSearchResult res = new ConceptSearchResult(c);
@@ -340,20 +269,19 @@ public class AdvancedSearchFormController {
 				}
 			}
 			
+			// add results to ListHolder
+			PagedListHolder resListHolder = new PagedListHolder(resList);
+			resListHolder.setPageSize(DEFAULT_RESULT_PAGE_SIZE);
+
 			//add results to view
 			model.addAttribute("conceptSearch", cs);
-			model.addAttribute("searchResult", resList);
+			model.addAttribute("searchResult", resListHolder);
 			
 			//add search results to session to make them available for other methods
 			session.setAttribute("conceptSearch", cs);
 			session.setAttribute("searchResult", resList);
-			session.setAttribute("sortResults", resList);
+			session.setAttribute("sortResults", resListHolder);
 			
-			//reset currentPage when performing a new search
-			ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
-			if (conCount != null) {
-				conCount.setCurrentPage(1);
-			}
 		} else {
 			log.error("ConceptSearch (cs) index is invalid!");
 		}

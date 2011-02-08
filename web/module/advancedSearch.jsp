@@ -1,93 +1,96 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 
+<openmrs:require privilege="View Concept Classes" otherwise="/login.htm" redirect="/module/conceptsearch/advancedSearch.form" />
+
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
+<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
-<link rel="stylesheet" type="text/css" href="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.css" />
+<!-- Include css from conceptmanagement module -->
+<openmrs:htmlInclude file="${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/css/jquery.autocomplete.css" />
 
-<script src="/openmrs/scripts/calendar/calendar.js?v=1.6.0.12685" type="text/javascript"></script>
-<script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
-<script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
+<!-- Include javascript from core -->
+<openmrs:htmlInclude file="/scripts/calendar/calendar.js"/>
+
+<!-- Include javascript from conceptmanagement module -->
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.autocomplete.min.js'/>
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.js'/>
+<openmrs:htmlInclude file="${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"/>
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.autocomplete.js'/>
 
 <script type="text/javascript" language="JavaScript">
-<!--
-function showDatatypes() {
-	var dTyp = document.getElementById('divData');
-	var lTyp = document.getElementById('linkData');
 
-	if (dTyp.style.display=='none') {
-		dTyp.style.display = 'block';
-		lTyp.innerHTML = 'Hide Datatypes';
-	}
-	else {
-		dTyp.style.display = 'none';
-		lTyp.innerHTML = 'Show Datatypes';
-	}	
-}
+jQuery(document).ready(function() {
+	// register toggle functions 
+	$('#divData').hide();
+	$('#divClass').hide();
+	$('#linkHistory').show();
+	
+	
+	$("#linkData").click(function(){
+		$('#divData').slideToggle("slow");
+		return false; //Prevent the browser jump to the link anchor
+	});
+	
+	$("#linkClass").click(function(){
+		$('#divClass').slideToggle("slow");
+		return false; //Prevent the browser jump to the link anchor
+	});
+	
+	$("#linkHistory").click(function(){
+		$('#rowHistory').toggle();
+		$('#linkHistory').html(($('#linkHistory').html() == '<spring:message code="conceptsearch.historyenablelink" />') ? '<spring:message code="conceptsearch.historydisablelink" />' : '<spring:message code="conceptsearch.historyenablelink" />');
 
-function showConceptClasses() {
-	var cClass = document.getElementById('divClass');
-	var lClass = document.getElementById('linkClass');
+		return false; //Prevent the browser jump to the link anchor
+	});
+	
+	$('#rowHistory').toggle();
 
-	if (cClass.style.display=='none') {
-		cClass.style.display = 'block';
-		lClass.innerHTML = 'Hide Classes';
-	}
-	else {
-		cClass.style.display = 'none';
-		lClass.innerHTML = 'Show Classes';
-	}	
-}
+	$("#conceptQuery").autocomplete("<%=request.getContextPath()%>/module/conceptsearch/autocomplete.form");
+});
 
-function showSearchHistory() {
-	var cClass = document.getElementById('rowHistory');
-	var lClass = document.getElementById('linkHistory');
 
-	if (cClass.style.display=='none') {
-		cClass.style.display = '';
-		lClass.innerHTML = 'Hide Last';
-	}
-	else {
-		cClass.style.display = 'none';
-		lClass.innerHTML = 'Last 10';
-	}	
-}
 //-->
 </script>
-
-
-<openmrs:require privilege="View Concepts" otherwise="/login.htm" />
-
 <h2><spring:message code="conceptsearch.advancedheading" /></h2>
+
+<spring:hasBindErrors name="command">
+	<spring:message code="fix.error"/>
+	<div class="error">
+		<c:forEach items="${errors.allErrors}" var="error">
+			<spring:message code="${error.code}" text="${error.code}"/><br/>
+		</c:forEach>
+	</div>
+	<br />
+</spring:hasBindErrors>
 <br />
-<div style="float:left; width:20%; overflow:auto;">
-<form method="post" class="box" name="frmSearch">
+<div style="float:left; width:25%;">
+<div class="boxHeader"><b><spring:message code="Concept.find" /></b></div>
+<div class="box">
+<form method="post" name="frmSearch">
 <table>
 	<tr>
-		<td>Keyword:</td>
-		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
-			value="${conceptSearch.searchQuery}"> <a href="#" id='linkHistory' onclick="showSearchHistory()";>Last 10</a> 
-			<script>
-				jQuery(document).ready(function() {
-					$("#conceptQuery").autocomplete("/openmrs/module/conceptsearch/autocomplete.form");
-				});
-			</script>
+		<td valign="top"><spring:message code="conceptsearch.keyword" />:</td>
+		<td><input id="conceptQuery" type="text" name="conceptQuery" size="25"
+			value="${conceptSearch.searchQuery}"><br/><a href="#" id='linkHistory' style="display:none;"><spring:message code="conceptsearch.historyenablelink" /></a> 
 		</td>
 	</tr>
-	<tr id="rowHistory" style="display:none;">
-		<td valign="top">History:</td>
-		<td>		
+	<tr id="rowHistory" valign="top" >
+	    <td><spring:message code="conceptsearch.history" />: 
+		</td>
+		<td>
 			<c:set var="histIter" value="1"></c:set>	
 			<c:forEach var="history" items="${historyQuery}">
 				<a href='advancedSearch.form?history=${histIter}'>${histIter}. ${history.searchQuery}</a><br />
 				<c:set var="histIter" value="${histIter+1}"></c:set>
 			</c:forEach>
-	    </td>
+		</td>
 	</tr>
 	<tr>
 		<td valign="top"><spring:message code="Concept.datatype" />:</td>
-		<td><a href="#" id='linkData' onclick="showDatatypes()";>Show Datatypes</a> 
+		<td><a href="#" id='linkData'>Show Datatypes</a> 
 		<div id="divData" style="display:none;">
 			<c:forEach var="dataType" items="${dataTypes}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.dataTypes, dataType)}"> checked </c:if> name="conceptDatatype" value="${dataType.id}">${dataType.name}<br />
@@ -97,7 +100,7 @@ function showSearchHistory() {
 	</tr>
 	<tr>
 		<td valign="top"><spring:message code="Concept.conceptClass" />:</td>
-		<td><a href="#" id='linkClass' onclick="showConceptClasses()";>Show Classes</a> 
+		<td><a href="#" id='linkClass'>Show Classes</a> 
 		<div id="divClass" style="display:none;">
 			<c:forEach var="class" items="${conceptClasses}">
 				<input type="checkbox" <c:if test="${fn:contains(conceptSearch.conceptClasses, class)}"> checked </c:if> name="conceptClasses" value="${class.id}">${class.name}<br />
@@ -129,63 +132,18 @@ function showSearchHistory() {
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" name="action" value="<spring:message code="general.search" />"></td>
+		<td><input type="submit" name="action" value="<spring:message code="general.search" />">
+		<a href="basicSearch.form"><spring:message code="conceptsearch.basicheading" /></a>
+		</td>
 	</tr>
 </table>
 </form>
 </div>
-<div style="width:80%; margin:0px 0px 0px 0px; overflow:auto">
-<form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='advancedSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
-							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
-							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
-							<option <c:if test="${countConcept.conceptsPerPage==100}"> selected </c:if> value="100">100</option>
-							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1"><spring:message code="conceptsearch.all" /></option>
-						</select><spring:message code="conceptsearch.conceptsperpage" /></div></form>
-<div class="boxHeader"><b><spring:message code="conceptsearch.searchresults" /></b>&nbsp;<c:if test="${!(searchResult == null)}">(${fn:length(searchResult)} <spring:message code="conceptsearch.resultsreturned" />)</c:if></div>
-<div class="box">
-<table>
-	<tr>
-		<th><spring:message code="conceptsearch.actions" /></th>
-		<th><spring:message code="Concept" /><a href="?sort=name&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=name&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="Concept.conceptClass" /><a href="?sort=class&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=class&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<th><spring:message code="Concept.datatype" /><a href="?sort=datatype&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=datatype&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-		<!-- <th>Other Names</th> -->
-		<th><spring:message code="conceptsearch.numberofobs" /><a href="?sort=obs&order=desc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/movedown.gif"></a><a href="?sort=obs&order=asc"><img style="width: 15px; height: 15px;" border="0" src="/openmrs/images/moveup.gif"></a></th>
-	</tr>
-	<c:choose>
-	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
-		<c:set var="lastConcept" value="${fn:length(searchResult)}"></c:set>
-	</c:when>
-	<c:otherwise>
-		<c:set var="lastConcept" value="${countConcept.currentPage*countConcept.conceptsPerPage}"></c:set>
-	</c:otherwise>
-	</c:choose>
-	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">
-		<tr bgcolor="#F5F5F5">
-			<td><a
-				href="viewConcept.form?conceptId=${concept.conceptId}"><spring:message
-				code="general.view" /></a></td>
-			<td>${concept.conceptName}</td>
-			<td>${concept.conceptClass}</td>
-			<td>${concept.conceptDatatype}</td>
-			<!--  <td>${concept.otherNames}</td> -->
-			<td>${concept.numberOfObs}</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td colspan="4"><em>${concept.conceptDescription}</em></td>
-		</tr>
-	</c:forEach>
-</table>
-<c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
-<div style="position:relative; left:30px; font-size11px;">
-<spring:message code="conceptsearch.page" />:
-<c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
-	<a href="?page=${i}">${i}</a>&nbsp;
-</c:forEach>
-</div>
-</c:if>
-</div>
 </div>
 
+<div style="width:74%;  overflow: hidden; float:right">
+  <openmrs:portlet url="searchresult" id="searchresult" moduleId="conceptsearch" />
+</div>
+
+<div style="clear: both;"></div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>

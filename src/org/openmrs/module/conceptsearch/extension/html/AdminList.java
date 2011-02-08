@@ -49,7 +49,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		map.put("module/conceptsearch/basicSearch.form", "conceptsearch.basicheading");
 		map.put("module/conceptsearch/advancedSearch.form", "conceptsearch.advancedheading");
-		
+	
 		return map;
 	}
 	

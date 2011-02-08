@@ -1,78 +1,51 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 
+<openmrs:require privilege="View Concept Classes" otherwise="/login.htm" redirect="/module/conceptsearch/basicSearch.form" />
+
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
-<openmrs:require privilege="View Concepts" otherwise="/login.htm" />
+<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
+<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
-<link rel="stylesheet" type="text/css" href="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.css" />
+<!-- Include css from conceptmanagement module -->
+<openmrs:htmlInclude file="${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/css/jquery.autocomplete.css" />
 
-<script src="/openmrs/scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
-<script src="/openmrs/scripts/jquery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
+<!-- Include javascript from conceptmanagement module -->
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.autocomplete.min.js'/>
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.js'/>
+<openmrs:htmlInclude file="${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"/>
+<openmrs:htmlInclude file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/jquery/autocomplete/jquery.autocomplete.js'/>
 
 <h2><spring:message code="conceptsearch.basicheading" /></h2>
-
 <br />
-<form method="post" class="box">
-<table>
-	<tr>
-		<td><input id="conceptQuery" type="text" name="conceptQuery" size="20"
-			value="${conceptSearch.searchQuery}">
-			<script>
-				$("#conceptQuery").autocomplete("/openmrs/module/conceptsearch/autocomplete.form");
-			</script></td>
-		<td><input type="submit"
-			value="<spring:message code="general.search" />"></td>
-	</tr>
-</table>
-</form>
-<c:if test="${!(searchResult == null)}">
-	<dir>
-		${fn:length(searchResult)} <spring:message code="conceptsearch.resultsreturned" />
-	</dir>
-</c:if>
-<form name="frmConceptCount"><div style="position:absolute; right:40px;">Show <select name="conceptsPerPage" size="1" OnChange="location.href='basicSearch.form?count='+frmConceptCount.conceptsPerPage.options[selectedIndex].value";>
-							<option <c:if test="${countConcept.conceptsPerPage==25}"> selected </c:if> value="25">25</option>
-							<option <c:if test="${countConcept.conceptsPerPage==50}"> selected </c:if> value="50">50</option>
-							<option <c:if test="${countConcept.conceptsPerPage==100}"> selected </c:if> value="100">100</option>
-							<option <c:if test="${countConcept.conceptsPerPage==10000}"> selected </c:if> value="-1"><spring:message code="conceptsearch.all" /></option>
-						</select><spring:message code="conceptsearch.conceptsperpage" /></div></form>
-<div class="boxHeader"><b><spring:message
-	code="conceptsearch.concepts" /></b></div>
+<spring:hasBindErrors name="conceptQuery">
+	<spring:message code="fix.error"/>
+	<div class="error">
+		<c:forEach items="${errors.allErrors}" var="error">
+			<spring:message code="${error.code}" text="${error.code}"/><br/>
+		</c:forEach>
+	</div>
+	<br />
+</spring:hasBindErrors>
+<form method="post">
+<div class="boxHeader"><b><spring:message code="Concept.find" /></b></div>
 <div class="box">
 <table>
 	<tr>
-		<th><spring:message code="conceptsearch.actions" /></th>
-		<th><spring:message code="Concept" /></th>
-		<th><spring:message code="Concept.conceptClass" /></th>
-		<th><spring:message code="Concept.datatype" /></th>
+		<td><input id="conceptQuery" type="text" name="conceptQuery" size="25"
+			value="${conceptSearch.searchQuery}">
+			<script>
+			$("#conceptQuery").autocomplete("<%=request.getContextPath()%>/module/conceptsearch/autocomplete.form");
+			</script></td>
+		<td><input type="submit"
+			value="<spring:message code="general.search" />"> &nbsp;
+			<a href="advancedSearch.form"><spring:message code="conceptsearch.advancedheading" /></a>
+		</td>
 	</tr>
-	<c:choose>
-	<c:when test="${countConcept.currentPage*countConcept.conceptsPerPage ge fn:length(searchResult)}">
-		<c:set var="lastConcept" value="${fn:length(searchResult)}"></c:set>
-	</c:when>
-	<c:otherwise>
-		<c:set var="lastConcept" value="${countConcept.currentPage*countConcept.conceptsPerPage}"></c:set>
-	</c:otherwise>
-	</c:choose>
-	<c:forEach var="concept" begin="${(countConcept.currentPage-1)*countConcept.conceptsPerPage}" end="${lastConcept}" items="${searchResult}">
-		<tr>
-			<td><a
-				href="viewConcept.form?conceptId=${concept.conceptId}"><spring:message
-				code="general.view" /></a></td>
-			<td>${concept.names}</td>
-			<td>${concept.conceptClass.name}</td>
-			<td>${concept.datatype.name}</td>
-		</tr>
-	</c:forEach>
 </table>
-<c:if test="${!(searchResult == null || countConcept.conceptsPerPage == -1)}">
-<div style="position:relative; left:30px; font-size11px;">
-<spring:message code="conceptsearch.page" />:
-<c:forEach var="i" begin="1" end="${(fn:length(searchResult) div countConcept.conceptsPerPage)+1}" step="1">
-	<a href="?page=${i}">${i}</a>&nbsp;
-</c:forEach>
-</c:if>
 </div>
-</div>
+</form>
+<br />
+<openmrs:portlet url="searchresult" id="searchresult" moduleId="conceptsearch" />
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

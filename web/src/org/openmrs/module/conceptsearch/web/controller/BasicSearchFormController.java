@@ -13,117 +13,97 @@
  */
 package org.openmrs.module.conceptsearch.web.controller;
 
-import java.util.Collection;
-import java.util.Vector;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptsearch.ConceptPageCount;
 import org.openmrs.module.conceptsearch.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptSearchResult;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 /**
  * Controller to handle all searches performed by basicsearch.jsp.
  */
 @Controller
-public class BasicSearchFormController {
+public class BasicSearchFormController extends AbstractSearchFormController {
+
+	@ModelAttribute("conceptQuery")
+	public String getConceptQuery(@RequestParam(value="conceptQuery", required=false) String conceptQuery) {
+		return (conceptQuery == null ? "" : conceptQuery);
+    }
 	
-	/** Logger for this class and subclasses */
-	protected final Log log = LogFactory.getLog(getClass());
+	@InitBinder("conceptQuery")
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.setAllowedFields(new String[] { "conceptQuery" });
+		dataBinder.setRequiredFields(new String[] { "conceptQuery" });
+	}
 	
 	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET)
 	public void showBasicSearch(ModelMap model, WebRequest request, HttpSession session) {
-		//display advancedSearch.jsp	
+		//display basicSearch.jsp	
 		session.removeAttribute("searchResult");
 		session.removeAttribute("sortResults");
 		session.removeAttribute("conceptSearch");
-		session.removeAttribute("countConcept");
 		
-		ConceptPageCount conCount = new ConceptPageCount();
-		session.setAttribute("countConcept", conCount);
+	}
+	
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.POST)
+	public void performBasicSearch(@ModelAttribute("conceptQuery") String searchQuery, BindingResult errors, ModelMap model, WebRequest request, HttpSession session) {
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		List<Concept> rslt = new ArrayList<Concept>();
+		ConceptSearch cs = new ConceptSearch("");
+		
+		if (searchQuery != null && searchQuery.length()>0) {
+			cs.setSearchQuery(searchQuery);
+			rslt = Context.getConceptService().getConceptsByName(searchQuery);
+			
+			//add the results to a DTO to avoid Hibernate's lazy loading
+			List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();
+			for (Concept c : rslt) {
+				if (cs.getConceptUsedAs() == null || searchService.isConceptUsedAs(c, cs)) {
+					ConceptSearchResult res = new ConceptSearchResult(c);
+					res.setNumberOfObs(searchService.getNumberOfObsForConcept(c.getConceptId()));
+					resList.add(res);
+				}
+			}
+			
+			// add results to ListHolder
+			PagedListHolder resListHolder = new PagedListHolder(resList);
+			resListHolder.setPageSize(DEFAULT_RESULT_PAGE_SIZE);
+			
+			model.addAttribute("searchResult", resListHolder);
+			model.addAttribute("conceptSearch", cs);
+			
+			session.setAttribute("sortResults", resListHolder);
+			session.setAttribute("conceptSearch", cs);
+		}
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET, params = "count")
 	public void setConceptsPerPage(ModelMap model, WebRequest request, HttpSession session) {
-		ConceptPageCount conCount = new ConceptPageCount();
-		
-		//set count
-		String count = request.getParameter("count");
-		
-		if (session.getAttribute("countConcept") == null) {
-			session.setAttribute("countConcept", conCount);
-			conCount.setConceptsPerPage(Integer.parseInt(count));
-		} else {
-			conCount = (ConceptPageCount) session.getAttribute("countConcept");
-			int cCount = Integer.parseInt(count);
-			if (cCount == -1)
-				cCount = 10000;
-			conCount.setConceptsPerPage(cCount);
-			conCount.setCurrentPage(1);
-		}
-		model.addAttribute("countConcept", conCount);
-		
-		//add other elements (search words and results) to the view, so they are displayed
-		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		if (cs != null) {
-			model.addAttribute("conceptSearch", cs);
-		}
-		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
-		if (conList != null) {
-			model.addAttribute("searchResult", conList);
-		}
+		super.setConceptsPerPage(model, request, session);
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET, params = "page")
-	public void switchToPage(ModelMap model, WebRequest request, HttpSession session) {
-		//set page
-		String page = request.getParameter("page");
-		
-		ConceptPageCount conCount = (ConceptPageCount) session.getAttribute("countConcept");
-		if (conCount != null) {
-			conCount.setCurrentPage(Integer.parseInt(page));
-			model.addAttribute("countConcept", conCount);
-		}
-		
-		//add other elements (search words and results) to the view, so they are displayed
-		ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
-		if (cs != null) {
-			model.addAttribute("conceptSearch", cs);
-		}
-		Collection<Concept> conList = (Collection<Concept>) session.getAttribute("sortResults");
-		if (conList != null) {
-			model.addAttribute("searchResult", conList);
-		} else {
-			log.error("Results are gone");
-		}
+	public void switchToPage(@RequestParam("page") String page, ModelMap model, WebRequest request, HttpSession session) {
+		super.switchToPage(page, model, request, session);
 	}
 	
-	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.POST)
-	public void performBasicSearch(ModelMap model, WebRequest request, HttpSession session) {
-		Collection<Concept> rslt = new Vector<Concept>();
-		ConceptSearch cs = new ConceptSearch("");
-		
-		String searchQuery = (String) request.getParameter("conceptQuery");
-		
-		if (searchQuery != null) {
-			cs.setSearchQuery(searchQuery);
-			rslt = Context.getConceptService().getConceptsByName(searchQuery);
-			
-			model.addAttribute("searchResult", rslt);
-			model.addAttribute("sortResults", rslt);
-			model.addAttribute("conceptSearch", cs);
-			
-			session.setAttribute("sortResults", rslt);
-			session.setAttribute("conceptSearch", cs);
-		}
+	@RequestMapping(value = "/module/conceptsearch/basicSearch", method = RequestMethod.GET, params = "sort")
+    public void sortResultsView(ModelMap model, WebRequest request, HttpSession session) {
+		super.sortResultsView(model, request, session);
 	}
 	
 }

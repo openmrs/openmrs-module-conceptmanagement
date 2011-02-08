@@ -17,6 +17,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
 import org.openmrs.module.Extension.MEDIA_TYPE;
 import org.openmrs.module.conceptsearch.extension.html.AdminList;
 
@@ -28,6 +29,19 @@ public class AdminListExtensionTest extends TestCase {
 	/**
 	 * Get the links for the extension class
 	 */
+	@Test
+	public void testTitle() {
+		AdminList ext = new AdminList();
+		
+		assertNotNull("there should be a title", ext.getTitle());
+		
+		assertTrue("there should be a title", ext.getTitle().length() > 2);
+	}
+	
+	/**
+	 * Get the links for the extension class
+	 */
+	@Test
 	public void testValidatesLinks() {
 		AdminList ext = new AdminList();
 		
@@ -41,6 +55,7 @@ public class AdminListExtensionTest extends TestCase {
 	/**
 	 * Check the media type of this extension class
 	 */
+	@Test
 	public void testMediaTypeIsHtml() {
 		AdminList ext = new AdminList();
 		

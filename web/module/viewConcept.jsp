@@ -1,8 +1,9 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 
+<openmrs:require privilege="View Concept Classes" otherwise="/login.htm" redirect="/module/conceptsearch/viewConcept.form" />
+
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
-<openmrs:require privilege="View Concepts" otherwise="/login.htm" />
 
 <style type="text/css">
 	#conceptTabs {
@@ -227,7 +228,5 @@
 </table>
 </div>
 </div> <!-- end conceptMeatadata -->
-
-
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

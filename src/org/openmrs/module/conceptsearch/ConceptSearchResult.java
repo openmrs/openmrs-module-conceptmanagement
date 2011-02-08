@@ -14,6 +14,7 @@
 package org.openmrs.module.conceptsearch;
 
 import java.util.List;
+
 import java.util.Vector;
 
 import org.openmrs.Concept;
@@ -21,13 +22,18 @@ import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptDescription;
 import org.openmrs.ConceptName;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Class to store all the needed information about a concept. By storing all data in this class we
  * avoid Hibernate's lazy loading error when not displaying all concepts at once and we can connect
  * some other information with a certain concept (like number of obs)
  */
-public class ConceptSearchResult {
+public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	
 	private int conceptId;
 	
@@ -44,7 +50,7 @@ public class ConceptSearchResult {
 	private Long numberOfObs;
 	
 	//private String usedInForms;
-	
+	//private static Log log = LogFactory.getLog(ConceptSearchResult.class);
 	public ConceptSearchResult(int id, ConceptName name, ConceptDescription description, ConceptClass cclass,
 	    ConceptDatatype datatype) {
 		this.conceptId = id;
@@ -65,6 +71,7 @@ public class ConceptSearchResult {
 		for (ConceptName cn : con.getNames()) {
 			this.otherNames.add(cn.getName());
 		}
+		
 	}
 	
 	/**
@@ -164,5 +171,17 @@ public class ConceptSearchResult {
 	public void setConceptId(int conceptId) {
 		this.conceptId = conceptId;
 	}
+
+	/* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(final ConceptSearchResult other) {
+        return new CompareToBuilder().append(conceptId, other.conceptId).append(conceptName, other.conceptName)
+                .append(conceptDescription, other.conceptDescription).append(conceptClass, other.conceptClass)
+                .append(conceptDatatype, other.conceptDatatype).append(otherNames, other.otherNames)
+                .append(numberOfObs, other.numberOfObs).toComparison();
+    }
+
+
 	
 }
