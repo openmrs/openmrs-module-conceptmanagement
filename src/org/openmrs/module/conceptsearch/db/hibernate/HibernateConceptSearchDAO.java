@@ -119,6 +119,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	@SuppressWarnings("unchecked")
 	public List<Concept> getConcepts(ConceptSearch cs) throws DAOException {
 		Criteria crit = createGetConceptsCriteria(cs);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
 		return crit.list();
 	}
@@ -131,7 +132,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	 */
 	private Criteria createGetConceptsCriteria(ConceptSearch cs) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
-		
+
 		if (!cs.getSearchQuery().isEmpty()) {
 			crit.createAlias("names", "names");
 			crit.add(Restrictions.like("names.name", "%" + cs.getSearchQuery() + "%"));
@@ -213,6 +214,8 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
+	 * Returns a list of concept names, maximum 30 elements
+	 * 
 	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getAutocompleteConcepts(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -225,6 +228,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		//crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
 		
 		crit.add(Restrictions.ilike("names.name", searchWord, MatchMode.ANYWHERE));
+		crit.add(Restrictions.eq("retired", false));
 		crit.setMaxResults(30);
 		
 		for (Concept c : (List<Concept>) crit.list()) {

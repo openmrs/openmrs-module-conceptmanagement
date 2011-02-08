@@ -47,8 +47,9 @@
 	<classpathentry kind="lib" path="lib-common/openmrs-1.6.x/lib/xerces/resolver.jar"/>
 	<classpathentry kind="lib" path="lib-common/openmrs-1.6.x/lib/xerces/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib-common/openmrs-1.6.x/lib/xerces/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib-common/openmrs-api-1.6.2.13894-dev.jar"/>
-	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.6.2.13894-dev.jar"/>
+	<classpathentry kind="lib" path="lib-common/openmrs-api-1.6.2.13894-dev.jar" sourcepath="/openmrs-1.6.x/src"/>
+	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.6.2.13894-dev.jar" sourcepath="/openmrs-1.6.x"/>
 	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.6.2.13894-dev.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

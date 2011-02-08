@@ -37,7 +37,11 @@
 }
 
 .ac_loading {
-	background : Window url('./indicator.gif') right center no-repeat;
+	background : Window url('indicator.gif') right center no-repeat #eee;
+}
+
+.ac_odd {
+	background-color: #eee;
 }
 
 .ac_over {

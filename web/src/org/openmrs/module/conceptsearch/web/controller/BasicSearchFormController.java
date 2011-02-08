@@ -67,7 +67,7 @@ public class BasicSearchFormController extends AbstractSearchFormController {
 		
 		if (searchQuery != null && searchQuery.length()>0) {
 			cs.setSearchQuery(searchQuery);
-			rslt = Context.getConceptService().getConceptsByName(searchQuery);
+			rslt = searchService.getConcepts(cs);
 			
 			//add the results to a DTO to avoid Hibernate's lazy loading
 			List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();

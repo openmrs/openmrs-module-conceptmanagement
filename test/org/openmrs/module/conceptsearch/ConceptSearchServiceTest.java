@@ -51,4 +51,23 @@ public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 		Assert.assertNotNull("some number should be returned", nmbr);
 	}
 	
+	/**
+	 * Test if ConceptSearchService object is created and returns a value for a special query.
+	 */
+	@Test
+	public void testAutocompleteConcepts() {
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		Assert.assertNotNull("searchService should not be null", searchService);
+		
+		List<String> conceptNameList = searchService.getAutocompleteConcepts("cd4");
+		Assert.assertNotNull("some concepts should be returned", conceptNameList);
+		Assert.assertFalse("some concepts should be returned", conceptNameList.isEmpty());
+		for (String conceptname : conceptNameList) {
+			Assert.assertTrue("some cd4 concepts should be returned", conceptname.toLowerCase().indexOf("cd4")>=0);
+        }
+
+		conceptNameList = searchService.getAutocompleteConcepts("INVALIDCONCEPTNAMEWHICHISNOTINTHEDATABASE");
+		Assert.assertTrue("should be empty", conceptNameList.isEmpty());
+
+	}
 }
