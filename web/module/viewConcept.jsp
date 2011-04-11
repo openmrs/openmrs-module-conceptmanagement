@@ -152,6 +152,10 @@
 		<td>${concept.conceptId}</td>
 	</tr>
 	<tr>
+		<td><b>UUID</b></td>
+		<td>${concept.uuid}</td>
+	</tr>
+	<tr>
 		<td><b><spring:message code="general.name" /></b></td>
 		<td>${concept.name}</td>
 	</tr>
@@ -227,6 +231,6 @@
 	</tr>
 </table>
 </div>
-</div> <!-- end conceptMeatadata -->
+</div> <!-- end conceptMetadata -->
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
