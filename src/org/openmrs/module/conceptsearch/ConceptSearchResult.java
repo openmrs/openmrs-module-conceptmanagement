@@ -14,19 +14,14 @@
 package org.openmrs.module.conceptsearch;
 
 import java.util.List;
-
 import java.util.Vector;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptDescription;
 import org.openmrs.ConceptName;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Class to store all the needed information about a concept. By storing all data in this class we
@@ -62,11 +57,18 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	
 	public ConceptSearchResult(Concept con) {
 		this.conceptId = con.getConceptId();
-		this.conceptName = con.getName().getName();
-		if (con.getDescription() != null)
+		if (con.getName() != null) {
+			this.conceptName = con.getName().getName();
+		}
+		if (con.getDescription() != null) {
 			this.conceptDescription = con.getDescription().getDescription();
-		this.conceptClass = con.getConceptClass().getName();
-		this.conceptDatatype = con.getDatatype().getName();
+		}
+		if (con.getConceptClass() != null) {
+			this.conceptClass = con.getConceptClass().getName();
+		}
+		if (con.getDatatype() != null) {
+			this.conceptDatatype = con.getDatatype().getName();
+		}
 		this.otherNames = new Vector<String>();
 		for (ConceptName cn : con.getNames()) {
 			this.otherNames.add(cn.getName());
@@ -178,7 +180,7 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
     public int compareTo(final ConceptSearchResult other) {
         return new CompareToBuilder().append(conceptId, other.conceptId).append(conceptName, other.conceptName)
                 .append(conceptDescription, other.conceptDescription).append(conceptClass, other.conceptClass)
-                .append(conceptDatatype, other.conceptDatatype).append(otherNames, other.otherNames)
+                .append(conceptDatatype, other.conceptDatatype).append(otherNames.toArray(), other.otherNames.toArray())
                 .append(numberOfObs, other.numberOfObs).toComparison();
     }
 
