@@ -40,7 +40,7 @@ public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test if ConceptSearchService object is created and returns a value for a special query.
+	 * Test query number of observations
 	 */
 	@Test
 	public void testNumberOfObsQuery() {
@@ -52,7 +52,7 @@ public class ConceptSearchServiceTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Test if ConceptSearchService object is created and returns a value for a special query.
+	 * Test autocomplete feature.
 	 */
 	@Test
 	public void testAutocompleteConcepts() {
