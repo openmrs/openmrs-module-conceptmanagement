@@ -9,8 +9,8 @@
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>conceptsearch-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Concept Search Module API</name>
-	<description>API project for Concept Search Module</description>
+	<name>Advanced Concept Management Module API</name>
+	<description>API project for Advanced Concept Management Module</description>
 
 	<dependencies>
 		<!-- 

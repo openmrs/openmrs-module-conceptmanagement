@@ -9,8 +9,8 @@
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>conceptsearch-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>Concept Search Module OMOD</name>
-	<description>OpenMRS module project for Concept Search Module</description>
+	<name>Advanced Concept Management Module OMOD</name>
+	<description>OpenMRS module project for Advanced Concept Management Module</description>
 
 	<dependencies>
 		<dependency>

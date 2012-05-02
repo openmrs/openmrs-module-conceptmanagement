@@ -6,10 +6,10 @@
 	<artifactId>conceptsearch</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Concept Search Module</name>
-	<description>Parent project for Concept Search Module</description>
+	<name>Advanced Concept Management Module</name>
+	<description>Parent project for Advanced Concept Management Module</description>
 
-	<url>http://openmrs.org</url>
+	<url>https://wiki.openmrs.org/x/wQ0z</url>
 
 	<scm>
 		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/conceptsearch/trunk/</connection>
@@ -62,7 +62,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<openMRSVersion>1.5.0</openMRSVersion>
+		<openMRSVersion>1.7.0</openMRSVersion>
 	</properties>
 
 	<build>
