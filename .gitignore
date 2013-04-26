@@ -10,6 +10,7 @@
 /omod/.settings
 /omod/.project
 /omod/target
+/nbactions.xml
 
 /.idea
 *.iml
