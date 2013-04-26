@@ -12,9 +12,12 @@
 	<url>https://wiki.openmrs.org/x/wQ0z</url>
 
 	<scm>
-		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/conceptsearch/trunk/</connection>
-		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/conceptsearch/trunk/</developerConnection>
-		<url>http://svn.openmrs.org/openmrs-modules/conceptsearch/trunk/</url>
+		<connection>scm:git:https://github.com/openmrs/openmrs-module-conceptmanagement/</connection>
+
+		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-conceptmanagement/</developerConnection>
+
+		<url>https://github.com/openmrs/openmrs-module-conceptmanagement/</url>
+
 	</scm>
 
 	<modules>
