@@ -58,6 +58,8 @@ public class ConceptNameTagValidator implements Validator {
 			errors.rejectValue("conceptNameTag", "error.general");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tag", "error.name");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description");
+
 		}
 	}
 	
