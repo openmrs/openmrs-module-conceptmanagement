@@ -30,6 +30,7 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.Obs;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.conceptsearch.ConceptSearch;
@@ -244,6 +245,33 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
+	 * Returns a list of concept name tags, maximum 30 elements
+	 * 
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#getAutocompleteConceptNameTags(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAutocompleteConceptNameTags(String searchWord) throws DAOException {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptNameTag.class);
+		Vector<String> prev = new Vector<String>();
+		//crit.createAlias("names", "names");
+		//crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
+		crit.add(Restrictions.ilike("tag", searchWord, MatchMode.ANYWHERE));
+		crit.add(Restrictions.eq("voided", false));
+		crit.setMaxResults(30);
+		
+		for (ConceptNameTag cnt : (List<ConceptNameTag>) crit.list()) {
+			if (isSearchTermBeginningOfWord(cnt.getTag(), searchWord) && !prev.contains(cnt.getTag())) {
+				prev.add(cnt.getTag());
+			}
+		}
+		
+		
+		return prev;
+	}
+	
+	
+	/**
 	 * Method to find out that searchTerm is the beginning of a new word and not in the middle of a
 	 * word
 	 * 
@@ -261,6 +289,24 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 			return Character.isWhitespace(possibleWord.charAt(pos - 1));
 		
 		return false;
+	}
+	
+	/**
+     * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#purgeConceptNameTag(org.openmrs.ConceptNameTag)
+     */
+    public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException {
+		sessionFactory.getCurrentSession().delete(nameTag);	    
+    }
+    
+	/**
+	 * @see org.openmrs.api.db.ConceptDAO#saveConceptNameTag(org.openmrs.ConceptNameTag)
+	 */
+	public ConceptNameTag saveConceptNameTag(ConceptNameTag nameTag) {
+		if (nameTag == null)
+			return null;
+		
+		sessionFactory.getCurrentSession().saveOrUpdate(nameTag);
+		return nameTag;
 	}
 	
 }

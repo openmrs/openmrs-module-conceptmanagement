@@ -22,6 +22,8 @@ import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptDescription;
 import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
+
 
 /**
  * Class to store all the needed information about a concept. By storing all data in this class we
@@ -38,11 +40,16 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	
 	private String conceptClass;
 	
+	private String locale;
+	
 	private String conceptDatatype;
 	
 	private List<String> otherNames;
+		
+	private List<String> conceptNameTags;
 	
 	private Long numberOfObs;
+	
 	
 	//private String usedInForms;
 	//private static Log log = LogFactory.getLog(ConceptSearchResult.class);
@@ -53,6 +60,19 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 		this.conceptDescription = description.getDescription();
 		this.conceptClass = cclass.getName();
 		this.conceptDatatype = datatype.getName();
+	}
+	
+	public ConceptSearchResult(ConceptName name) {
+		this.conceptId = name.getId();
+		this.conceptName = name.getName();
+		this.conceptNameTags = new Vector<String>();
+		for(ConceptNameTag ctn : name.getTags()){
+			this.conceptNameTags.add(ctn.getTag());
+		}
+		if( (name.getLocale()) !=null){
+			this.locale = name.getLocale().getDisplayLanguage();
+		}
+				
 	}
 	
 	public ConceptSearchResult(Concept con) {
@@ -173,6 +193,35 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	public void setConceptId(int conceptId) {
 		this.conceptId = conceptId;
 	}
+	
+	/**
+	 * @return the conceptNameTags
+	 */
+	public List<String> getConceptNameTags() {
+		return conceptNameTags;
+	}
+	
+	/**
+	 * @param conceptNameTags the conceptNameTags to set
+	 */
+	public void setConceptNameTags(List<String> conceptNameTags) {
+		this.conceptNameTags = conceptNameTags;
+	}
+	
+	
+	/**
+	 * @return the locale
+	 */
+	public String getLocale() {
+		return locale;
+	}
+	
+	/**
+	 * @param locale the locale to set
+	 */
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 
 	/* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -181,7 +230,7 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
         return new CompareToBuilder().append(conceptId, other.conceptId).append(conceptName, other.conceptName)
                 .append(conceptDescription, other.conceptDescription).append(conceptClass, other.conceptClass)
                 .append(conceptDatatype, other.conceptDatatype).append(otherNames.toArray(), other.otherNames.toArray())
-                .append(numberOfObs, other.numberOfObs).toComparison();
+                .append(numberOfObs, other.numberOfObs).append(locale,  other.locale).toComparison();
     }
 
 

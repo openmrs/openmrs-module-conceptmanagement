@@ -17,7 +17,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.conceptsearch.ConceptSearch;
+import org.openmrs.module.conceptsearch.ConceptSearchService;
+import org.openmrs.Concept;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.ui.ModelMap;
@@ -27,7 +31,7 @@ import org.springframework.web.context.request.WebRequest;
 
 /**
  * AbstractSearchFormController provides common methods, which
- * are used in BasicSearchFormController and AdvancedSearchFormController.
+ * are used in BasicSearchFormController, AdvancedSearchFormController and ManageConceptNameFormController.
  * 
  */
 public abstract class AbstractSearchFormController {
@@ -81,9 +85,50 @@ public abstract class AbstractSearchFormController {
     	
     	PagedListHolder resListHolder = (PagedListHolder) session.getAttribute("sortResults");
     	ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+    	Concept concept = (Concept) session.getAttribute("concept");
+    	if (concept != null){
+    	   	model.addAttribute("concept", concept);
+    	}
     	if (cs != null)
     		model.addAttribute("conceptSearch", cs);
+    	if (resListHolder != null) {
+//    		List temp = resListHolder.getSource();
+//    		Collections.sort((List<ConceptSearchResult>) temp, new ConceptComparator(sortFor, asc));
+    		resListHolder.setSort(new MutableSortDefinition(sortFor, true, asc));
+    		resListHolder.resort();
+    		model.addAttribute("searchResult", resListHolder);
+    	} else {
+    		log.warn("Results are gone");
+    	}
+    }
+    
+    /*
+     * 
+     * 
+     * used by the manageconceptnameform
+     * conceptId added to parameter so that the form
+     *  comes up with the correct concept after sorting
+     * 
+     */
+    
+    public void sortResultsView( @RequestParam("sort") String sort,@RequestParam("order") String order, @RequestParam("conceptId") String conceptId,ModelMap model, WebRequest request, HttpSession session) {
+    	String sortFor = request.getParameter("sort");
+    	boolean asc = true;
     	
+    	if (request.getParameter("order") != null && request.getParameter("order").equals("desc"))
+    		asc = false;
+    	
+    	PagedListHolder resListHolder = (PagedListHolder) session.getAttribute("sortResults");
+    	ConceptSearch cs = (ConceptSearch) session.getAttribute("conceptSearch");
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		
+		String id = request.getParameter("conceptId");
+		int cid = Integer.parseInt(id);
+		Concept concept = searchService.getConcept(cid);
+    	model.addAttribute("concept", concept);
+    	
+    	if (cs != null)
+    		model.addAttribute("conceptSearch", cs);
     	if (resListHolder != null) {
 //    		List temp = resListHolder.getSource();
 //    		Collections.sort((List<ConceptSearchResult>) temp, new ConceptComparator(sortFor, asc));

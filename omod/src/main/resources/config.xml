@@ -24,6 +24,11 @@
 		<class>@MODULE_PACKAGE@.extension.html.AdminList</class>
 	</extension>
 	
+	<extension>
+		<point>org.openmrs.admin.concepts.localHeader</point>
+		<class>@MODULE_PACKAGE@.extension.html.ConceptListExt</class>
+	</extension>
+	
 	
 	<!-- AOP
 	<advice>

@@ -19,6 +19,7 @@ import java.util.List;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.api.db.DAOException;
 
 /**
@@ -75,5 +76,18 @@ public interface ConceptSearchDAO {
      * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
      */
     public List<String> getAutocompleteConcepts(String searchWord) throws DAOException;
+    
+	/**
+     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
+     */
+    public List<String> getAutocompleteConceptNameTags(String searchWord) throws DAOException;
+    
+    
+	/**
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#purgeConceptNameTag(org.openmrs.ConceptNameTag)
+	 */
+	public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException;
 	
+	public ConceptNameTag saveConceptNameTag(ConceptNameTag nameTag);
+
 }

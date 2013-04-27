@@ -19,8 +19,11 @@ import java.util.List;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.annotation.Authorized;
+import org.openmrs.api.APIException;
 import org.openmrs.util.OpenmrsConstants;
+//import org.openmrs.util.PrivilegeConstants;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -123,4 +126,48 @@ public interface ConceptSearchService {
 	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<String> getAutocompleteConcepts(String searchWord);
 	
+	/**
+	 * Returns a List of search suggestions depending on the search word entered
+	 * @param searchWord the beginning of the concept name tag
+	 * @return List of concept name tags that match the searchWord
+	 */
+	@Transactional(readOnly = true)
+	@Authorized( { OpenmrsConstants.PRIV_MANAGE_CONCEPTS })
+	public List<String> getAutocompleteConceptNameTags(String searchWord);
+	
+	/**
+	 * Purges the specified concept name tag from the database
+	 * 
+	 * @param conceptNameTag the concept name tag object to purge
+	 * @throws APIException
+	 */
+	@Transactional(readOnly = false)
+	@Authorized(OpenmrsConstants.PRIV_MANAGE_CONCEPT_NAME_TAGS) 
+	public void purgeConceptNameTag(ConceptNameTag nameTag) throws APIException;
+	
+	
+	/**
+	 * Retiring a ConceptNameTag essentially removes it from circulation
+	 * 
+	 * @param conceptNameTag The ConceptNameTag to retire
+	 * @param reason The retire reason
+	 * @throws APIException
+	 * @return the retired ConceptNameTag
+	 */
+	@Authorized(OpenmrsConstants.PRIV_MANAGE_CONCEPT_NAME_TAGS) 
+	public ConceptNameTag retireNameTag(ConceptNameTag nameTag, String reason) throws APIException;
+	
+	/**
+	 * Marks a conceptNameTag that is currently retired as not retired.
+	 * 
+	 * @param conceptNameTag that is current set as retired
+	 * @return the given conceptNameTag, marked as not retired now, and saved to the db
+	 * @throws APIException
+	 * @should mark conceptNameTag as retired
+	 * @should not change attributes of conceptNameTag that is already retired
+	 */
+	@Authorized(OpenmrsConstants.PRIV_MANAGE_CONCEPT_NAME_TAGS) 
+	public ConceptNameTag unretireNameTag(ConceptNameTag nameTag) throws APIException;
+	 
+
 }

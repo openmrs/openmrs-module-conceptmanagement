@@ -35,7 +35,34 @@
 		</list>
 	</property>
 </bean>
+<bean id="conceptManagementUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	<property name="mappings">
+       	<props>
+			<prop key="**/conceptNameTag.list">conceptNameTagList</prop>
+			<prop key="**/conceptNameTag.form">conceptNameTagForm</prop>
+		</props>
+	</property>
+</bean>
+	<!--  ** /Concept Drug ** -->
+	<!-- ** Concept Class ** -->
+	<bean id="conceptNameTagList" class="org.openmrs.module.conceptsearch.web.controller.ConceptNameTagListController">
+		<property name="sessionForm"><value>true</value></property>
+		<property name="commandName"><value>conceptNameTagList</value></property>
+		<property name="formView"><value>/module/@MODULE_ID@/conceptNameTagList</value></property>
+		<property name="successView"><value>conceptNameTag.list</value></property>
+	</bean>
+
+	<!--  Form Controller for the add/edit concept tags page -->
+	<bean id="conceptNameTagForm"
+		class="org.openmrs.module.conceptsearch.web.controller.ConceptNameTagFormController">
+		<property name="sessionForm"><value>true</value></property>
+		<property name="commandName"><value>conceptNameTag</value></property>
+		<property name="validator">
+			<ref bean="conceptNameTagValidator" />
+		</property>
+		<property name="formView"><value>/module/@MODULE_ID@/conceptNameTagForm</value></property>
+		<property name="successView"><value>conceptNameTag.list</value></property>
+	</bean>
 
 </beans>
-
 
