@@ -68,26 +68,26 @@ public interface ConceptSearchDAO {
 	public ConceptClass getConceptClassById(int id) throws DAOException;
 	
 	/**
-	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptsearch.ConceptSearch)
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept,
+	 *      org.openmrs.module.conceptsearch.ConceptSearch)
 	 */
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) throws DAOException;
 	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
-     */
-    public List<String> getAutocompleteConcepts(String searchWord) throws DAOException;
-    
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+	 */
+	public List<String> getAutocompleteConcepts(String searchWord) throws DAOException;
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
-     */
-    public List<String> getAutocompleteConceptNameTags(String searchWord) throws DAOException;
-    
-    
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
+	 */
+	public List<String> getAutocompleteConceptNameTags(String searchWord) throws DAOException;
+	
 	/**
 	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#purgeConceptNameTag(org.openmrs.ConceptNameTag)
 	 */
 	public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException;
 	
 	public ConceptNameTag saveConceptNameTag(ConceptNameTag nameTag);
-
+	
 }

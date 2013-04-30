@@ -62,36 +62,37 @@ h1,h2,h3,h4,h5 {
 	href="#"
 	onClick="return toggleRowVisibilityForClass('conceptNameTagTable', 'retired', false);">
 		<openmrs:message code="general.toggle.retired" />
-</a> <spring:message code="conceptsearch.taglisttitle" /> 
+</a> <spring:message code="conceptsearch.taglisttitle" />
 </b>
 <form method="post">
-<div class="box">
-	<table id="conceptNameTagTable" cellpadding="2" cellspacing="0">
-		<tr>
-			<th></th>
-			<th><spring:message code="general.name" /></th>
-			<th><spring:message code="general.description" /></th>
-		</tr>
+	<div class="box">
+		<table id="conceptNameTagTable" cellpadding="2" cellspacing="0">
+			<tr>
+				<th></th>
+				<th><spring:message code="general.name" /></th>
+				<th><spring:message code="general.description" /></th>
+			</tr>
 			<c:forEach var="conceptNameTag" items="${conceptNameTagList}">
-		<tr class="<c:if test="${conceptNameTag.voided}">retired </c:if>">
-				
-				<td valign="top"><input type="checkbox" name="conceptNameTagId"
-					value="${conceptNameTag.conceptNameTagId}"></td>
-				<td valign="top"><a
-					href="conceptNameTag.form?conceptNameTagId=${conceptNameTag.conceptNameTagId}">
-						${conceptNameTag.tag} </a></td>
-				<td valign="top">${conceptNameTag.description}</td>
-		</tr>
-		</c:forEach>
-	</table>
+				<tr class="<c:if test="${conceptNameTag.voided}">retired </c:if>">
 
-	<openmrs:extensionPoint
-		pointId="org.openmrs.admin.concepts.conceptNameTagList.inForm"
-		type="html" />
+					<td valign="top"><input type="checkbox"
+						name="conceptNameTagId" value="${conceptNameTag.conceptNameTagId}"></td>
+					<td valign="top"><a
+						href="conceptNameTag.form?conceptNameTagId=${conceptNameTag.conceptNameTagId}">
+							${conceptNameTag.tag} </a></td>
+					<td valign="top">${conceptNameTag.description}</td>
+				</tr>
+			</c:forEach>
+		</table>
 
-	<input type="submit"
-		value="<spring:message code="conceptsearch.deletetag"/>" name="action">
-</div>
+		<openmrs:extensionPoint
+			pointId="org.openmrs.admin.concepts.conceptNameTagList.inForm"
+			type="html" />
+
+		<input type="submit"
+			value="<spring:message code="conceptsearch.deletetag"/>"
+			name="action">
+	</div>
 </form>
 
 <openmrs:extensionPoint

@@ -115,36 +115,35 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	public ConceptDatatype getConceptDatatypeById(int id) {
 		return dao.getConceptDatatypeById(id);
 	}
-
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptsearch.ConceptSearch)
-     */
-    @Override
-    public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
-    	return dao.isConceptUsedAs(concept, cs);
-    }
-
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept,
+	 *      org.openmrs.module.conceptsearch.ConceptSearch)
+	 */
+	@Override
+	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
+		return dao.isConceptUsedAs(concept, cs);
+	}
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
-     */
-    @Override
-    public List<String> getAutocompleteConcepts(String searchWord) {
-    	return dao.getAutocompleteConcepts(searchWord);
-    }
-    
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+	 */
+	@Override
+	public List<String> getAutocompleteConcepts(String searchWord) {
+		return dao.getAutocompleteConcepts(searchWord);
+	}
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
-     */
-    @Override
-    public List<String> getAutocompleteConceptNameTags(String searchWord) {
-    	return dao.getAutocompleteConceptNameTags(searchWord);
-    }
-    
-    
-    
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
+	 */
+	@Override
+	public List<String> getAutocompleteConceptNameTags(String searchWord) {
+		return dao.getAutocompleteConceptNameTags(searchWord);
+	}
+	
 	/**
 	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#purgeConceptNameTag(org.openmrs.ConceptNameTag)
-	 * TODO: check if tag is in use?
+	 *      TODO: check if tag is in use?
 	 */
 	@Override
 	public void purgeConceptNameTag(ConceptNameTag nameTag) {
@@ -152,14 +151,13 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ConceptSearchService#retireNameTag(org.openmrs.ConceptNameTag, java.lang.String)
+	 * @see org.openmrs.api.ConceptSearchService#retireNameTag(org.openmrs.ConceptNameTag,
+	 *      java.lang.String)
 	 * @throws APIException
 	 */
-	public ConceptNameTag retireNameTag(ConceptNameTag nameTag, String reason) throws APIException{
+	public ConceptNameTag retireNameTag(ConceptNameTag nameTag, String reason) throws APIException {
 		return dao.saveConceptNameTag(nameTag);
 	}
-
-	
 	
 	/**
 	 * @see org.openmrs.api.ConceptSearchService#ConceptNameTag(org.openmrs.ConceptNameTag)

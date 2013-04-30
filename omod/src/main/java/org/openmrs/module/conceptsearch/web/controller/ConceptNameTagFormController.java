@@ -63,7 +63,7 @@ public class ConceptNameTagFormController extends SimpleFormController {
 	 *      org.springframework.validation.BindException)
 	 */
 	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object obj,
-	        BindException errors) throws Exception {		
+	                                BindException errors) throws Exception {
 		HttpSession session = request.getSession();
 		
 		String view = getFormView();
@@ -90,10 +90,9 @@ public class ConceptNameTagFormController extends SimpleFormController {
 					log.error("Unable to Retire concept because an error occurred: " + nameTag, e);
 					session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, "general.cannot.retire");
 				}
-
+				
 			}
 			
-
 			// if this nametag is already voided and needs to be unvoided
 			else if (request.getParameter("unretireNameTag") != null) {
 				try {
@@ -109,11 +108,11 @@ public class ConceptNameTagFormController extends SimpleFormController {
 				}
 			} else {
 				//if(nameTag.getTag() != null && nameTag.getTag().length()>0){
-					Context.getConceptService().saveConceptNameTag(nameTag);
-					session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.saved");
+				Context.getConceptService().saveConceptNameTag(nameTag);
+				session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.saved");
 				//}
 				//else{
-					//errors.reject("Name required","Name required");
+				//errors.reject("Name required","Name required");
 				//}
 			}
 			
@@ -123,6 +122,7 @@ public class ConceptNameTagFormController extends SimpleFormController {
 		
 		return new ModelAndView(new RedirectView(view));
 	}
+	
 	/**
 	 * This is called prior to displaying a form for the first time. It tells Spring the
 	 * form/command object to load into the request
@@ -146,4 +146,3 @@ public class ConceptNameTagFormController extends SimpleFormController {
 		return conceptNameTag;
 	}
 }
-	

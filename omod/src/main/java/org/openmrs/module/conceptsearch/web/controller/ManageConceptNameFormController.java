@@ -57,11 +57,11 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 @Controller
 public class ManageConceptNameFormController extends AbstractSearchFormController {
-            
+	
 	@ModelAttribute("tagnameQuery")
-	public String getTagnameQuery(@RequestParam(value="tagnameQuery", required=false) String tagnameQuery) {
+	public String getTagnameQuery(@RequestParam(value = "tagnameQuery", required = false) String tagnameQuery) {
 		return (tagnameQuery == null ? "" : tagnameQuery);
-    }
+	}
 	
 	@InitBinder("tagnameQuery")
 	public void initBinder(WebDataBinder dataBinder) {
@@ -69,11 +69,10 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		dataBinder.setRequiredFields(new String[] { "tagnameQuery" });
 		
 	}
-
 	
 	@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = RequestMethod.POST)
-	protected void performSaveorDelete(@ModelAttribute("tagnameQuery") String searchQuery, BindingResult errors, ModelMap model, WebRequest request, HttpSession session) {
-
+	protected void performSaveorDelete(@ModelAttribute("tagnameQuery") String searchQuery, BindingResult errors,
+	                                   ModelMap model, WebRequest request, HttpSession session) {
 		
 		ConceptService cs = Context.getConceptService();
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
@@ -81,95 +80,98 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		String id = request.getParameter("conceptId");
 		int cid = Integer.parseInt(id);
 		Concept concept = searchService.getConcept(cid);
-			
-			if (request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("save")) {
-				int i = 0;
-				for(ConceptName cn : concept.getNames()){
-					if(request.getParameter("saveTagWithConceptName"+cn) !=null) {
-						String tagNameQueryString="tagnameQuery"+cn;
-						if(request.getParameter(tagNameQueryString).length()>0){
-							String tagName = request.getParameter(tagNameQueryString);
-							ConceptNameTag tag = cs.getConceptNameTagByName(tagName);
-							if(tag != null){
-								if(!tag.getVoided()){
-									cn.addTag(tag);
-									cs.saveConcept(concept);
-									
-								}
-								else{
-									errors.reject("Tag is retired","Tag is retired");	
-								}
+		
+		if (request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("save")) {
+			int i = 0;
+			for (ConceptName cn : concept.getNames()) {
+				if (request.getParameter("saveTagWithConceptName" + cn) != null) {
+					String tagNameQueryString = "tagnameQuery" + cn;
+					if (request.getParameter(tagNameQueryString).length() > 0) {
+						String tagName = request.getParameter(tagNameQueryString);
+						ConceptNameTag tag = cs.getConceptNameTagByName(tagName);
+						if (tag != null) {
+							if (!tag.getVoided()) {
+								cn.addTag(tag);
+								cs.saveConcept(concept);
+								
+							} else {
+								errors.reject("Tag is retired", "Tag is retired");
 							}
-							else{
-								errors.reject("Tag not found","Tag not found");
-							}
+						} else {
+							errors.reject("Tag not found", "Tag not found");
 						}
 					}
-					i++;
 				}
-				
+				i++;
 			}
-			//if (request.getParameter("deleteCN-conceptName") != null) {
-			else if(request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("delete")){
-				for(ConceptName cn : concept.getNames()){
-					int i = 0; boolean del = false;
-					List<String> tags = new Vector<String>();
-					for(ConceptNameTag cnt : cn.getTags()){
-						if(request.getParameter("hiddenAction"+cn.getName()+i).length() > 0){
-							del = true;
-							String tagName = request.getParameter("hiddenAction"+cn.getName()+i);
-							tags.add(tagName);
-							
-						}
-						i++;
+			
+		}
+		//if (request.getParameter("deleteCN-conceptName") != null) {
+		else if (request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("delete")) {
+			for (ConceptName cn : concept.getNames()) {
+				int i = 0;
+				boolean del = false;
+				List<String> tags = new Vector<String>();
+				for (ConceptNameTag cnt : cn.getTags()) {
+					if (request.getParameter("hiddenAction" + cn.getName() + i).length() > 0) {
+						del = true;
+						String tagName = request.getParameter("hiddenAction" + cn.getName() + i);
+						tags.add(tagName);
 						
 					}
-					if(del){
-						for(String cntName : tags){
-							ConceptNameTag tag = cs.getConceptNameTagByName(cntName);
-							cn.removeTag(tag);							
-						}
-						cs.saveConcept(concept);
-					}
+					i++;
+					
 				}
-				
+				if (del) {
+					for (String cntName : tags) {
+						ConceptNameTag tag = cs.getConceptNameTagByName(cntName);
+						cn.removeTag(tag);
+					}
+					cs.saveConcept(concept);
+				}
 			}
-			if(request.getParameter("sort") != null && request.getParameter("order") != null){
-				String sort = request.getParameter("sort");
-				String order = request.getParameter("order");
-				String conceptId = request.getParameter("conceptId");
-				displaySortedConceptEditPage(sort, order, conceptId, model, request, session); 
-				
-			}
-			else{
-				displayConceptEditPage(model, request, session); 
-			}
-
+			
+		}
+		if (request.getParameter("sort") != null && request.getParameter("order") != null) {
+			String sort = request.getParameter("sort");
+			String order = request.getParameter("order");
+			String conceptId = request.getParameter("conceptId");
+			displaySortedConceptEditPage(sort, order, conceptId, model, request, session);
+			
+		} else {
+			displayConceptEditPage(model, request, session);
+		}
+		
 	}
-
-	@RequestMapping(value = "/module/conceptsearch/manageConceptName", method={RequestMethod.GET}, params={"sort", "order", "conceptId"})
-    public void sortResultsView( @RequestParam("sort") String sort,@RequestParam("order") String order, @RequestParam("conceptId") String conceptId,ModelMap model, WebRequest request, HttpSession session) {
-		super.sortResultsView( sort,order,conceptId,model,request,session);
-
+	
+	@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = { RequestMethod.GET }, params = { "sort",
+	        "order", "conceptId" })
+	public void sortResultsView(@RequestParam("sort") String sort, @RequestParam("order") String order,
+	                            @RequestParam("conceptId") String conceptId, ModelMap model, WebRequest request,
+	                            HttpSession session) {
+		super.sortResultsView(sort, order, conceptId, model, request, session);
+		
 	}
-
+	
 	//@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = RequestMethod.GET, params = "conceptId")
-	public void displaySortedConceptEditPage(@RequestParam("sort") String sort,@RequestParam("order") String order, @RequestParam("conceptId") String conceptId,ModelMap model, WebRequest request, HttpSession session) {
+	public void displaySortedConceptEditPage(@RequestParam("sort") String sort, @RequestParam("order") String order,
+	                                         @RequestParam("conceptId") String conceptId, ModelMap model,
+	                                         WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		String id = request.getParameter("conceptId");
 		int cid = Integer.parseInt(id);
 		
 		Concept concept = searchService.getConcept(cid);
-		List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();	
-
+		List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();
+		
 		if (concept != null) {
-			for(ConceptName cn : concept.getNames()){
+			for (ConceptName cn : concept.getNames()) {
 				ConceptSearchResult res = new ConceptSearchResult(cn);
 				resList.add(res);
 			}
-				
+			
 		}
-		sortResultsView( sort,order,conceptId,model,request,session);
+		sortResultsView(sort, order, conceptId, model, request, session);
 		// add results to ListHolder
 		PagedListHolder resListHolder = new PagedListHolder(resList);
 		resListHolder.setPageSize(DEFAULT_RESULT_PAGE_SIZE);
@@ -177,8 +179,9 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		model.addAttribute("searchResult", resListHolder);
 		session.setAttribute("sortResults", resListHolder);
 		model.addAttribute("concept", concept);
-		sortResultsView( sort,order,conceptId,model,request,session);
+		sortResultsView(sort, order, conceptId, model, request, session);
 	}
+	
 	@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = RequestMethod.GET, params = "conceptId")
 	public void displayConceptEditPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
@@ -186,14 +189,14 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		int cid = Integer.parseInt(id);
 		
 		Concept concept = searchService.getConcept(cid);
-		List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();	
-
+		List<ConceptSearchResult> resList = new ArrayList<ConceptSearchResult>();
+		
 		if (concept != null) {
-			for(ConceptName cn : concept.getNames()){
+			for (ConceptName cn : concept.getNames()) {
 				ConceptSearchResult res = new ConceptSearchResult(cn);
 				resList.add(res);
 			}
-				
+			
 		}
 		// add results to ListHolder
 		PagedListHolder resListHolder = new PagedListHolder(resList);
@@ -202,7 +205,7 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		model.addAttribute("searchResult", resListHolder);
 		session.setAttribute("sortResults", resListHolder);
 		model.addAttribute("concept", concept);
-
+		
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/autocompletenametag", method = RequestMethod.GET)
@@ -215,5 +218,5 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		// -- Autocompletehelper is used to avoid some problems -- 
 		log.debug("Accessing autocomplete");
 	}
-
+	
 }

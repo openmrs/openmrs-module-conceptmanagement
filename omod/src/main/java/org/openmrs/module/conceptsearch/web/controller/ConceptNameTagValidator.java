@@ -59,7 +59,7 @@ public class ConceptNameTagValidator implements Validator {
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tag", "error.name");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description");
-
+			
 		}
 	}
 	
