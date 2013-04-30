@@ -15,67 +15,77 @@ body {
 	position: relative;
 	min-height: 100%;
 }
+
 #logocell {
 	width: 61px;
 }
+
 .barsmall {
-	background-image:url(images/openmrs_green_bar_repeat.gif);
-	background-repeat:repeat-x;
-	height:27px;
+	background-image: url(images/openmrs_green_bar_repeat.gif);
+	background-repeat: repeat-x;
+	height: 27px;
 	margin-left: 0px;
-    font-family: Verdana,Arial,Helvetica,sans-serif;
-    color: #ffffff;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #ffffff;
 }
+
 #logosmall {
 	float: left;
-	margin-left: 49px; 
-	margin-top:2px;
+	margin-left: 49px;
+	margin-top: 2px;
 	position: absolute;
 }
+
 #bannerbar {
-	text-align:center;
-	line-height:40px;
-	margin-top:12px;
-	width:100%;
+	text-align: center;
+	line-height: 40px;
+	margin-top: 12px;
+	width: 100%;
 }
+
 img.logo-reduced61 {
-	width:61px;
-	height:61px;
+	width: 61px;
+	height: 61px;
 }
+
 img.bar-round-reduced50 {
-	height:27px;
-	margin-left:-5px;
-	margin-top:0px;
+	height: 27px;
+	margin-left: -5px;
+	margin-top: 0px;
 }
 
 .navList {
-		padding: 5px 0 2px 0;
-		margin: 0px;
-		text-align: center;
-		color: #ffffff;
-		width: 100%;
-	}
-	.navList li {
-		padding: 0 15px 0 18px;
-		margin-top:0px;
-		border-left: 2px solid white;
-		display:inline;
-		line-height: 1.0em;
-		white-space: nowrap;
-		font-size: 1.3em;
-        font-family: Verdana,Arial,Helvetica,sans-serif;
-	}
-	.navList > li:first-child {
-		border-left-style: none;
-	}
-	.navList li.firstChild {
-		/* IE hack to get around lack of first-child support */
-		border-left-style: none;
-	}
-	.navList a:link, .navList a:active, .navList a:visited,.navList a:hover {
-		text-decoration: none;
-		color: #ffffff;
-	}
+	padding: 5px 0 2px 0;
+	margin: 0px;
+	text-align: center;
+	color: #ffffff;
+	width: 100%;
+}
+
+.navList li {
+	padding: 0 15px 0 18px;
+	margin-top: 0px;
+	border-left: 2px solid white;
+	display: inline;
+	line-height: 1.0em;
+	white-space: nowrap;
+	font-size: 1.3em;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.navList>li:first-child {
+	border-left-style: none;
+}
+
+.navList li.firstChild {
+	/* IE hack to get around lack of first-child support */
+	border-left-style: none;
+}
+
+.navList a:link,.navList a:active,.navList a:visited,.navList a:hover {
+	text-decoration: none;
+	color: #ffffff;
+}
 
 * html #pageBody {
 	height: 100%;
@@ -83,22 +93,23 @@ img.bar-round-reduced50 {
 
 * {
 	font-family: Verdana, 'Lucida Grande', 'Trebuchet MS', Arial, Sans-Serif;
-    -moz-box-sizing: border-box;  /* Use IE-like Border-Box model */
+	-moz-box-sizing: border-box; /* Use IE-like Border-Box model */
 }
 
-h1, h2, h3, h4, h5 {
+h1,h2,h3,h4,h5 {
 	margin-top: 5px;
 	margin-bottom: 7px;
 }
 
-a, a:link, a:hover, a:visited, a:active {
+a,a:link,a:hover,a:visited,a:active {
 	text-decoration: underline;
 	color: #ffffff;
 }
+
 a:hover {
 	text-decoration: none;
- 	text-align: left;
- 	z-index: 6;
+	text-align: left;
+	z-index: 6;
 }
 
 #openmrs_msg {
@@ -111,7 +122,7 @@ a:hover {
 	background-color: lightpink;
 }
 
-#openmrs_msg, #openmrs_error { 
+#openmrs_msg,#openmrs_error {
 	margin-top: 3px;
 	margin-bottom: 5px;
 	border: 1px dashed lightgrey;
@@ -122,29 +133,33 @@ a:hover {
 	color: #333333;
 	line-height: 26px;
 	margin: 0px;
-    padding-right: 5px;
+	padding-right: 5px;
 	padding-top: 3px;
-    position: absolute;
-    right: 5px;
-    text-align: right;
+	position: absolute;
+	right: 5px;
+	text-align: right;
 	top: 0;
 	z-index: 10;
 }
-	#userBar a:link, #userBar a:active, #userBar a:visited, #userBar a:hover,
-	#content a.offColor, #content a.offColor:link, #content a.offColor:active, #content a.offColor:visited, #content a.offColor:hover {
-		color: #f57439;
-	}
-	#userBar span {
-		border-left: 1px solid #333333;
-		padding: 0 5px 0 5px;
-	}
-	#userBar > span:first-child {
-		border-left-style: none;
-	}
-	#userBar span.firstChild {
-		/* IE hack to get around lack of first-child support */
-		border-left-style: none;
-	}
+
+#userBar a:link,#userBar a:active,#userBar a:visited,#userBar a:hover,#content a.offColor,#content a.offColor:link,#content a.offColor:active,#content a.offColor:visited,#content a.offColor:hover
+	{
+	color: #f57439;
+}
+
+#userBar span {
+	border-left: 1px solid #333333;
+	padding: 0 5px 0 5px;
+}
+
+#userBar>span:first-child {
+	border-left-style: none;
+}
+
+#userBar span.firstChild {
+	/* IE hack to get around lack of first-child support */
+	border-left-style: none;
+}
 
 #banner {
 	position: absolute;
@@ -153,8 +168,8 @@ a:hover {
 	text-align: left;
 	z-index: 6;
 	width: 100%;
-	}
-	
+}
+
 #content {
 	margin: 0px 0 0 0;
 	padding: 80px 10px 10px 10px;
@@ -162,9 +177,11 @@ a:hover {
 	background-color: #ffffff;
 	z-index: 8;
 }
-	#content a, a:link, #content a:active, #content a:visited, #content a:hover {
-		color: #003366;
-	}	
+
+#content a,a:link,#content a:active,#content a:visited,#content a:hover
+	{
+	color: #003366;
+}
 
 #contentMinimal {
 	margin: 0px 0 0 0;
@@ -174,9 +191,11 @@ a:hover {
 	background-color: #ffffff;
 	z-index: 8;
 }
-	#contentMinimal a, a:link, #contentMinimal a:active, #contentMinimal a:visited, #contentMinimal a:hover {
-		color: #003366;
-	}
+
+#contentMinimal a,a:link,#contentMinimal a:active,#contentMinimal a:visited,#contentMinimal a:hover
+	{
+	color: #003366;
+}
 
 #footer {
 	position: relative;
@@ -189,7 +208,7 @@ a:hover {
 	background-color: #eeeeee;
 }
 
-#footer a, a:link, #footer a:active, #footer a:visited, #footer a:hover {
+#footer a,a:link,#footer a:active,#footer a:visited,#footer a:hover {
 	color: #003366;
 }
 
@@ -197,7 +216,7 @@ a:hover {
 	margin-right: 5px;
 }
 
-#buildDate, #codeVersion, #databaseVersion, #databaseVersionError {
+#buildDate,#codeVersion,#databaseVersion,#databaseVersionError {
 	color: #999999;
 }
 
@@ -214,13 +233,14 @@ a:hover {
 	height: 1.4em;
 }
 
-#footer #poweredBy a, #poweredBy a:link, #poweredBy a:active, #poweredBy a:visited {
+#footer #poweredBy a,#poweredBy a:link,#poweredBy a:active,#poweredBy a:visited
+	{
 	text-decoration: none;
 }
 
 #menu {
 	padding-left: 2px;
-	width: 95% ;
+	width: 95%;
 }
 
 #menu li {
@@ -235,7 +255,7 @@ a:hover {
 	border-left-width: 0px;
 }
 
-#menu .active a{
+#menu .active a {
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -249,12 +269,27 @@ thead th {
 	font-weight: bold;
 }
 
-#patientSummary { font-size: 1.1em; }
-#patientSummary .boxHeader { font-size: 1.55em;}
-#patientSummary { /*width: 700px;*/ }
+#patientSummary {
+	font-size: 1.1em;
+}
 
-.patientSummaryLabel { font-size: small; text-align: right }
-.patientSummaryValue { color: #2222ff }
+#patientSummary .boxHeader {
+	font-size: 1.55em;
+}
+
+#patientSummary { /*width: 700px;*/
+	
+}
+
+.patientSummaryLabel {
+	font-size: small;
+	text-align: right
+}
+
+.patientSummaryValue {
+	color: #2222ff
+}
+
 .voidButton {
 	border: 1px solid gray;
 	background-color: lightpink;
@@ -265,7 +300,9 @@ thead th {
 	cursor: pointer;
 }
 
-#headerAccompagnateur .patientSummaryValue { color: black; }
+#headerAccompagnateur .patientSummaryValue {
+	color: black;
+}
 
 .obsDate {
 	font-size: 0.7em;
@@ -275,7 +312,7 @@ thead th {
 	font-size: 0.8em;
 	font-weight: bold;
 	text-align: left;
-	padding:5px 5px 5px 5px;
+	padding: 5px 5px 5px 5px;
 }
 
 #patientHeader {
@@ -283,14 +320,15 @@ thead th {
 	display: block;
 }
 
-#patientHeaderPatientName, #patientHeaderPreferredIdentifier {
-	font-weight:bold;
-	font-size:1.6em;
-	margin-right:10px;
+#patientHeaderPatientName,#patientHeaderPreferredIdentifier {
+	font-weight: bold;
+	font-size: 1.6em;
+	margin-right: 10px;
 	vertical-align: middle;
 	text-align: left;
 	float: left;
 }
+
 #patientHeaderPreferredIdentifier {
 	float: right;
 	text-align: right;
@@ -306,37 +344,41 @@ thead th {
 table#patientHeaderGeneralInfo {
 	clear: both;
 	width: 100%;
-	}
-	table#patientHeaderGeneralInfo td {
-		text-align: left;
-		vertical-align: top;
-		padding-right: 8px;
-		padding-left: 8px;
-	}
-	
+}
+
+table#patientHeaderGeneralInfo td {
+	text-align: left;
+	vertical-align: top;
+	padding-right: 8px;
+	padding-left: 8px;
+}
+
 table td#patientHeaderPatientGender {
 	padding: 0px;
 	width: 25px;
 }
 
-table#patientActions,table#outcomeFormTable{
+table#patientActions,table#outcomeFormTable {
 	width: 100%;
 }
-table td#patientActionsOutcomeReason,table td#patientActionsOutcomeDate {
+
+table td#patientActionsOutcomeReason,table td#patientActionsOutcomeDate
+	{
 	width: 35%;
 }
 
-#patientHeaderPatientAge, #patientHeaderHealthCenter, #patientHeaderShowMoreIdentifiers, #patientDashboardHeaderExtension, .patientHeaderPersonAttribute {
+#patientHeaderPatientAge,#patientHeaderHealthCenter,#patientHeaderShowMoreIdentifiers,#patientDashboardHeaderExtension,.patientHeaderPersonAttribute
+	{
 	width: 1%;
 	white-space: nowrap;
 	line-height: 25px;
 }
-	
+
 #patientHeaderPatientBirthdate {
 	white-space: nowrap;
 	vertical-align: bottom;
 	padding: 0px;
-}	
+}
 
 .patientHeaderPatientIdentifier {
 	white-space: nowrap;
@@ -361,25 +403,29 @@ table#patientHeaderObs td {
 	padding-right: 5px;
 	padding-left: 5px;
 }
-tr td#patientHeaderObsWeight{
+
+tr td#patientHeaderObsWeight {
 	margin-left: 0px;
-	padding-left: 0px;	
+	padding-left: 0px;
 }
-tr td#patientHeaderObsRegimen{
-	border-right: 0px solid white;	
+
+tr td#patientHeaderObsRegimen {
+	border-right: 0px solid white;
 }
+
 tr td#patientHeaderObsReturnVisit {
 	display: none;
 }
 
-#patientHeader a.offColor, #patientHeader a.offColor:link, #patientHeader a.offColor:active, #patientHeader a.offColor:visited, #patientHeader a.offColor:hover {
+#patientHeader a.offColor,#patientHeader a.offColor:link,#patientHeader a.offColor:active,#patientHeader a.offColor:visited,#patientHeader a.offColor:hover
+	{
 	color: #ffffff;
 }
 
-#patientActionsCauseOfDeath a, #patientActionsCauseOfDeath a:link, #patientActionsCauseOfDeath a:active, #patientActionsCauseOfDeath a:visited, #patientActionsCauseOfDeath a:hover {
-	color: #003366;	
+#patientActionsCauseOfDeath a,#patientActionsCauseOfDeath a:link,#patientActionsCauseOfDeath a:active,#patientActionsCauseOfDeath a:visited,#patientActionsCauseOfDeath a:hover
+	{
+	color: #003366;
 }
-
 
 #patientHeaderRegimen {
 	font-weight: bold;
@@ -389,8 +435,8 @@ tr td#patientHeaderObsReturnVisit {
 #patientDashboardHeader td {
 	padding: 0px 0px 0px 0px;
 	margin: 0px 0px 0px 0px;
-	vertical-align:bottom;
-	text-align:left;
+	vertical-align: bottom;
+	text-align: left;
 }
 
 #patientSubheader th {
@@ -398,51 +444,58 @@ tr td#patientHeaderObsReturnVisit {
 	font-weight: bold;
 }
 
-#patientSubheaderExited th, #patientSubheaderDead th {
+#patientSubheaderExited th,#patientSubheaderDead th {
 	color: #555555;
 	font-weight: bold;
 }
 
 #patientTreatmentHeader {
-	font-size:0.9em;
+	font-size: 0.9em;
 	text-align: left;
-	color:navy;
-	display:block;
-	border:1px solid navy;
+	color: navy;
+	display: block;
+	border: 1px solid navy;
 }
+
 #patientTreatmentHeader td {
-	vertical-align:top;
+	vertical-align: top;
 }
-table.patientEncounters { 
+
+table.patientEncounters {
 	width: 100%;
 	margin-right: 20px;
-	border:none;
+	border: none;
 }
+
 table.patientRecentObs {
 	margin-right: 20px;
-	border:none;
+	border: none;
 }
+
 table.patientRecentObs th {
 	border-bottom: 1px solid navy;
 	text-align: left;
 	font-weight: bold;
 	padding: 0em 0.5em;
 }
+
 table.patientRecentObs td {
 	padding: 0em 0.5em;
 }
 
 table.patientTreatmentPrograms {
-	border:none;
+	border: none;
 	margin-right: 20px;
-	vertical-align:top;
+	vertical-align: top;
 }
+
 table.patientTreatmentPrograms th {
 	border-bottom: 1px solid navy;
 	text-align: left;
 	font-weight: bold;
 	padding: 0em 0.5em;
 }
+
 table.patientTreatmentPrograms td {
 	padding: 0em 0.5em;
 }
@@ -457,13 +510,13 @@ table.patientTreatmentPrograms td {
 	width: 99%;
 }
 
-#patientTabs ul, #patientTabs li {
+#patientTabs ul,#patientTabs li {
 	display: inline;
 	list-style-type: none;
 	padding: 0px 0px 0px 0px;
 }
 
-#patientTabs a:link, #patientTabs a:visited {
+#patientTabs a:link,#patientTabs a:visited {
 	border: 1px solid navy;
 	font-size: small;
 	font-weight: bold;
@@ -473,15 +526,19 @@ table.patientTreatmentPrograms td {
 	color: navy;
 	background: #E0E0F0;
 }
-#patientTabs a:link.active, #patientTabs a:visited.active {
+
+#patientTabs a:link.active,#patientTabs a:visited.active {
 	border-bottom: 1px solid #FFFFFF;
 }
-#patientTabs a.current, #patientTabs a:link.current, #patientTabs a:visited.current, #patientTabs a.current:hover {
+
+#patientTabs a.current,#patientTabs a:link.current,#patientTabs a:visited.current,#patientTabs a.current:hover
+	{
 	background: #FFFFFF;
 	border-bottom: 1px solid #FFFFFF;
 	color: navy;
 	text-decoration: none;
 }
+
 #patientTabs a:hover {
 	text-decoration: underline;
 }
@@ -489,11 +546,12 @@ table.patientTreatmentPrograms td {
 #patientDashboardDemographics table {
 	width: 95%;
 	padding: 5px 5px 5px 5px;
-	font-size: small; 
+	font-size: small;
 }
+
 #patientDashboardDemographics table th {
-	text-align:left;
-	text-decoration:underline;
+	text-align: left;
+	text-decoration: underline;
 }
 
 .dateDisplayField {
@@ -506,7 +564,9 @@ table.patientTreatmentPrograms td {
 .patientIdentifier {
 	width: 7em;
 }
-.box, .boxHeader, .boxRed, .boxHeaderRed, .boxExited, .boxHeaderExited, .boxDead, .boxHeaderDead {
+
+.box,.boxHeader,.boxRed,.boxHeaderRed,.boxExited,.boxHeaderExited,.boxDead,.boxHeaderDead
+	{
 	border: 1px solid #1aac9b;
 	width: 100%;
 	padding: 5px 2px 5px 2px;
@@ -528,7 +588,7 @@ table.patientTreatmentPrograms td {
 	clear: both;
 }
 
-.box>*, .boxRed>*, .boxExited>*, .boxDead>* {
+.box>*,.boxRed>*,.boxExited>*,.boxDead>* {
 	font-size: .9em;
 }
 
@@ -555,7 +615,7 @@ table.patientTreatmentPrograms td {
 	background-color: #b82619;
 }
 
-.boxHeaderExited, .boxHeaderDead {
+.boxHeaderExited,.boxHeaderDead {
 	color: white;
 	display: block;
 	padding: 2px;
@@ -563,56 +623,60 @@ table.patientTreatmentPrograms td {
 	background-color: #999999;
 }
 
-#content .boxHeader a:link, #content .boxHeader a, #content .boxHeader a:visited, #content .boxHeader a:hover {
+#content .boxHeader a:link,#content .boxHeader a,#content .boxHeader a:visited,#content .boxHeader a:hover
+	{
 	color: white;
 }
 
 .boxHeader .oddRow {
-  background-color: #8FABC7;
+	background-color: #8FABC7;
 }
 
 .boxHeader .evenRow {
-  background-color: #BBCCF7;
+	background-color: #BBCCF7;
 }
 
 .boxHeader .popupSearchForm {
-  background-color: #8FABC7;
+	background-color: #8FABC7;
 }
-	
+
 #selectFormForm {
 	padding: 2px;
-	}
-	#selectFormForm div {
-		margin-bottom: 7px;
-		font-size: 1.03em;
-	}
+}
 
-.retired, .voided, .retired *, .voided * {
+#selectFormForm div {
+	margin-bottom: 7px;
+	font-size: 1.03em;
+}
+
+.retired,.voided,.retired *,.voided * {
 	text-decoration: line-through;
 }
 
 .error {
 	background-color: lightpink;
 }
-	span.error, div.error {
-		border: 1px dashed darkred;
-		padding: 1px 6px 1px 6px;
-		margin-left: 4px;
-		margin-right: 4px;
-		vertical-align: middle;
-	}
-	input.error, textarea.error {
-		background-color: white;
-		color: darkred;
-	}
-	
+
+span.error,div.error {
+	border: 1px dashed darkred;
+	padding: 1px 6px 1px 6px;
+	margin-left: 4px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+input.error,textarea.error {
+	background-color: white;
+	color: darkred;
+}
+
 .tooltip {
 	border: 1px solid darkgrey;
 	background-color: #ffff80;
 	margin: 2px;
 	padding: 3px;
 }
-	
+
 .button {
 	border: 1px solid darkgrey;
 	background-color: whitesmoke;
@@ -628,6 +692,7 @@ table.patientTreatmentPrograms td {
 	cursor: pointer;
 	margin: 1px;
 }
+
 .closeButton {
 	border: 1px solid gray;
 	background-color: lightpink;
@@ -639,26 +704,30 @@ table.patientTreatmentPrograms td {
 	cursor: pointer;
 }
 
-.retiredMessage, .voidedMessage {
+.retiredMessage,.voidedMessage {
 	border: 1px solid firebrick;
 	background-color: white;
 	font-weight: bold;
 	padding: 1px;
 	margin: 2px;
 	color: white;
-	}
-	.retiredMessage, .voidedMessage div {
-		background-color: firebrick;
-		padding: 2px;
-	}
-.searchIndex, .searchIndexHighlight {
+}
+
+.retiredMessage,.voidedMessage div {
+	background-color: firebrick;
+	padding: 2px;
+}
+
+.searchIndex,.searchIndexHighlight {
 	text-align: right;
 	vertical-align: top;
 	width: 1.8em;
 }
-.searchIndexHighlight, .searchHighlight {
-	background-color: 	#F0E68C;
+
+.searchIndexHighlight,.searchHighlight {
+	background-color: #F0E68C;
 }
+
 tr.searchHighlight {
 	cursor: pointer;
 	background-color: #F0E68C;
@@ -676,12 +745,12 @@ tr.searchHighlight {
 	overflow-y: auto;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"],input[type="password"] {
 	padding: 1px;
 	border: 1px solid cadetblue;
 }
 
-input, textarea {
+input,textarea {
 	font-size: 0.9em;
 }
 
@@ -689,27 +758,34 @@ a.conceptHit {
 	text-decoration: none;
 	display: block;
 }
+
 a:hover.searchHit {
 	background-color: khaki;
 }
+
 a:hover span.mainHit {
 	text-decoration: none;
 }
+
 a span.mainHit {
 	text-decoration: underline;
 }
+
 a span.additionalHit {
 	color: gray;
 	text-decoration: none;
 }
+
 .description {
 	font-size: .9em;
 	padding-left: 10px;
 	color: gray;
 }
-#searchInfoBar, #searchInfoBar a {
+
+#searchInfoBar,#searchInfoBar a {
 	background-color: whitesmoke;
 }
+
 #searchInfoBar {
 	font-size: 1em;
 	text-align: right;
@@ -719,50 +795,57 @@ a span.additionalHit {
 	margin: 1px 0 1px 0;
 	font-style: italic;
 }
+
 #searchPagingBar {
 	font-size: 1em;
 	padding: 2px 0 2px 0;
 	width: 100%;
 	text-align: center;
 }
+
 #disabledZone {
 	position: fixed;
 	top: 0px;
 	right: 0px;
-	padding:4px;
+	padding: 4px;
 	margin-top: 3em;
 	font-size: 1.4em;
 	background-color: red;
 	color: white;
 }
+
 fieldset {
 	margin: 0px;
 	padding: 3px;
 	border: 1px solid cadetblue;
 }
+
 #optionsTOC {
 	float: left;
 	margin-left: 0px;
 	padding-left: 0px;
 	padding-top: 8px;
 	width: 140px;
-	}
-	#optionsTOC li {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		border: 1px solid white;
-	}
-	#optionsTOC li.selected {
-		border-color: cadetblue whitesmoke cadetblue cadetblue;
-		border-width: 1px;
-		border-style: solid dashed solid solid;
-		margin-right: -1px;
-	}
-	#optionsTOC li a {
-		display: block;
-		padding: 3px;
-	}
+}
+
+#optionsTOC li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: 1px solid white;
+}
+
+#optionsTOC li.selected {
+	border-color: cadetblue whitesmoke cadetblue cadetblue;
+	border-width: 1px;
+	border-style: solid dashed solid solid;
+	margin-right: -1px;
+}
+
+#optionsTOC li a {
+	display: block;
+	padding: 3px;
+}
 
 .sideNote {
 	border: 1px solid burlywood;
@@ -786,8 +869,8 @@ fieldset {
 
 .tableGroup {
 	border-top: 1px solid #1aac9b;
-    background: #e0e0f0;
-    border-bottom: 1px solid #1aac9b;
+	background: #e0e0f0;
+	border-bottom: 1px solid #1aac9b;
 }
 
 .oddRow {
@@ -797,9 +880,9 @@ fieldset {
 .evenRow {
 	background-color: whitesmoke;
 }
-	
+
 .webappName {
-	text-transform:capitalize;
+	text-transform: capitalize;
 }
 
 #alertOuterBox {
@@ -808,71 +891,87 @@ fieldset {
 	border-top-width: 0px;
 	max-height: 6em;
 }
+
 #alertInnerBox {
 	max-height: 4.3em;
 	overflow-y: auto;
 	padding: 2px;
 }
+
 .alert {
 	margin-bottom: 1px;
 	padding: 0 2px 0 2px;
 	border-top: 1px dotted lightgrey;
 	background-color: white;
-	}
-	.alert:first-child {
-		border-top-width: 0px;
-	}
-	.alert.firstChild {
-		/* IE hack to get around lack of first-child support */
-		border-top-width: 0px;
-	}
-	
+}
+
+.alert:first-child {
+	border-top-width: 0px;
+}
+
+.alert.firstChild {
+	/* IE hack to get around lack of first-child support */
+	border-top-width: 0px;
+}
+
 #alertBar {
 	border-top: 1px solid lightgrey;
 	font-size: .8em;
 	font-weight: bold;
 	padding-left: 2px;
 	background-color: lightpink;
-	}
-	#alertBar img {
-		vertical-align: middle;
-	}
-.markAlertRead, .markAlertRead:link, .markAlertRead:visited {
+}
+
+#alertBar img {
+	vertical-align: middle;
+}
+
+.markAlertRead,.markAlertRead:link,.markAlertRead:visited {
 	float: right;
 	padding: 0 3px 0 3px;
 	text-decoration: none;
-	}
+}
+
 .markAlertText {
 	font-size: .8em;
-	}	
-	.markAlertRead img {
-		border-width: 0px;
-		height: 1em;
-		margin: 1px 1px 0 1px;
-		vertical-align: middle;
-	}
+}
+
+.markAlertRead img {
+	border-width: 0px;
+	height: 1em;
+	margin: 1px 1px 0 1px;
+	vertical-align: middle;
+}
+
 .smallWidth {
 	width: 140px;
-	}
-	select.smallWidth {
-		width: 140px;
-	}
+}
+
+select.smallWidth {
+	width: 140px;
+}
+
 .mediumWidth {
 	width: 240px;
-	}
-	select.mediumWidth {
-		width: 240px;
-	}	
+}
+
+select.mediumWidth {
+	width: 240px;
+}
+
 .largeWidth {
 	width: 340px;
-	}
-	select.largeWidth {
-		width: 340px;
-	}
+}
+
+select.largeWidth {
+	width: 340px;
+}
+
 .smallMessage {
 	font-size: .9em;
 	color: grey;
 }
+
 #popupTray {
 	float: right;
 	position: fixed;
@@ -881,11 +980,13 @@ fieldset {
 	width: 20px;
 	z-index: 7;
 }
+
 .popupTrayTitle {
 	font-size: 1.2em;
 	font-weight: bold;
 	text-align: center;
 }
+
 #patientSetTray {
 	z-index: 7;
 	border-width: 2px 0px 2px 2px;
@@ -893,6 +994,7 @@ fieldset {
 	border-style: solid;
 	background-color: whitesmoke;
 }
+
 #patientSetBox {
 	border: 1px solid black;
 	background: #ffffbb;
@@ -909,11 +1011,13 @@ fieldset {
 	border: 1px black dashed;
 	background-color: #f4f4f4;
 }
+
 .analysisShortcutBarButton {
 	background-color: #f0f0a0;
 	padding: 0.2em;
 	text-decoration: none;
 }
+
 .analysisShortcutMenu {
 	border: 1px solid black;
 	background-color: #f0f0a0;
@@ -923,6 +1027,7 @@ fieldset {
 	width: 250px;
 	z-index: 1;
 }
+
 #stackTrace {
 	display: none;
 	font-size: 11px;
@@ -930,8 +1035,9 @@ fieldset {
 	width: 585px;
 }
 
-#regimenPortlet a.boxHeader, a:link.boxHeader, a:visited.boxHeader, a:active.boxHeader, a:hover.boxHeader {
-	color: #ffffff; 
+#regimenPortlet a.boxHeader,a:link.boxHeader,a:visited.boxHeader,a:active.boxHeader,a:hover.boxHeader
+	{
+	color: #ffffff;
 }
 
 #exceptionMessage {
@@ -950,34 +1056,42 @@ span.noOrdersMessage {
 
 .encounterFormTable tr {
 	font-size: 0.9em;
-	}
-	.encounterFormTable th {
-		background-color: whitesmoke;
-	}
-	.encounterFormTable .encounterViewLabel {
-		text-align: left;
-	}
-	.encounterFormTable .encounterViewObsGroup {
-		font-weight: bold;
-	}
-	.encounterFormTable .encounterViewObsConcept {
-		font-size: .9em;
-	}
-	.encounterFormTable .encounterViewObsValue {
-		font-weight: bold;
-		white-space: pre;
-	}
-	.encounterFormTable .encounterViewObsDatetime {
-		font-size: .9em;
-	}
-	.encounterFormTable .evenRow {
-		background-color: white;
-	}
-	.encounterFormTable .oddRow {
-		background-color: white;
-	}
-	
-	/*
+}
+
+.encounterFormTable th {
+	background-color: whitesmoke;
+}
+
+.encounterFormTable .encounterViewLabel {
+	text-align: left;
+}
+
+.encounterFormTable .encounterViewObsGroup {
+	font-weight: bold;
+}
+
+.encounterFormTable .encounterViewObsConcept {
+	font-size: .9em;
+}
+
+.encounterFormTable .encounterViewObsValue {
+	font-weight: bold;
+	white-space: pre;
+}
+
+.encounterFormTable .encounterViewObsDatetime {
+	font-size: .9em;
+}
+
+.encounterFormTable .evenRow {
+	background-color: white;
+}
+
+.encounterFormTable .oddRow {
+	background-color: white;
+}
+
+/*
 	.encounterFormTable {
 		width: 100%;
 	}
@@ -1014,7 +1128,6 @@ span.noOrdersMessage {
 		background-color: whitesmoke;
 	}
 	*/
-	
 table#obs td.obsValue {
 	white-space: pre;
 }
@@ -1029,32 +1142,36 @@ table#obs td.obsValue {
 	border: 1px solid lightgray;
 	float: left;
 	background-color: #EFEFEF;
-	}
-	.listItem {
-		padding: 2px;
-		float: left;
-		margin: 2px;
-		width: 210px;
-		font-size: .9em;
-		border: 1px solid lightgrey;
-		background-color: white;
-	}
-	.listItem input {
-		float: left;
-		vertical-align: middle;
-		margin: 2px 2px 0px 2px;
-	}
-	.listItem label {
-		float: left;
-		width: 184px;
-		padding: 0px;
-		margin: 0px;
-	}
-	.listItemChecked { 
-		background-color: #8FABC7;
-		color: white;
-	}
-	
+}
+
+.listItem {
+	padding: 2px;
+	float: left;
+	margin: 2px;
+	width: 210px;
+	font-size: .9em;
+	border: 1px solid lightgrey;
+	background-color: white;
+}
+
+.listItem input {
+	float: left;
+	vertical-align: middle;
+	margin: 2px 2px 0px 2px;
+}
+
+.listItem label {
+	float: left;
+	width: 184px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.listItemChecked {
+	background-color: #8FABC7;
+	color: white;
+}
+
 .instructions {
 	font-size: 0.8em;
 }
@@ -1104,10 +1221,10 @@ th.smallHeader {
 }
 
 #patientPrintableSummary {
-	font-size: 1.0em; 
+	font-size: 1.0em;
 }
 
-.highlighted, .highlight {
+.highlighted,.highlight {
 	background-color: #FFFF6E;
 }
 
@@ -1152,7 +1269,7 @@ th.smallHeader {
 }
 
 #patientDashboardSummary {
-	font-size: 0.7em; 
+	font-size: 0.7em;
 }
 
 table td#summaryHeaderPatientGender {
@@ -1160,20 +1277,20 @@ table td#summaryHeaderPatientGender {
 	vertical-align: middle;
 	padding: 0px;
 }
-	
+
 #summaryHeaderPatientAge {
 	white-space: nowrap;
 	width: 25%;
 	text-align: right;
 	vertical-align: middle;
 	padding: 0px;
-}	
+}
 
 #summaryHeaderPatientIdentifiers {
 	text-align: right;
 }
 
-#triggeredStateConversion td, th {
+#triggeredStateConversion td,th {
 	padding-left: 5px;
 	padding-right: 5px;
 }
@@ -1182,7 +1299,7 @@ table td#summaryHeaderPatientGender {
 	border: 1px dotted #ffffff;
 }
 
-#patientTabs.Exited, #patientTabs.Dead {
+#patientTabs.Exited,#patientTabs.Dead {
 	margin: 10px auto 7px auto;
 	padding-top: 5px;
 	padding-left: 5px;
@@ -1191,13 +1308,15 @@ table td#summaryHeaderPatientGender {
 	width: 99%;
 }
 
-#patientTabs.Exited ul, #patientTabs.Exited li, #patientTabs.Dead ul, #patientTabs.Dead li {
+#patientTabs.Exited ul,#patientTabs.Exited li,#patientTabs.Dead ul,#patientTabs.Dead li
+	{
 	display: inline;
 	list-style-type: none;
 	padding: 0px 0px 0px 0px;
 }
 
-#patientTabs.Exited a:link, #patientTabs.Exited a:visited, #patientTabs.Dead a:link, #patientTabs.Dead a:visited {
+#patientTabs.Exited a:link,#patientTabs.Exited a:visited,#patientTabs.Dead a:link,#patientTabs.Dead a:visited
+	{
 	border: 1px solid #555555;
 	font-size: small;
 	font-weight: bold;
@@ -1207,16 +1326,21 @@ table td#summaryHeaderPatientGender {
 	color: #555555;
 	background: #bbbbbb;
 }
-#patientTabs.Exited a:link.active, #patientTabs.Exited a:visited.active, #patientTabs.Dead a:link.active, #patientTabs.Dead a:visited.active {
+
+#patientTabs.Exited a:link.active,#patientTabs.Exited a:visited.active,#patientTabs.Dead a:link.active,#patientTabs.Dead a:visited.active
+	{
 	border-bottom: 1px solid #FFFFFF;
 }
-#patientTabs.Exited a.current, #patientTabs.Exited a:link.current, #patientTabs.Exited a:visited.current, #patientTabs.Exited a.current:hover, #patientTabs.Dead a.current, #patientTabs.Dead a:link.current, #patientTabs.Dead a:visited.current, #patientTabs.Dead a.current:hover {
+
+#patientTabs.Exited a.current,#patientTabs.Exited a:link.current,#patientTabs.Exited a:visited.current,#patientTabs.Exited a.current:hover,#patientTabs.Dead a.current,#patientTabs.Dead a:link.current,#patientTabs.Dead a:visited.current,#patientTabs.Dead a.current:hover
+	{
 	background: #FFFFFF;
 	border-bottom: 1px solid #FFFFFF;
 	color: #555555;
 	text-decoration: none;
 }
-#patientTabs.Exited a:hover, #patientTabs.Dead a:hover {
+
+#patientTabs.Exited a:hover,#patientTabs.Dead a:hover {
 	text-decoration: underline;
 }
 
@@ -1228,13 +1352,13 @@ table td#summaryHeaderPatientGender {
 	border-bottom: 1px solid navy;
 }
 
-#cohortSearchTabs ul, #cohortSearchTabs li {
+#cohortSearchTabs ul,#cohortSearchTabs li {
 	display: inline;
 	list-style-type: none;
 	padding: 0px 0px 0px 0px;
 }
 
-#cohortSearchTabs a:link, #cohortSearchTabs a:visited {
+#cohortSearchTabs a:link,#cohortSearchTabs a:visited {
 	border: 1px solid navy;
 	font-size: small;
 	font-weight: bold;
@@ -1244,85 +1368,115 @@ table td#summaryHeaderPatientGender {
 	color: navy;
 	background: #E0E0F0;
 }
-#cohortSearchTabs a:link.active, #cohortSearchTabs a:visited.active {
+
+#cohortSearchTabs a:link.active,#cohortSearchTabs a:visited.active {
 	border-bottom: 1px solid #FFFFFF;
 }
-#cohortSearchTabs a.current, #cohortSearchTabs a:link.current, #cohortSearchTabs a:visited.current, #cohortSearchTabs a.current:hover {
+
+#cohortSearchTabs a.current,#cohortSearchTabs a:link.current,#cohortSearchTabs a:visited.current,#cohortSearchTabs a.current:hover
+	{
 	background: #FFFFFF;
 	border-bottom: 1px solid #FFFFFF;
 	color: navy;
 	text-decoration: none;
 }
+
 #cohortSearchTabs a:hover {
 	text-decoration: underline;
 }
 
-.inline ul, .inline li {
+.inline ul,.inline li {
 	display: inline;
 	list-style-type: none;
 	padding: 0px;
 }
+
 .forgotPasswordLink {
 	font-size: small;
 }
+
 .required {
 	color: red;
 	font-weight: bold;
 }
+
 .user .personName {
 	font-size: 0.8em;
 }
 /* BEGIN- css properties for the search widgets */
 #openmrsSearchTable tbody tr.even.row_highlight {
-	 background-color: #F0E68C;
+	background-color: #F0E68C;
 }
+
 #openmrsSearchTable tbody tr.odd.row_highlight {
-	 background-color: #F0E68C;
+	background-color: #F0E68C;
 }
+
 .row_highlight {
-	 background-color: #F0E68C !important;
-}
-.verbose{
-	text-align: left; padding-left: 15px;
-}
-.verbose:hover{
 	background-color: #F0E68C !important;
 }
-img#spinner{
+
+.verbose {
+	text-align: left;
+	padding-left: 15px;
+}
+
+.verbose:hover {
+	background-color: #F0E68C !important;
+}
+
+img#spinner {
 	vertical-align: middle;
 }
+
 #openmrsSearchTable tbody tr:hover {
-	background-color: #F0E68C; cursor: pointer;
+	background-color: #F0E68C;
+	cursor: pointer;
 }
-#pageInfo{
-	text-align:right; font-style: italic;
+
+#pageInfo {
+	text-align: right;
+	font-style: italic;
 }
-#openmrsSearchTable{
+
+#openmrsSearchTable {
 	padding-bottom: 10px;
 }
-div.paging_full_numbers{
-	width:auto !important;
+
+div.paging_full_numbers {
+	width: auto !important;
 }
-#minCharError{
+
+#minCharError {
 	visibility: hidden;
 }
-.searchWidgetContainer{	
+
+.searchWidgetContainer {
 	padding: 5px 5px 5px 5px;
 }
-span#searchWidgetNotification{
-	color: #FF0000; font-style: italic;
+
+span#searchWidgetNotification {
+	color: #FF0000;
+	font-style: italic;
 }
-span#loadingMsg{
-	font-weight: bold; margin-left: 10px; font-style: italic;
+
+span#loadingMsg {
+	font-weight: bold;
+	margin-left: 10px;
+	font-style: italic;
 }
-.dataTables_info{
+
+.dataTables_info {
 	font-weight: bold
 }
-div#openmrsSearchTable_wrapper{
-	min-height:0px; height: auto !important;
+
+div#openmrsSearchTable_wrapper {
+	min-height: 0px;
+	height: auto !important;
 }
-input#inputNode{
-    width: 210px;
+
+input#inputNode {
+	width: 210px;
 }
 /* END- css properties for the search widgets */
 .ui-autocomplete {
@@ -1330,70 +1484,101 @@ input#inputNode{
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+
 .autocompleteresult {
 	white-space: nowrap;
 }
+
 .autocompleteresult .preferredname {
 	color: gray;
 }
+
 .autocompleteresult .hit {
 	font-weight: bold;
 }
-span.otherHit{
+
+span.otherHit {
 	color: gray;
 }
+
 .male {
 	color: blue;
 	font-family: Arial Unicode;
 }
+
 .female {
 	color: pink;
 	font-family: Arial Unicode;
 }
-.mergePatientsTab{
-	background-color: #E8E6E6; border: 1px solid black; padding: 5px 5px 0px 5px; cursor: pointer; width: 85px;
-		
+
+.mergePatientsTab {
+	background-color: #E8E6E6;
+	border: 1px solid black;
+	padding: 5px 5px 0px 5px;
+	cursor: pointer;
+	width: 85px;
 }
-.mergePatientsSelectedTab{
-	background-color: #FFFFFF; border: 1px solid black; padding: 5px 5px 0px 5px; cursor: pointer; border-bottom: none; width: 85px;
+
+.mergePatientsSelectedTab {
+	background-color: #FFFFFF;
+	border: 1px solid black;
+	padding: 5px 5px 0px 5px;
+	cursor: pointer;
+	border-bottom: none;
+	width: 85px;
 }
-.mergePatientsTabsColumn{
+
+.mergePatientsTabsColumn {
 	text-align: center;
 }
-.mergePatientsTabSpaces{
-	border-bottom: 1px solid black; 
+
+.mergePatientsTabSpaces {
+	border-bottom: 1px solid black;
 }
-.mergePatientsTabDiv{
-	width:85px;
+
+.mergePatientsTabDiv {
+	width: 85px;
 }
-.form_align_left{
+
+.form_align_left {
 	text-align: left;
 }
-.hidden{
+
+.hidden {
 	display: none
 }
-.lightBorderBox{
+
+.lightBorderBox {
 	border: 1px solid lightgrey
 }
-.content_align_center{
+
+.content_align_center {
 	text-align: center;
 }
-.alignRight{
+
+.alignRight {
 	text-align: right;
 }
-div#openmrsSearchTable_length{
-	text-align: left; float: left; padding-top: 5px;
+
+div#openmrsSearchTable_length {
+	text-align: left;
+	float: left;
+	padding-top: 5px;
 }
-tr.headerRow{
+
+tr.headerRow {
 	background-color: #CCCCCC;
 }
+
 table.left-aligned-th th {
 	text-align: left
 }
-td.dataTables_empty{
+
+td.dataTables_empty {
 	background-color: #BBCCF7;
 }
-td.dataTables_empty:hover{
+
+td.dataTables_empty:hover {
 	background-color: #BBCCF7;
 }
 
@@ -1404,27 +1589,33 @@ td.dataTables_empty:hover{
 	margin-top: 0px;
 	padding-top: 0px;
 }
+
 #conceptMainarea {
-	float:left;
+	float: left;
 	width: 70%;
 }
+
 #conceptSidebar {
-	float:right;
+	float: right;
 	width: 28%;
 	padding: 10px;
 	margin-bottom: 10px;
 }
-#conceptSidebar fieldset:not(:first-child) {
+
+#conceptSidebar fieldset:not (:first-child ) {
 	margin-top: 15px;
 }
+
 #conceptSidebar fieldset {
 	padding: 10px;
 }
+
 .localeSpecific td {
 	background-color: whitesmoke;
 }
+
 a.selectedTab {
 	background-color: whitesmoke;
-	font-weight:bold;
+	font-weight: bold;
 	text-decoration: none;
 }

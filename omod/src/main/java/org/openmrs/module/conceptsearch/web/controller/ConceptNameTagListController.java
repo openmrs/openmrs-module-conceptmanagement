@@ -64,7 +64,7 @@ public class ConceptNameTagListController extends SimpleFormController {
 	 *      org.springframework.validation.BindException)
 	 */
 	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object obj,
-	        BindException errors) throws Exception {
+	                                BindException errors) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
 		
@@ -79,7 +79,6 @@ public class ConceptNameTagListController extends SimpleFormController {
 			if (conceptNameTagList != null) {
 				ConceptService cs = Context.getConceptService();
 				ConceptSearchService css = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-
 				
 				String deleted = msa.getMessage("general.deleted");
 				String notDeleted = msa.getMessage("ConceptNameTag.cannot.delete");

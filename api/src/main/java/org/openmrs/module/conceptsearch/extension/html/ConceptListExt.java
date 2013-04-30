@@ -18,21 +18,20 @@ import java.util.Map;
 
 import org.openmrs.module.Extension;
 
-
 /**
- * This class defines the links that will appear on the administration page under the
- * Concept Section. This extension is enabled by defining (uncommenting) it in the
- * /metadata/config.xml file.
+ * This class defines the links that will appear on the administration page under the Concept
+ * Section. This extension is enabled by defining (uncommenting) it in the /metadata/config.xml
+ * file.
  */
-public class ConceptListExt extends Extension{
+public class ConceptListExt extends Extension {
 	
 	/**
 	 * @see org.openmrs.module.web.extension.LinkExt#getMediaType()
 	 */
 	public Extension.MEDIA_TYPE getMediaType() {
 		return Extension.MEDIA_TYPE.html;
-	} 
-
+	}
+	
 	/**
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getLinks()
 	 */
@@ -40,9 +39,9 @@ public class ConceptListExt extends Extension{
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-	    map.put("module/conceptsearch/conceptNameTag.list", "conceptsearch.conceptnametaglistheading");
-
-	    return map;
-    }
+		map.put("module/conceptsearch/conceptNameTag.list", "conceptsearch.conceptnametaglistheading");
+		
+		return map;
+	}
 	
 }

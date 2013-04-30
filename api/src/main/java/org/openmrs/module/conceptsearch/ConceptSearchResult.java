@@ -24,13 +24,12 @@ import org.openmrs.ConceptDescription;
 import org.openmrs.ConceptName;
 import org.openmrs.ConceptNameTag;
 
-
 /**
  * Class to store all the needed information about a concept. By storing all data in this class we
  * avoid Hibernate's lazy loading error when not displaying all concepts at once and we can connect
  * some other information with a certain concept (like number of obs)
  */
-public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
+public class ConceptSearchResult implements Comparable<ConceptSearchResult> {
 	
 	private int conceptId;
 	
@@ -45,11 +44,10 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	private String conceptDatatype;
 	
 	private List<String> otherNames;
-		
+	
 	private List<String> conceptNameTags;
 	
 	private Long numberOfObs;
-	
 	
 	//private String usedInForms;
 	//private static Log log = LogFactory.getLog(ConceptSearchResult.class);
@@ -66,13 +64,13 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 		this.conceptId = name.getId();
 		this.conceptName = name.getName();
 		this.conceptNameTags = new Vector<String>();
-		for(ConceptNameTag ctn : name.getTags()){
+		for (ConceptNameTag ctn : name.getTags()) {
 			this.conceptNameTags.add(ctn.getTag());
 		}
-		if( (name.getLocale()) !=null){
+		if ((name.getLocale()) != null) {
 			this.locale = name.getLocale().getDisplayLanguage();
 		}
-				
+		
 	}
 	
 	public ConceptSearchResult(Concept con) {
@@ -208,7 +206,6 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 		this.conceptNameTags = conceptNameTags;
 	}
 	
-	
 	/**
 	 * @return the locale
 	 */
@@ -222,17 +219,15 @@ public class ConceptSearchResult implements Comparable<ConceptSearchResult>{
 	public void setLocale(String locale) {
 		this.locale = locale;
 	}
-
+	
 	/* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(final ConceptSearchResult other) {
-        return new CompareToBuilder().append(conceptId, other.conceptId).append(conceptName, other.conceptName)
-                .append(conceptDescription, other.conceptDescription).append(conceptClass, other.conceptClass)
-                .append(conceptDatatype, other.conceptDatatype).append(otherNames.toArray(), other.otherNames.toArray())
-                .append(numberOfObs, other.numberOfObs).append(locale,  other.locale).toComparison();
-    }
-
-
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(final ConceptSearchResult other) {
+		return new CompareToBuilder().append(conceptId, other.conceptId).append(conceptName, other.conceptName)
+		        .append(conceptDescription, other.conceptDescription).append(conceptClass, other.conceptClass)
+		        .append(conceptDatatype, other.conceptDatatype).append(otherNames.toArray(), other.otherNames.toArray())
+		        .append(numberOfObs, other.numberOfObs).append(locale, other.locale).toComparison();
+	}
 	
 }

@@ -133,7 +133,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	 */
 	private Criteria createGetConceptsCriteria(ConceptSearch cs) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Concept.class);
-
+		
 		if (!cs.getSearchQuery().isEmpty()) {
 			crit.createAlias("names", "names");
 			crit.add(Restrictions.like("names.name", "%" + cs.getSearchQuery() + "%"));
@@ -142,7 +142,7 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		/*		if (CollectionUtils.isNotEmpty(cs.getSearchTermsList())) {
 					crit.add(Restrictions.in("description", cs.getSearchTermsList())); //TODO: contains? like?
 				}*/
-
+		
 		if (CollectionUtils.isNotEmpty(cs.getDataTypes())) {
 			crit.add(Restrictions.in("datatype", cs.getDataTypes()));
 		}
@@ -266,10 +266,8 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 			}
 		}
 		
-		
 		return prev;
 	}
-	
 	
 	/**
 	 * Method to find out that searchTerm is the beginning of a new word and not in the middle of a
@@ -292,12 +290,12 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	}
 	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#purgeConceptNameTag(org.openmrs.ConceptNameTag)
-     */
-    public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException {
-		sessionFactory.getCurrentSession().delete(nameTag);	    
-    }
-    
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchDAO#purgeConceptNameTag(org.openmrs.ConceptNameTag)
+	 */
+	public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException {
+		sessionFactory.getCurrentSession().delete(nameTag);
+	}
+	
 	/**
 	 * @see org.openmrs.api.db.ConceptDAO#saveConceptNameTag(org.openmrs.ConceptNameTag)
 	 */
