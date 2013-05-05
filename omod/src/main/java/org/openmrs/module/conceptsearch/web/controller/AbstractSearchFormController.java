@@ -89,8 +89,6 @@ public abstract class AbstractSearchFormController {
 		if (cs != null)
 			model.addAttribute("conceptSearch", cs);
 		if (resListHolder != null) {
-			//    		List temp = resListHolder.getSource();
-			//    		Collections.sort((List<ConceptSearchResult>) temp, new ConceptComparator(sortFor, asc));
 			resListHolder.setSort(new MutableSortDefinition(sortFor, true, asc));
 			resListHolder.resort();
 			model.addAttribute("searchResult", resListHolder);
@@ -129,8 +127,6 @@ public abstract class AbstractSearchFormController {
 		if (cs != null)
 			model.addAttribute("conceptSearch", cs);
 		if (resListHolder != null) {
-			//    		List temp = resListHolder.getSource();
-			//    		Collections.sort((List<ConceptSearchResult>) temp, new ConceptComparator(sortFor, asc));
 			resListHolder.setSort(new MutableSortDefinition(sortFor, true, asc));
 			resListHolder.resort();
 			model.addAttribute("searchResult", resListHolder);

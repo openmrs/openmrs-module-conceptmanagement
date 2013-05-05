@@ -16,13 +16,17 @@ package org.openmrs.module.conceptsearch.extension.html;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.openmrs.module.Extension;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * This class defines the links that will appear on the administration page under the Concept
  * Section. file.
  */
-public class ConceptListExt extends Extension {
+public class ConceptFormHeaderExt extends Extension {
 	
 	/**
 	 * @see org.openmrs.module.web.extension.LinkExt#getMediaType()
@@ -32,14 +36,18 @@ public class ConceptListExt extends Extension {
 	}
 	
 	/**
-	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getLinks()
+	 * If this method returns a non-null value then the return value will be used as the default
+	 * content for this extension at this extension point
+	 * 
+	 * @return override content
 	 */
-	public Map<String, String> getLinks() {
-		
-		Map<String, String> map = new HashMap<String, String>();
-		
-		map.put("module/conceptsearch/conceptNameTagList.list", "conceptsearch.conceptnametaglistheading");
-		return map;
+	public String getOverrideContent(String bodyContent) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		String conceptId = request.getParameter("conceptId");
+		if (conceptId != null) {
+			return ("<div><a href=\"/openmrs/module/conceptsearch/manageConceptName.form?conceptId=" + conceptId + "\" >Edit Name Tags</a></div>");
+		} else
+			return ("");
 	}
 	
 }

@@ -9,12 +9,11 @@
  * License for the specific language governing rights and limitations
  * under the License.
  *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ * Copyright (C) OpenMRS, LLC. All Rights Reserved.
  */
 package org.openmrs.module.conceptsearch.web.controller;
 
 import java.util.ArrayList;
-import org.openmrs.module.conceptsearch.web.controller.ConceptNameTagValidator;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -90,13 +89,9 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 						String tagName = request.getParameter(tagNameQueryString);
 						ConceptNameTag tag = cs.getConceptNameTagByName(tagName);
 						if (tag != null) {
-							if (!tag.getVoided()) {
-								cn.addTag(tag);
-								cs.saveConcept(concept);
-								
-							} else {
-								errors.reject("Tag is retired", "Tag is retired");
-							}
+							cn.addTag(tag);
+							cs.saveConcept(concept);
+							
 						} else {
 							errors.reject("Tag not found", "Tag not found");
 						}
@@ -215,7 +210,7 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		//List<String> autoResults = searchService.getAutocompleteConcepts(searchFor);
 		//model.addAttribute("autoComplete", autoResults);
 		
-		// -- Autocompletehelper is used to avoid some problems -- 
+		// -- Autocompletehelper is used to avoid some problems --
 		log.debug("Accessing autocomplete");
 	}
 	

@@ -30,6 +30,11 @@
 		<class>@MODULE_PACKAGE@.extension.html.ConceptListExt</class>
 	</extension>
 
+	<extension>
+		<point>org.openmrs.dictionary.conceptFormHeader</point>
+		<class>@MODULE_PACKAGE@.extension.html.ConceptFormHeaderExt</class>
+	</extension>
+
 
 	<!-- AOP <advice> <point>org.openmrs.api.FormService</point> <class>@MODULE_PACKAGE@.advice.DuplicateFormAdvisor</class> 
 		</advice> /AOP -->
