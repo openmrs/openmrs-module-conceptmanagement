@@ -139,8 +139,8 @@ $(document).ready(function(){
 								</span>
 								</span>
 							</c:forEach>
-							</br></br>
-							<span class="add-nametag">
+							</br>
+							<div class="add-nametag">
 								&nbsp; Add : &nbsp; <input id="tagnameQuery${rowStatus.index}"
 									type="text" name="tagnameQuery${conceptName.conceptName}"
 									size="25" value=""> &nbsp;&nbsp; <input type="submit"
@@ -153,7 +153,7 @@ $(document).ready(function(){
 	        var tagnameQuery1=$(tagnameQuery);
 			tagnameQuery1.autocomplete("<%=request.getContextPath()%>/module/conceptsearch/autocompletenametag.form");
 								</script>
-							</span></td>
+							</div></td>
 					</tr>
 				</c:forEach>
 			</table>
