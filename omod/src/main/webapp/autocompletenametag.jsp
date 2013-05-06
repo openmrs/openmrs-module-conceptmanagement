@@ -9,8 +9,8 @@
 	List<String> concepts = ah.getAutocompleteConceptNameTags(query);
 
 	Iterator<String> iterator = concepts.iterator();
-	while(iterator.hasNext()) {
-		String concept = (String)iterator.next();
+	while (iterator.hasNext()) {
+		String concept = (String) iterator.next();
 		out.println(concept);
 	}
 %>

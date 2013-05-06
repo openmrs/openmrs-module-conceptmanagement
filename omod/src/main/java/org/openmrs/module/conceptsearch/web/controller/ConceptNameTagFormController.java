@@ -14,6 +14,9 @@
 package org.openmrs.module.conceptsearch.web.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
+import org.openmrs.ConceptName;
 import org.openmrs.ConceptNameTag;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
@@ -28,121 +33,108 @@ import org.openmrs.api.context.Context;
 import org.openmrs.web.WebConstants;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.openmrs.api.APIException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 
-public class ConceptNameTagFormController extends SimpleFormController {
+@Controller
+public class ConceptNameTagFormController {
 	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
-	/**
-	 * Allows for Integers to be used as values in input tags. Normally, only strings and lists are
-	 * expected
-	 * 
-	 * @see org.springframework.web.servlet.mvc.BaseCommandController#initBinder(javax.servlet.http.HttpServletRequest,
-	 *      org.springframework.web.bind.ServletRequestDataBinder)
-	 */
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
-		super.initBinder(request, binder);
-		//NumberFormat nf = NumberFormat.getInstance(new Locale("en_US"));
-		binder.registerCustomEditor(java.lang.Integer.class, new CustomNumberEditor(java.lang.Integer.class, true));
+
+	@ModelAttribute("tag")
+	public String getTag(@RequestParam(value = "tag", required = false) String tag) {
+		return (tag == null ? "" : tag);
 	}
 	
-	/**
-	 * The onSubmit function receives the form/command object that was modified by the input form
-	 * and saves it to the db
-	 * 
-	 * @see org.springframework.web.servlet.mvc.SimpleFormController#onSubmit(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse, java.lang.Object,
-	 *      org.springframework.validation.BindException)
-	 */
-	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object obj,
-	                                BindException errors) throws Exception {
-		HttpSession session = request.getSession();
-		
-		String view = getFormView();
-		MessageSourceAccessor msa = getMessageSourceAccessor();
-		if (Context.isAuthenticated()) {
-			ConceptNameTag nameTag = (ConceptNameTag) obj;
-			//ConceptService conceptService = Context.getConceptService();
-			ConceptSearchService css = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-			if (request.getParameter("retireNameTag") != null) {
-				String retireReason = request.getParameter("retireReason");
-				try {
-					String reason = request.getParameter("retiredReason");
-					if (!StringUtils.hasText(reason)) {
-						reason = msa.getMessage("general.default.retireReason");
-					}
-					nameTag.setVoided(true);
-					nameTag.setVoidReason(retireReason);
-					nameTag.setVoidedBy(Context.getAuthenticatedUser());
-					nameTag.setDateVoided(new Date());
-					css.retireNameTag(nameTag, retireReason);
-					session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.retiredSuccessfully");
-				}
-				catch (APIException e) {
-					log.error("Unable to Retire concept because an error occurred: " + nameTag, e);
-					session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, "general.cannot.retire");
-				}
-				
-			}
+	@InitBinder("tag")
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.setAllowedFields(new String[] { "tag" });
+		dataBinder.setRequiredFields(new String[] { "tag" });
+	}
+	
+	@RequestMapping(value = "/module/conceptsearch/conceptNameTagForm", method = RequestMethod.POST)
+	protected String onSubmit(@ModelAttribute("conceptNameTag") ConceptNameTag conceptNameTag, BindingResult errors,
+	                        ModelMap model, WebRequest request, HttpSession session) {
+		errors = validateConceptNameTag(conceptNameTag,errors);
+		if (errors.hasErrors()){
+			session.setAttribute("conceptNameTag", conceptNameTag);
+			model.addAttribute("conceptNameTag", conceptNameTag);
+			return "/module/conceptsearch/conceptNameTagForm";
+		} else {
+			ConceptNameTag newTag = new ConceptNameTag();
+			String tagDescription = request.getParameter("description");
+			String tagName = request.getParameter("tag");
 			
-			// if this nametag is already voided and needs to be unvoided
-			else if (request.getParameter("unretireNameTag") != null) {
-				try {
-					nameTag.setVoided(false);
-					nameTag.setVoidedBy(Context.getAuthenticatedUser());
-					nameTag.setDateVoided(new Date());
-					css.unretireNameTag(nameTag);
-					session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.unretiredSuccessfully");
-				}
-				catch (APIException e) {
-					log.error("Error while trying to unretire concept", e);
-					session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, "general.cannot.unretire");
-				}
-			} else {
-				//if(nameTag.getTag() != null && nameTag.getTag().length()>0){
-				Context.getConceptService().saveConceptNameTag(nameTag);
-				session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.saved");
-				//}
-				//else{
-				//errors.reject("Name required","Name required");
-				//}
-			}
-			
-			view = getSuccessView();
+			newTag.setTag(tagName);
+			newTag.setDescription(tagDescription);
+			Context.getConceptService().saveConceptNameTag(newTag);
+			session.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ConceptNameTag.saved");
+			session.setAttribute("conceptNameTag", newTag);
+			model.addAttribute("conceptNameTag", newTag);
+			return "redirect:/module/conceptsearch/conceptNameTagList.list";
 			
 		}
 		
-		return new ModelAndView(new RedirectView(view));
 	}
-	
-	/**
-	 * This is called prior to displaying a form for the first time. It tells Spring the
-	 * form/command object to load into the request
-	 * 
-	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
-	 */
-	protected Object formBackingObject(HttpServletRequest request) throws ServletException {
+	@RequestMapping(value = "/module/conceptsearch/conceptNameTagForm", method = RequestMethod.GET, params = "conceptId")
+	public void displayConceptNameTagFormWithId(ModelMap model, WebRequest request, HttpSession session) {
 		
 		ConceptNameTag conceptNameTag = null;
-		
-		if (Context.isAuthenticated()) {
-			ConceptService cs = Context.getConceptService();
-			String conceptNameTagId = request.getParameter("conceptNameTagId");
-			if (conceptNameTagId != null)
-				conceptNameTag = cs.getConceptNameTag(Integer.valueOf(conceptNameTagId));
-		}
+		ConceptService cs = Context.getConceptService();
+		String conceptNameTagId = request.getParameter("conceptNameTagId");
+		if (conceptNameTagId != null)
+			conceptNameTag = cs.getConceptNameTag(Integer.valueOf(conceptNameTagId));
 		
 		if (conceptNameTag == null)
 			conceptNameTag = new ConceptNameTag();
 		
-		return conceptNameTag;
+		session.setAttribute("conceptNameTag", conceptNameTag);
+		model.addAttribute("conceptNameTag", conceptNameTag);
 	}
+	
+	@RequestMapping(value = "/module/conceptsearch/conceptNameTagForm", method = RequestMethod.GET)
+	public void displayConceptNameTagForm(ModelMap model, WebRequest request, HttpSession session) {
+		
+		ConceptNameTag conceptNameTag = null;
+		ConceptService cs = Context.getConceptService();
+		String conceptNameTagId = request.getParameter("conceptNameTagId");
+		if (conceptNameTagId != null)
+			conceptNameTag = cs.getConceptNameTag(Integer.valueOf(conceptNameTagId));
+		
+		if (conceptNameTag == null)
+			conceptNameTag = new ConceptNameTag();
+		
+		session.setAttribute("conceptNameTag", conceptNameTag);
+		model.addAttribute("conceptNameTag", conceptNameTag);
+	}
+	private BindingResult validateConceptNameTag(ConceptNameTag conceptNameTag, BindingResult errors){
+		boolean bothNull=false;
+		if(conceptNameTag.getTag() == null || conceptNameTag.getTag().length() <= 0) {
+			errors.rejectValue("tag", "error.name");
+			if (conceptNameTag.getDescription() == null || conceptNameTag.getDescription().length() <= 0) {
+				bothNull = true;
+				errors.rejectValue("description", "error.description");
+			}
+		} else if (conceptNameTag.getDescription() == null || conceptNameTag.getDescription().length() <= 0 && !bothNull) {
+			errors.rejectValue("description", "error.description");
+		}
+		return errors;
+	}
+	
 }

@@ -139,7 +139,7 @@ $(document).ready(function(){
 								</span>
 								</span>
 							</c:forEach>
-
+							</br>
 							<div class="add-nametag">
 								&nbsp; Add : &nbsp; <input id="tagnameQuery${rowStatus.index}"
 									type="text" name="tagnameQuery${conceptName.conceptName}"
@@ -150,16 +150,18 @@ $(document).ready(function(){
 									value="<spring:message code="conceptsearch.savetags" />">
 								<script>
 	        var tagnameQuery = '#tagnameQuery'+${rowStatus.index};
-	        var tagnameQuery1=$(tagnameQuery);//alert(tagnameQuery2);
-			tagnameQuery1.autocomplete("<%=request.getContextPath()%>
-									/module/conceptsearch/autocompletenametag.form");
+	        var tagnameQuery1=$(tagnameQuery);
+			tagnameQuery1.autocomplete("<%=request.getContextPath()%>/module/conceptsearch/autocompletenametag.form");
 								</script>
 							</div></td>
 					</tr>
 				</c:forEach>
-			</table> </br> </br>
-		</span> <input type="hidden" id="deleteOrSave" name="deleteOrSave" value="">
-		<input type="hidden" id="tagnameQuery" name="tagnameQuery" value="">
+			</table>
+		</span>
+		<div>
+			<input type="hidden" id="deleteOrSave" name="deleteOrSave" value="">
+			<input type="hidden" id="tagnameQuery" name="tagnameQuery" value="">
+		</div>
 
 	</form>
 </div>

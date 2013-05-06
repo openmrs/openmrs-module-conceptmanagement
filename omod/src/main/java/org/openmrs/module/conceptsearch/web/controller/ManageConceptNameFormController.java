@@ -9,38 +9,25 @@
  * License for the specific language governing rights and limitations
  * under the License.
  *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ * Copyright (C) OpenMRS, LLC. All Rights Reserved.
  */
 package org.openmrs.module.conceptsearch.web.controller;
 
 import java.util.ArrayList;
-import org.openmrs.module.conceptsearch.web.controller.ConceptNameTagValidator;
-import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.openmrs.Concept;
-import org.openmrs.ConceptClass;
-import org.openmrs.ConceptDatatype;
-import org.openmrs.ConceptDescription;
 import org.openmrs.ConceptName;
 import org.openmrs.ConceptNameTag;
-import org.openmrs.api.APIException;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.openmrs.module.conceptsearch.ConceptSearchResult;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
-import org.openmrs.web.WebConstants;
-import org.openmrs.web.controller.ConceptFormController.ConceptFormBackingObject;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -49,8 +36,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Controller to handle edit of concept names (only tags for now).
@@ -90,13 +75,9 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 						String tagName = request.getParameter(tagNameQueryString);
 						ConceptNameTag tag = cs.getConceptNameTagByName(tagName);
 						if (tag != null) {
-							if (!tag.getVoided()) {
-								cn.addTag(tag);
-								cs.saveConcept(concept);
-								
-							} else {
-								errors.reject("Tag is retired", "Tag is retired");
-							}
+							cn.addTag(tag);
+							cs.saveConcept(concept);
+							
 						} else {
 							errors.reject("Tag not found", "Tag not found");
 						}
@@ -105,9 +86,7 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 				i++;
 			}
 			
-		}
-		//if (request.getParameter("deleteCN-conceptName") != null) {
-		else if (request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("delete")) {
+		} else if (request.getParameter("deleteOrSave") != null && request.getParameter("deleteOrSave").contains("delete")) {
 			for (ConceptName cn : concept.getNames()) {
 				int i = 0;
 				boolean del = false;
@@ -153,7 +132,6 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		
 	}
 	
-	//@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = RequestMethod.GET, params = "conceptId")
 	public void displaySortedConceptEditPage(@RequestParam("sort") String sort, @RequestParam("order") String order,
 	                                         @RequestParam("conceptId") String conceptId, ModelMap model,
 	                                         WebRequest request, HttpSession session) {
@@ -210,12 +188,8 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 	
 	@RequestMapping(value = "/module/conceptsearch/autocompletenametag", method = RequestMethod.GET)
 	public void doAutocomplete(ModelMap model, WebRequest request, HttpSession session) {
-		//ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
-		//String searchFor = request.getParameter("q");
-		//List<String> autoResults = searchService.getAutocompleteConcepts(searchFor);
-		//model.addAttribute("autoComplete", autoResults);
 		
-		// -- Autocompletehelper is used to avoid some problems -- 
+		// -- Autocompletehelper is used to avoid some problems --
 		log.debug("Accessing autocomplete");
 	}
 	

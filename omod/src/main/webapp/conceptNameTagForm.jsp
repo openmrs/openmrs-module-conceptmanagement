@@ -2,59 +2,23 @@
 
 <openmrs:require privilege="Manage Concept Name Tags"
 	otherwise="/login.htm"
-	redirect="/module/conceptsearch/conceptNameTag.form" />
+	redirect="/module/conceptsearch/conceptNameTagForm.form" />
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="localHeader.jsp"%>
-<style>
-#table {
-	width: 100%;
-}
 
-#table th {
-	text-align: left;
-}
-
-#table input[name=name],input#concept_selection {
-	width: 99%;
-}
-
-h1,h2,h3,h4,h5 {
-	margin-top: 5px;
-	margin-bottom: 7px;
-}
-
-* {
-	font-family: Verdana, 'Lucida Grande', 'Trebuchet MS', Arial, Sans-Serif;
-	-moz-box-sizing: border-box; /* Use IE-like Border-Box model */
-}
-</style>
 
 <h2>
 	<spring:message code="conceptsearch.conceptnametaglistheading" />
 </h2>
 
+
+<br />
 <openmrs:extensionPoint
 	pointId="org.openmrs.admin.concepts.conceptNameTagForm.afterTitle"
 	type="html"
 	parameters="conceptNameTagId=${conceptNameTag.conceptNameTagId}" />
 
-<c:if test="${conceptNameTag.voided}">
-	<form action="" method="post">
-		<div class="retiredMessage">
-			<div>
-				<openmrs:message code="conceptsearch.retiredNameTagMessage" />
-				${conceptNameTag.voidedBy.personName}
-				<openmrs:formatDate date="${conceptNameTag.dateVoided}"
-					type="medium" />
-				- ${conceptNameTag.voidReason} <input type="submit"
-					value='<openmrs:message code="conceptsearch.unretireNameTag"/>'
-					name="unretireNameTag" />
-
-			</div>
-		</div>
-	</form>
-</c:if>
 
 <form method="post">
 	<fieldset>
@@ -99,30 +63,6 @@ h1,h2,h3,h4,h5 {
 </form>
 <br />
 <br />
-<c:if
-	test="${not conceptNameTag.voided && not empty conceptNameTag.conceptNameTagId}">
-	<form action="" method="post">
-		<fieldset>
-			<h4>
-				<openmrs:message code="conceptsearch.retiretag" />
-			</h4>
-
-			<b><openmrs:message code="general.reason" /></b> <input type="text"
-				value="" size="40" name="retireReason" />
-			<spring:hasBindErrors name="conceptNameTag.tag">
-				<c:forEach items="${errors.allErrors}" var="error">
-					<c:if test="${error.code == 'retireReason'}">
-					s<span class="error"><openmrs:message
-								code="${error.defaultMessage}" text="${error.defaultMessage}" /></span>
-					</c:if>
-				</c:forEach>
-			</spring:hasBindErrors>
-			<br /> <input type="submit"
-				value='<openmrs:message code="conceptsearch.retireNametag"/>'
-				name="retireNameTag" />
-		</fieldset>
-	</form>
-</c:if>
 <openmrs:extensionPoint
 	pointId="org.openmrs.admin.concepts.conceptNameTagForm.footer"
 	type="html"

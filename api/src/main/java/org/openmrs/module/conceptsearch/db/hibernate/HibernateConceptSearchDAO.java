@@ -9,7 +9,7 @@
  * License for the specific language governing rights and limitations
  * under the License.
  *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ * Copyright (C) OpenMRS, LLC. All Rights Reserved.
  */
 package org.openmrs.module.conceptsearch.db.hibernate;
 
@@ -37,8 +37,8 @@ import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.openmrs.module.conceptsearch.ConceptSearchDAO;
 
 /**
- *
- */
+*
+*/
 public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	
 	protected final Log log = LogFactory.getLog(getClass());
@@ -139,9 +139,9 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 			crit.add(Restrictions.like("names.name", "%" + cs.getSearchQuery() + "%"));
 		}
 		
-		/*		if (CollectionUtils.isNotEmpty(cs.getSearchTermsList())) {
-					crit.add(Restrictions.in("description", cs.getSearchTermsList())); //TODO: contains? like?
-				}*/
+		/* if (CollectionUtils.isNotEmpty(cs.getSearchTermsList())) {
+		crit.add(Restrictions.in("description", cs.getSearchTermsList())); //TODO: contains? like?
+		}*/
 		
 		if (CollectionUtils.isNotEmpty(cs.getDataTypes())) {
 			crit.add(Restrictions.in("datatype", cs.getDataTypes()));
@@ -254,16 +254,10 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 	public List<String> getAutocompleteConceptNameTags(String searchWord) throws DAOException {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ConceptNameTag.class);
 		Vector<String> prev = new Vector<String>();
-		//crit.createAlias("names", "names");
-		//crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
-		crit.add(Restrictions.ilike("tag", searchWord, MatchMode.ANYWHERE));
-		crit.add(Restrictions.eq("voided", false));
+		crit.add(Restrictions.ilike("tag", searchWord, MatchMode.START));
 		crit.setMaxResults(30);
-		
 		for (ConceptNameTag cnt : (List<ConceptNameTag>) crit.list()) {
-			if (isSearchTermBeginningOfWord(cnt.getTag(), searchWord) && !prev.contains(cnt.getTag())) {
-				prev.add(cnt.getTag());
-			}
+			prev.add(cnt.getTag());
 		}
 		
 		return prev;
