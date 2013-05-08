@@ -20,6 +20,7 @@ import org.openmrs.annotation.Handler;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.openmrs.api.context.Context;
 
 /**
  * Validates attributes on the {@link ConceptNameTag} object.
@@ -59,7 +60,12 @@ public class ConceptNameTagValidator implements Validator {
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tag", "error.name");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description");
-			
+			for (ConceptNameTag currentTag : Context.getConceptService().getAllConceptNameTags()) {
+				if (currentTag.getTag().trim().equals(cnt.getTag().trim())) {
+					errors.rejectValue("tag", "Invalid tag. This tag is a duplicate.",
+					    "Invalid tag. This tag is a duplicate.");
+				}
+			}
 		}
 	}
 	
