@@ -62,8 +62,7 @@ public class ConceptNameTagValidator implements Validator {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description");
 			for (ConceptNameTag currentTag : Context.getConceptService().getAllConceptNameTags()) {
 				if (currentTag.getTag().trim().equals(cnt.getTag().trim())) {
-					errors.rejectValue("tag", "Invalid tag. This tag is a duplicate.",
-					    "Invalid tag. This tag is a duplicate.");
+					errors.rejectValue("tag", "conceptsearch.error.duplicate");
 				}
 			}
 		}
