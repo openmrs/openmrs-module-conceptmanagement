@@ -13,28 +13,16 @@
  */
 package org.openmrs.module.conceptsearch.web.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
 import org.openmrs.ConceptNameTag;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.conceptsearch.ConceptSearchService;
 import org.openmrs.api.context.Context;
 import org.openmrs.web.WebConstants;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
-import org.springframework.validation.BindException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,21 +30,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.openmrs.api.APIException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 
 @Controller
 public class ConceptNameTagFormController {
 	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-
+	
+	/** Validator for this controller */
+	private ConceptNameTagValidator validator;
+	
+	@Autowired
+	public ConceptNameTagFormController(ConceptNameTagValidator validator) {
+		this.validator = validator;
+	}
+	
 	@ModelAttribute("tag")
 	public String getTag(@RequestParam(value = "tag", required = false) String tag) {
 		return (tag == null ? "" : tag);
@@ -70,9 +60,10 @@ public class ConceptNameTagFormController {
 	
 	@RequestMapping(value = "/module/conceptsearch/conceptNameTagForm", method = RequestMethod.POST)
 	protected String onSubmit(@ModelAttribute("conceptNameTag") ConceptNameTag conceptNameTag, BindingResult errors,
-	                        ModelMap model, WebRequest request, HttpSession session) {
-		errors = validateConceptNameTag(conceptNameTag,errors);
-		if (errors.hasErrors()){
+	                          ModelMap model, WebRequest request, HttpSession session) {
+		
+		validator.validate(conceptNameTag, errors);
+		if (errors.hasErrors()) {
 			session.setAttribute("conceptNameTag", conceptNameTag);
 			model.addAttribute("conceptNameTag", conceptNameTag);
 			return "/module/conceptsearch/conceptNameTagForm";
@@ -92,6 +83,7 @@ public class ConceptNameTagFormController {
 		}
 		
 	}
+	
 	@RequestMapping(value = "/module/conceptsearch/conceptNameTagForm", method = RequestMethod.GET, params = "conceptId")
 	public void displayConceptNameTagFormWithId(ModelMap model, WebRequest request, HttpSession session) {
 		
@@ -122,19 +114,6 @@ public class ConceptNameTagFormController {
 		
 		session.setAttribute("conceptNameTag", conceptNameTag);
 		model.addAttribute("conceptNameTag", conceptNameTag);
-	}
-	private BindingResult validateConceptNameTag(ConceptNameTag conceptNameTag, BindingResult errors){
-		boolean bothNull=false;
-		if(conceptNameTag.getTag() == null || conceptNameTag.getTag().length() <= 0) {
-			errors.rejectValue("tag", "error.name");
-			if (conceptNameTag.getDescription() == null || conceptNameTag.getDescription().length() <= 0) {
-				bothNull = true;
-				errors.rejectValue("description", "error.description");
-			}
-		} else if (conceptNameTag.getDescription() == null || conceptNameTag.getDescription().length() <= 0 && !bothNull) {
-			errors.rejectValue("description", "error.description");
-		}
-		return errors;
 	}
 	
 }
