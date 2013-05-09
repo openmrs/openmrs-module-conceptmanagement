@@ -5,7 +5,7 @@
 	redirect="/module/conceptsearch/conceptNameTagForm.form" />
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
-<%@ include file="localHeader.jsp"%>
+<%@ include file="/WEB-INF/view/admin/concepts/localHeader.jsp" %>
 
 
 <h2>

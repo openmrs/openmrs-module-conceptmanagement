@@ -5,7 +5,7 @@
 	redirect="/module/conceptsearch/conceptNameTagList.list" />
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
-<%@ include file="localHeader.jsp"%>
+<%@ include file="/WEB-INF/view/admin/concepts/localHeader.jsp" %>
 
 <openmrs:htmlInclude
 	file='${pageContext.request.contextPath}/moduleResources/@MODULE_ID@/scripts/dojoConfig.js' />
