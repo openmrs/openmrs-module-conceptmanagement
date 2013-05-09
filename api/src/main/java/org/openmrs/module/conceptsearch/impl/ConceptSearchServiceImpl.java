@@ -21,9 +21,14 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptNameTag;
+import org.openmrs.Drug;
+import org.openmrs.annotation.Authorized;
+import org.openmrs.api.APIException;
 import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.openmrs.module.conceptsearch.ConceptSearchDAO;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
+import org.openmrs.util.OpenmrsConstants;
 
 /**
  * Implementation of the ConceptSearchService
@@ -110,21 +115,55 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 	public ConceptDatatype getConceptDatatypeById(int id) {
 		return dao.getConceptDatatypeById(id);
 	}
-
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept, org.openmrs.module.conceptsearch.ConceptSearch)
-     */
-    @Override
-    public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
-    	return dao.isConceptUsedAs(concept, cs);
-    }
-
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#isConceptUsedAs(org.openmrs.Concept,
+	 *      org.openmrs.module.conceptsearch.ConceptSearch)
+	 */
+	@Override
+	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs) {
+		return dao.isConceptUsedAs(concept, cs);
+	}
+	
 	/**
-     * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
-     */
-    @Override
-    public List<String> getAutocompleteConcepts(String searchWord) {
-    	return dao.getAutocompleteConcepts(searchWord);
-    }
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConcepts(java.lang.String)
+	 */
+	@Override
+	public List<String> getAutocompleteConcepts(String searchWord) {
+		return dao.getAutocompleteConcepts(searchWord);
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#getAutocompleteConceptNameTags(java.lang.String)
+	 */
+	@Override
+	public List<String> getAutocompleteConceptNameTags(String searchWord) {
+		return dao.getAutocompleteConceptNameTags(searchWord);
+	}
+	
+	/**
+	 * @see org.openmrs.module.conceptsearch.ConceptSearchService#purgeConceptNameTag(org.openmrs.ConceptNameTag)
+	 *      TODO: check if tag is in use?
+	 */
+	@Override
+	public void purgeConceptNameTag(ConceptNameTag nameTag) {
+		dao.purgeConceptNameTag(nameTag);
+	}
+	
+	/**
+	 * @see org.openmrs.api.ConceptSearchService#retireNameTag(org.openmrs.ConceptNameTag,
+	 *      java.lang.String)
+	 * @throws APIException
+	 */
+	public ConceptNameTag retireNameTag(ConceptNameTag nameTag, String reason) throws APIException {
+		return dao.saveConceptNameTag(nameTag);
+	}
+	
+	/**
+	 * @see org.openmrs.api.ConceptSearchService#ConceptNameTag(org.openmrs.ConceptNameTag)
+	 */
+	public ConceptNameTag unretireNameTag(ConceptNameTag nameTag) throws APIException {
+		return dao.saveConceptNameTag(nameTag);
+	}
 	
 }

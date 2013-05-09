@@ -30,4 +30,11 @@ public class AutocompleteHelper {
 		return null;
 	}
 	
+	public List<String> getAutocompleteConceptNameTags(String searchWord) {
+		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
+		if (searchWord != null)
+			return searchService.getAutocompleteConceptNameTags(searchWord);
+		return null;
+	}
+	
 }
