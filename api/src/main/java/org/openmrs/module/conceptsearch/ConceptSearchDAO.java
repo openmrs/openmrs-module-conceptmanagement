@@ -88,6 +88,4 @@ public interface ConceptSearchDAO {
 	 */
 	public void purgeConceptNameTag(ConceptNameTag nameTag) throws DAOException;
 	
-	public ConceptNameTag saveConceptNameTag(ConceptNameTag nameTag);
-	
 }

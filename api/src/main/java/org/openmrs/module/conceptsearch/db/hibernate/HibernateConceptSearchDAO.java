@@ -284,15 +284,4 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		sessionFactory.getCurrentSession().delete(nameTag);
 	}
 	
-	/**
-	 * @see org.openmrs.api.db.ConceptDAO#saveConceptNameTag(org.openmrs.ConceptNameTag)
-	 */
-	public ConceptNameTag saveConceptNameTag(ConceptNameTag nameTag) {
-		if (nameTag == null)
-			return null;
-		
-		sessionFactory.getCurrentSession().saveOrUpdate(nameTag);
-		return nameTag;
-	}
-	
 }

@@ -147,20 +147,4 @@ public class ConceptSearchServiceImpl implements ConceptSearchService {
 		dao.purgeConceptNameTag(nameTag);
 	}
 	
-	/**
-	 * @see org.openmrs.api.ConceptSearchService#retireNameTag(org.openmrs.ConceptNameTag,
-	 *      java.lang.String)
-	 * @throws APIException
-	 */
-	public ConceptNameTag retireNameTag(ConceptNameTag nameTag, String reason) throws APIException {
-		return dao.saveConceptNameTag(nameTag);
-	}
-	
-	/**
-	 * @see org.openmrs.api.ConceptSearchService#ConceptNameTag(org.openmrs.ConceptNameTag)
-	 */
-	public ConceptNameTag unretireNameTag(ConceptNameTag nameTag) throws APIException {
-		return dao.saveConceptNameTag(nameTag);
-	}
-	
 }
