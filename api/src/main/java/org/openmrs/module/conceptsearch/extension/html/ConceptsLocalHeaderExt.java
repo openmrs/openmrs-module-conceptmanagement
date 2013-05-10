@@ -22,7 +22,7 @@ import org.openmrs.module.Extension;
  * This class defines the links that will appear on the administration page under the Concept
  * Section. file.
  */
-public class ConceptListExt extends Extension {
+public class ConceptsLocalHeaderExt extends Extension {
 	
 	/**
 	 * @see org.openmrs.module.web.extension.LinkExt#getMediaType()

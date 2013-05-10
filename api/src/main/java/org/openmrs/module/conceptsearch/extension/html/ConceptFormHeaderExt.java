@@ -13,9 +13,6 @@
  */
 package org.openmrs.module.conceptsearch.extension.html;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.openmrs.module.Extension;

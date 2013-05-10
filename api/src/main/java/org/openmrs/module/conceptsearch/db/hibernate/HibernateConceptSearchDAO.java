@@ -139,10 +139,6 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 			crit.add(Restrictions.like("names.name", "%" + cs.getSearchQuery() + "%"));
 		}
 		
-		/* if (CollectionUtils.isNotEmpty(cs.getSearchTermsList())) {
-		crit.add(Restrictions.in("description", cs.getSearchTermsList())); //TODO: contains? like?
-		}*/
-		
 		if (CollectionUtils.isNotEmpty(cs.getDataTypes())) {
 			crit.add(Restrictions.in("datatype", cs.getDataTypes()));
 		}
@@ -226,8 +222,6 @@ public class HibernateConceptSearchDAO implements ConceptSearchDAO {
 		Vector<String> prev = new Vector<String>();
 		
 		crit.createAlias("names", "names");
-		//crit.add(Restrictions.like("names.name", "%" + searchWord + "%"));
-		
 		crit.add(Restrictions.ilike("names.name", searchWord, MatchMode.ANYWHERE));
 		crit.add(Restrictions.eq("retired", false));
 		crit.setMaxResults(30);

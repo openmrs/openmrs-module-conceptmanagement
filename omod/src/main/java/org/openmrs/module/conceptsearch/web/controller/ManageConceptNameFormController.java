@@ -115,10 +115,10 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 			String sort = request.getParameter("sort");
 			String order = request.getParameter("order");
 			String conceptId = request.getParameter("conceptId");
-			displaySortedConceptEditPage(sort, order, conceptId, model, request, session);
+			displaySortedManageConceptPage(sort, order, conceptId, model, request, session);
 			
 		} else {
-			displayConceptEditPage(model, request, session);
+			displayManageConceptPage(model, request, session);
 		}
 		
 	}
@@ -132,9 +132,9 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 		
 	}
 	
-	public void displaySortedConceptEditPage(@RequestParam("sort") String sort, @RequestParam("order") String order,
-	                                         @RequestParam("conceptId") String conceptId, ModelMap model,
-	                                         WebRequest request, HttpSession session) {
+	public void displaySortedManageConceptPage(@RequestParam("sort") String sort, @RequestParam("order") String order,
+	                                           @RequestParam("conceptId") String conceptId, ModelMap model,
+	                                           WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		String id = request.getParameter("conceptId");
 		int cid = Integer.parseInt(id);
@@ -161,7 +161,7 @@ public class ManageConceptNameFormController extends AbstractSearchFormControlle
 	}
 	
 	@RequestMapping(value = "/module/conceptsearch/manageConceptName", method = RequestMethod.GET, params = "conceptId")
-	public void displayConceptEditPage(ModelMap model, WebRequest request, HttpSession session) {
+	public void displayManageConceptPage(ModelMap model, WebRequest request, HttpSession session) {
 		ConceptSearchService searchService = (ConceptSearchService) Context.getService(ConceptSearchService.class);
 		String id = request.getParameter("conceptId");
 		int cid = Integer.parseInt(id);

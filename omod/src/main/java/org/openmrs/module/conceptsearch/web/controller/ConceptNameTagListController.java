@@ -13,13 +13,9 @@
  */
 package org.openmrs.module.conceptsearch.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -30,27 +26,13 @@ import org.openmrs.ConceptNameTag;
 import org.openmrs.api.APIException;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.conceptsearch.ConceptSearchResult;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
-import org.openmrs.web.WebConstants;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Controller to handle edit of concept names (only tags for now).

@@ -22,13 +22,10 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptNameTag;
-import org.openmrs.Drug;
-import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.module.conceptsearch.ConceptSearch;
 import org.openmrs.module.conceptsearch.ConceptSearchDAO;
 import org.openmrs.module.conceptsearch.ConceptSearchService;
-import org.openmrs.util.OpenmrsConstants;
 
 /**
  * Implementation of the ConceptSearchService

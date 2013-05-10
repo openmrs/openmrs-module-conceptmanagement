@@ -27,7 +27,7 @@
 
 	<extension>
 		<point>org.openmrs.admin.concepts.localHeader</point>
-		<class>@MODULE_PACKAGE@.extension.html.ConceptListExt</class>
+		<class>@MODULE_PACKAGE@.extension.html.ConceptsLocalHeaderExt</class>
 	</extension>
 
 	<extension>
