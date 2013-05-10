@@ -49,17 +49,22 @@ jQuery(document).ready(function() {
 		<th><spring:message code="Concept.datatype" /><a href="?sort=conceptDatatype&order=desc"><img style="width: 14px; height: 14px;" border="0" src="<%=request.getContextPath()%>/images/movedown.gif"></a><a href="?sort=conceptDatatype&order=asc"><img style="width: 14px; height: 14px;" border="0" src="<%=request.getContextPath()%>/images/moveup.gif"></a></th>
 		<!-- <th>Other Names</th> -->
 		<th><spring:message code="conceptsearch.numberofobs" /><a href="?sort=numberOfObs&order=desc"><img style="width: 13px; height: 13px;" border="0" src="<%=request.getContextPath()%>/images/movedown.gif"></a><a href="?sort=numberOfObs&order=asc"><img style="width: 14px; height: 14px;" border="0" src="<%=request.getContextPath()%>/images/moveup.gif"></a></th>
+		<th><spring:message code="conceptsearch.viewEditNames" /></th>
 	</tr>
 
 	<c:forEach var="concept" items="${searchResult.pageList}" varStatus="rowStatus">
 		<tr class='${rowStatus.index % 2 == 0 ? "evenRow" : "oddRow"}'>
 			<td class="searchIndex">${rowStatus.index + (searchResult.page * searchResult.pageSize + 1)}.</td>
-			<td><a class="searchHit"
-				href="viewConcept.form?conceptId=${concept.conceptId}" title="${concept.conceptDescription}">${concept.conceptName}</a></td>
+			<td>${concept.conceptName}</td>
 			<td>${concept.conceptClass}</td>
 			<td>${concept.conceptDatatype}</td>
 			<!--  <td>${concept.otherNames}</td> -->
 			<td>${concept.numberOfObs}</td>
+			<td><a class="searchHit"
+				href="viewConcept.form?conceptId=${concept.conceptId}" title="${concept.conceptName}&nbsp;: ${concept.conceptDescription}">View</a>
+			&nbsp;&nbsp;&nbsp;<a class="searchHit"
+				href="manageConceptName.form?conceptId=${concept.conceptId}" title="${concept.conceptName}&nbsp;: ${concept.conceptDescription}">Edit Names</a></td>
+			
 		</tr>
 	</c:forEach>
 </table>

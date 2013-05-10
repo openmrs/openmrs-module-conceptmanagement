@@ -19,8 +19,11 @@ import java.util.List;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.annotation.Authorized;
+import org.openmrs.api.APIException;
 import org.openmrs.util.OpenmrsConstants;
+//import org.openmrs.util.PrivilegeConstants;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,7 +41,7 @@ public interface ConceptSearchService {
 	 * @return all concepts that match criteria in cs
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<Concept> getConcepts(ConceptSearch cs);
 	
 	/**
@@ -48,7 +51,7 @@ public interface ConceptSearchService {
 	 * @return concept with the given conceptId
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Concept getConcept(Integer conceptId);
 	
 	/**
@@ -58,69 +61,98 @@ public interface ConceptSearchService {
 	 * @return number of observations for the given concept
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Long getNumberOfObsForConcept(Integer conceptId);
 	
 	/**
 	 * Returns the number of forms this concept is used by
+	 * 
 	 * @param conceptId
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public Long getNumberOfFormsForConcept(Integer conceptId);
 	
 	/**
 	 * Return all Concept Classes
+	 * 
 	 * @return all Concept Classes in the database
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<ConceptClass> getAllConceptClasses();
 	
 	/**
 	 * Return all Concept Datatypes
+	 * 
 	 * @return all Concept Datatypes in the database
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<ConceptDatatype> getAllConceptDatatypes();
 	
 	/**
 	 * Return the Datatype of a given id
+	 * 
 	 * @param id Datatype id
 	 * @return ConceptDatatype with given id
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public ConceptDatatype getConceptDatatypeById(int id);
 	
 	/**
 	 * Return the ConceptClass of a given id
+	 * 
 	 * @param id ConceptClass id
 	 * @return ConceptClass with given id
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public ConceptClass getConceptClassById(int id);
 	
 	/**
-	 * Checks if the request is used as a question in forms, as an answer to questions, as an observation question, as an observation value.
+	 * Checks if the request is used as a question in forms, as an answer to questions, as an
+	 * observation question, as an observation value.
+	 * 
 	 * @param concept Concepts to be checked if it matches the criteria
 	 * @param cs object that contains the criteria
-	 * @return boolean, true if concept matches all given criteria or no criteria is given, false if not
+	 * @return boolean, true if concept matches all given criteria or no criteria is given, false if
+	 *         not
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public boolean isConceptUsedAs(Concept concept, ConceptSearch cs);
 	
 	/**
 	 * Returns a List of search suggestions depending on the search word entered
+	 * 
 	 * @param searchWord the beginning of the concept name
 	 * @return List of concepts that match the searchWord
 	 */
 	@Transactional(readOnly = true)
-	@Authorized( { OpenmrsConstants.PRIV_VIEW_CONCEPTS })
+	@Authorized({ OpenmrsConstants.PRIV_VIEW_CONCEPTS })
 	public List<String> getAutocompleteConcepts(String searchWord);
+	
+	/**
+	 * Returns a List of search suggestions depending on the search word entered
+	 * 
+	 * @param searchWord the beginning of the concept name tag
+	 * @return List of concept name tags that match the searchWord
+	 */
+	@Transactional(readOnly = true)
+	@Authorized({ OpenmrsConstants.PRIV_MANAGE_CONCEPTS })
+	public List<String> getAutocompleteConceptNameTags(String searchWord);
+	
+	/**
+	 * Purges the specified concept name tag from the database
+	 * 
+	 * @param conceptNameTag the concept name tag object to purge
+	 * @throws APIException
+	 */
+	@Transactional(readOnly = false)
+	@Authorized(OpenmrsConstants.PRIV_MANAGE_CONCEPT_NAME_TAGS)
+	public void purgeConceptNameTag(ConceptNameTag nameTag) throws APIException;
 	
 }
